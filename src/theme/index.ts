@@ -262,8 +262,10 @@ export const colors = {
   rose_700: '#be123c',
   rose_800: '#9f1239',
   rose_900: '#881337',
+}
 
-  // fim.............
+export default {
+  colors
 }
 
 export type ColorsType = (
