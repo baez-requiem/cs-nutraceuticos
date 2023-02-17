@@ -1,7 +1,6 @@
-
 import 'styled-components'
 
-import theme from './'
+import theme from './theme.light'
 
 declare module 'styled-components' {
   type ThemeType = typeof theme

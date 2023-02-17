@@ -1,3 +1,11 @@
+export const deviceSize = {
+  xs: `(max-width: 480px)`,
+  sm: `(max-width: 720px)`,
+  md: `(max-width: 1080px)`,
+  lg: `(max-width: 1439px)`,
+  xl: `(min-width: 1440px)`
+}
+
 export const colors = {
   // slate
   slate_50: '#f8fafc',
@@ -262,10 +270,6 @@ export const colors = {
   rose_700: '#be123c',
   rose_800: '#9f1239',
   rose_900: '#881337',
-}
-
-export default {
-  colors
 }
 
 export type ColorsType = (

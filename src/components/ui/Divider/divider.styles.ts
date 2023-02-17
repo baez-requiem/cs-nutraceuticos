@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { ColorsType } from "../../../theme"
+import { ColorsType } from "src/theme/theme.default"
 
 interface ContainerProps {
   my?: number
@@ -21,6 +21,6 @@ export const Container = styled.div<ContainerProps>`
 
 export const Line = styled.div<LineProps>`
   height: 1px;
-  background-color: ${({ theme, color = 'gray_600' }) =>'red'};
+  background-color: ${({ theme, color = 'gray_600' }) => theme.colors[color]};
   opacity: ${({ opacity = 1 }) => opacity};
 `

@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { ColorsType } from "../../../theme"
+import { ColorsType } from "src/theme/theme.default"
 import { Container, Line } from "./divider.styles"
 
 export interface DividerProps {
