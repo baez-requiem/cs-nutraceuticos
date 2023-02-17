@@ -9,15 +9,15 @@ export interface FlexProps {
 }
 
 const Flex = styled.div<FlexProps>`
-  width: 100%;
-  
   display: flex;
   
-  align-items: ${({ items = 'start' }) => items};
   justify-content: ${({ justify = 'baseline' }) => justify};
   flex-direction: ${({ direction = 'row' }) => direction};
-  gap: ${({ gap = 0 }) => gap}px;
+  align-items: ${({ items = 'start' }) => items};
   flex-wrap: ${({ wrap }) => wrap ? 'wrap': 'nowrap'};
+  gap: ${({ gap = 0 }) => gap}px;
+  
+  width: 100%;
 `
 
 export default Flex
