@@ -10,7 +10,7 @@ const IconButton = styled.button<{ color?: ColorsType, size?: number }>`
   align-items: center;
   justify-content: center;
 
-  border-radius: 5px;
+  border-radius: 3.5px;
   border: none;
 
   background-color: ${({ theme, color }) => color ? theme.colors[color] : 'transparent'};
