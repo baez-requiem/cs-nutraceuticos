@@ -7,6 +7,9 @@ export const deviceSize = {
 }
 
 export const colors = {
+  primary: '#254e6c',
+  secondary: '#a9cf46',
+
   // slate
   slate_50: '#f8fafc',
   slate_100: '#f1f5f9',

@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { ColorsType } from "src/theme/theme.default"
-import { Container, Line } from "./divider.styles"
+import { Container, Line } from "src/components/ui/Divider/styles"
 
 export interface DividerProps {
   my?: number
