@@ -1,2 +1,5 @@
 export { default as MonthsInvoicingChart } from './MonthsInvoicingChart'
 export { default as DailyInvoicing } from './DailyInvoicing'
+export { default as DailyStatistics } from './DailyStatistics'
+export { default as MonthStatistics } from './MonthStatistics'
+export { default as LastSales } from './LastSales'

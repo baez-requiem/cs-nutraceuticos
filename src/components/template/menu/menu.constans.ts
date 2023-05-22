@@ -1,4 +1,5 @@
 import { BsBarChart } from 'react-icons/bs'
+import { TbReportAnalytics } from 'react-icons/tb'
 
 export const menuItems = [
   {
@@ -7,9 +8,9 @@ export const menuItems = [
     Icon: BsBarChart
   },
   {
-    label: 'Dashboard',
+    label: 'Relatórios',
     to: '/',
-    Icon: BsBarChart
+    Icon: TbReportAnalytics
   },
 ]
 

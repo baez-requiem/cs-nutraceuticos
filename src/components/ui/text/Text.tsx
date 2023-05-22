@@ -1,3 +1,4 @@
+import { ColorsType } from "src/theme/theme.default"
 import styled, { css } from "styled-components"
 
 const fontSize = {
@@ -14,7 +15,7 @@ export interface TextProps {
   size?: 'xs'|'sm'|'md'|'lg'|'xl'|'xl2'
   whiteSpace?: 'nowrap'|'normal'|'break-spaces'|'unset' 
   fontStyle?: 'normal'|'italic'|'oblique'
-  color?: string
+  color?: ColorsType
   p?: number
   pl?: number
   pt?: number
@@ -26,7 +27,7 @@ const Text = styled.span<TextProps>`
   font-weight: ${({ weight }) => weight || 'inherit'};
   font-size: ${({ size }) => fontSize[size || 'md']};
   font-style: ${({ fontStyle }) => fontStyle || 'normal'};
-  color: ${({ color }) => color || 'inherit'};
+  color: ${({ color, theme }) => theme.colors[color || 'black']};
   white-space: ${({ whiteSpace = 'unset' }) => whiteSpace};
 
   padding: ${({ p = 0 }) => p}px;

@@ -44,14 +44,13 @@ const MonthsInvoicingChart = () => {
       tooltip: value => value?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
       scale: value => value?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
     },
-    // elementType: 'bar'
   }], [])
 
   return (
     <Paper>
-      <Text size="xl" weight="600" color="rgb(8, 47, 73)">Receita 05/2023</Text>
+      <Text size="xl" weight="600" color="gray_900">Receita 05/2023</Text>
       <Divider my={10} />
-      <div style={{ height: 200 }}>
+      <div style={{ height: 350 }}>
           <Chart options={{ data, primaryAxis, secondaryAxes, tooltip: false, dark: false,  }} />
         </div>
     </Paper>

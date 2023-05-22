@@ -1,15 +1,17 @@
 import { Divider, Paper, Text } from "src/components/ui"
-import { DailyInvoicing, MonthsInvoicingChart } from "./components"
+import { DailyInvoicing, MonthsInvoicingChart, DailyStatistics, MonthStatistics, LastSales } from "./components"
 import { CardsContainer } from "./styles"
 
 const Dashboard = () => {
 
   return (
     <>
-      <Text size="xl2" weight="600" color="rgb(8, 47, 73)">Dashboard</Text>
+      <Text size="xl2" weight="600" color="gray_900">Dashboard</Text>
       <Divider my={10} />
       <CardsContainer>
-        <DailyInvoicing />
+        <DailyStatistics />
+        <MonthStatistics />
+        <LastSales />
         <MonthsInvoicingChart />
       </CardsContainer>
     </>
