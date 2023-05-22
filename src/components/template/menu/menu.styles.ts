@@ -186,7 +186,7 @@ export const MenuItem = styled.li<{ active?: boolean }>`
   align-items: center;
   gap: 12px;
 
-  padding: 8px 20px;
+  padding: 12px 20px;
 
   span {
     font-size: 16px;

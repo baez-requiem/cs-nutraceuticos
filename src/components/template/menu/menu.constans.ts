@@ -1,11 +1,29 @@
 import { BsBarChart } from 'react-icons/bs'
+import { HiOutlineUserGroup } from 'react-icons/hi'
 import { TbReportAnalytics } from 'react-icons/tb'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { MdStayPrimaryPortrait } from 'react-icons/md'
 
 export const menuItems = [
   {
     label: 'Dashboard',
     to: '/dashboard',
     Icon: BsBarChart
+  },
+  {
+    label: 'Produtos',
+    to: '/',
+    Icon: AiOutlineShoppingCart
+  },
+  {
+    label: 'Vendedores',
+    to: '/',
+    Icon: HiOutlineUserGroup
+  },
+  {
+    label: 'Mídias',
+    to: '/',
+    Icon: MdStayPrimaryPortrait
   },
   {
     label: 'Relatórios',
