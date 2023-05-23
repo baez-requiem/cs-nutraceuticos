@@ -208,17 +208,13 @@ export const MenuItem = styled.li<{ active?: boolean }>`
   `}
 `
 
-export const ExitItem = styled.div.attrs({
-  className: 'hide-justify-center'
-})`
+export const ExitItem = styled(MenuItem)`
   margin-top: auto;
-  padding: 16px 20px;
-  font-size: 16px;
   border-top: 1px solid rgb(63 63 70 / 0.8);
 
-  display: flex;
+  /* display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px; */
 `
 
 // export const SubMenu = styled(MenuContent).attrs({

@@ -14,7 +14,11 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: lazyLoad(lazy(() => import('src/pages/dashboard/Dashboard')))
-      }
+      },
+      {
+        path: "products",
+        element: lazyLoad(lazy(() => import('src/pages/products/Products')))
+      },
     ]
   }
 ])

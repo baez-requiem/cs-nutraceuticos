@@ -61,7 +61,7 @@ const Menu = () => {
         ))}
       </MenuContent>
 
-      <ExitItem>
+      <ExitItem onClick={navigateTo('/login')}>
         <RxEnter size={20} color="#fff" transform="scale(-1)" />
         <StyledSpan>Sair</StyledSpan>
       </ExitItem>

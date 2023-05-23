@@ -1,6 +1,7 @@
-import { Divider, Paper, Text } from "src/components/ui"
-import { DailyInvoicing, MonthsInvoicingChart, DailyStatistics, MonthStatistics, LastSales } from "./components"
+import { Divider, Text } from "src/components/ui"
+import { MonthsInvoicingChart, DailyStatistics, MonthStatistics, LastSales, DailySalesBySeller, MonthSalesBySeller, DailySalesByMedia, MonthSalesByMedia, DailySalesByTeam } from "./components"
 import { CardsContainer } from "./styles"
+import MonthSalesByTeam from "./components/MonthSalesByTeam"
 
 const Dashboard = () => {
 
@@ -13,6 +14,12 @@ const Dashboard = () => {
         <MonthStatistics />
         <LastSales />
         <MonthsInvoicingChart />
+        <DailySalesBySeller />
+        <MonthSalesBySeller />
+        <DailySalesByMedia />
+        <MonthSalesByMedia />
+        <DailySalesByTeam />
+        <MonthSalesByTeam />
       </CardsContainer>
     </>
   )

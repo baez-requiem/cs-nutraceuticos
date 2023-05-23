@@ -12,7 +12,7 @@ export const menuItems = [
   },
   {
     label: 'Produtos',
-    to: '/',
+    to: '/products',
     Icon: AiOutlineShoppingCart
   },
   {
