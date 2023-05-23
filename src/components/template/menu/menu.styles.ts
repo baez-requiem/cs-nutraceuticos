@@ -211,10 +211,6 @@ export const MenuItem = styled.li<{ active?: boolean }>`
 export const ExitItem = styled(MenuItem)`
   margin-top: auto;
   border-top: 1px solid rgb(63 63 70 / 0.8);
-
-  /* display: flex;
-  align-items: center;
-  gap: 12px; */
 `
 
 // export const SubMenu = styled(MenuContent).attrs({

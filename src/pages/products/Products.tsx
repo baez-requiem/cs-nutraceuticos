@@ -1,17 +1,17 @@
-import { Divider, Flex, Paper, SideFilters, Text } from "src/components/ui"
+import { Button, Divider, Flex, Paper, Private, SideFilters, Text } from "src/components/ui"
 
 const Products = () => {
 
   return (
-    <>
+    <Private>
       <Text size="xl2" weight="600" color="gray_900">Produtos</Text>
       <Divider my={10} />
 
       <Paper>
         <Flex items="end" justify="space-between">
-          <Text>teste</Text>
+          <Button size="sm" color="green_600">Cadastrar</Button>
 
-          <SideFilters show>
+          <SideFilters>
 
           </SideFilters>
         </Flex>
@@ -22,7 +22,7 @@ const Products = () => {
       <Paper>
 
       </Paper>
-    </>
+    </Private>
   )
 }
 

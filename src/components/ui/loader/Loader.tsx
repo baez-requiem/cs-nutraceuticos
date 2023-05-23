@@ -23,12 +23,15 @@ const pulsOutAnim = keyframes`
 `
 
 const Loader = styled.span`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  position: relative;
+  
   width: 100%;
   max-width: 6rem;
+  
   margin-top: 3rem;
   margin-bottom: 3rem;
   
