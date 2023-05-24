@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom"
 
-const Private = ({ children }) => {
+const PrivateComponent = ({ children }) => {
   const validation = true
   
   if (!validation) return Navigate({ to: '/login' })
@@ -8,4 +8,4 @@ const Private = ({ children }) => {
   return children
 }
 
-export default Private
+export default PrivateComponent
