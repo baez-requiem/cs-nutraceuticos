@@ -1,11 +1,21 @@
 import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { Button, Divider, Flex, IconButton, Paper, Private, SideFilters, Table, Text } from "src/components/ui"
+import { Button, Confirm, Divider, Flex, IconButton, Paper, Private, SideFilters, Table, Text } from "src/components/ui"
 import Badge from "src/components/ui/badge/Badge"
 import ModalSeller from "./ModalSeller"
 import { consultCep } from "src/services/viacep"
+import { useSellers } from "./hooks/useSellers"
 
 const Sellers = () => {
+
+  const {
+    closeConfirm,
+    closeModal,
+    openConfirm,
+    openModal,
+    useConfirm,
+    useModal
+  } = useSellers()
 
   return (
     <Private>
@@ -14,9 +24,7 @@ const Sellers = () => {
       
       <Paper>
         <Flex items="end" justify="space-between">
-          <Button size="sm" color="green_600" onClick={async () => {
-            console.log(await consultCep('88085250'))
-          }}>Cadastrar</Button>
+          <Button size="sm" color="green_600" onClick={openModal}>Cadastrar</Button>
 
           <SideFilters>
 
@@ -47,10 +55,10 @@ const Sellers = () => {
               align: 'center',
               render: (value, data) => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => {}}>
+                  <IconButton color="blue_600" onClick={() => openModal({ id: 'a' })}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => { }}>
+                  <IconButton color="red_600" onClick={() => openConfirm(value, 'fulano de tal')}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>
@@ -66,7 +74,8 @@ const Sellers = () => {
         />
       </Paper>
 
-      <ModalSeller show={false} onClose={() => {} } />
+      <ModalSeller {...useModal} onClose={closeModal} />
+      <Confirm {...useConfirm} onClose={closeConfirm} onConfirm={closeConfirm} />
     </Private>
   )
 }

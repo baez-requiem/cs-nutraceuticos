@@ -40,6 +40,7 @@ const Input: FC<InputProps> = ({
         block={block}
         onFocus={() => setUpLabel(true)}
         onBlur={verifyUpLabel}
+        onChangeCapture={verifyUpLabel}
         {...props}
       />
     </Container>
