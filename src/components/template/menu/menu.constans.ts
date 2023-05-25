@@ -17,7 +17,7 @@ export const menuItems = [
   },
   {
     label: 'Vendedores',
-    to: '/',
+    to: '/sellers',
     Icon: HiOutlineUserGroup
   },
   {

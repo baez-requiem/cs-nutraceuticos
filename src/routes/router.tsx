@@ -19,6 +19,10 @@ export const router = createBrowserRouter([
         path: "products",
         element: lazyLoad(lazy(() => import('src/pages/products/Products')))
       },
+      {
+        path: "sellers",
+        element: lazyLoad(lazy(() => import('src/pages/sellers/Sellers')))
+      },
     ]
   }
 ])

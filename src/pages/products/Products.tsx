@@ -7,7 +7,8 @@ import {
   Private,
   SideFilters,
   Text,
-  Table
+  Table,
+  Confirm
 } from "src/components/ui"
 
 import { MdOutlineModeEditOutline } from 'react-icons/md'
@@ -17,7 +18,14 @@ import { useProducts } from "./hooks/useProducts"
 
 const Products = () => {
 
-  const { useModal, openModal, closeModal } = useProducts()
+  const {
+    useModal,
+    openModal,
+    closeModal,
+    closeConfirm,
+    openConfirm,
+    useConfirm
+  } = useProducts()
 
   return (
     <Private>
@@ -47,12 +55,12 @@ const Products = () => {
               label: 'Ações',
               value: 'id',
               align: 'center',
-              render: () => (
+              render: (value, data) => (
                 <Flex justify="center" gap={10}>
                   <IconButton color="blue_600" onClick={() => openModal({ id: 1 })}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600">
+                  <IconButton color="red_600" onClick={() => openConfirm(value, data?.name || '')}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>
@@ -70,6 +78,12 @@ const Products = () => {
       </Paper>
 
       <ModalProduct {...useModal} onClose={closeModal} />
+
+      <Confirm
+        {...useConfirm}
+        onClose={closeConfirm}
+        onConfirm={closeConfirm}
+      />
     </Private>
   )
 }

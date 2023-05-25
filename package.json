@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/node": "^18.13.0",
+    "axios": "^1.4.0",
     "formik": "^2.2.9",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
