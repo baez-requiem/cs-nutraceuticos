@@ -15,7 +15,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { BsTrash } from 'react-icons/bs'
 import ModalSalesTeam from "./ModalSalesTeam"
 
-import { useMedias } from "./hooks/useMedias"
+import { useSalesTeam } from "./hooks/useSalesTeam"
 
 const SalesTeam = () => {
 
@@ -26,7 +26,7 @@ const SalesTeam = () => {
     closeConfirm,
     openConfirm,
     useConfirm
-  } = useMedias()
+  } = useSalesTeam()
 
   return (
     <Private>

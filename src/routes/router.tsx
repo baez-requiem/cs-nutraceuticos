@@ -8,34 +8,34 @@ import lazyLoad from "./lazyLoad"
 export const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   {
-    path: '/',
+    path: '/admin/',
     element: <Layout />,
     children: [
       {
         path: "dashboard",
-        element: lazyLoad(lazy(() => import('src/pages/dashboard/Dashboard')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/dashboard/Dashboard')))
       },
       {
         path: "products",
-        element: lazyLoad(lazy(() => import('src/pages/products/Products')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/products/Products')))
       },
       {
         path: "medias",
-        element: lazyLoad(lazy(() => import('src/pages/medias/Medias')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/medias/Medias')))
       },
       {
         path: "sellers",
-        element: lazyLoad(lazy(() => import('src/pages/sellers/Sellers')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/sellers/Sellers')))
       },
       {
         path: "stock",
-        element: lazyLoad(lazy(() => import('src/pages/stock/Stock')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/stock/Stock')))
       },
       {
         path: "sales-team",
-        element: lazyLoad(lazy(() => import('src/pages/salesTeam/SalesTeam')))
+        element: lazyLoad(lazy(() => import('src/modules/admin/salesTeam/SalesTeam')))
       },
     ]
   },
-  { path: '/*', element: <Login /> }
+  { path: '*', element: <Login /> }
 ])

@@ -12,7 +12,7 @@ interface useConfirmState {
   description?: string
 }
 
-const useMedias = () => {
+const useSalesTeam = () => {
   const [useModal, setModal] = useState<useModalState>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
@@ -28,7 +28,7 @@ const useMedias = () => {
     id,
     show: true,
     title: 'Atenção',
-    description: `Você tem certeza que deseja excluir a mídia ${name}(#${id}).`,
+    description: `Você tem certeza que deseja excluir a equipe ${name}(#${id}).`,
   })
 
   const closeConfirm = (isConfirmed?: boolean) => {
@@ -55,4 +55,4 @@ const useMedias = () => {
   }
 }
 
-export { useMedias }
+export { useSalesTeam }

@@ -5,6 +5,8 @@ import { ColorsType } from "src/theme/theme.default"
 const IconButton = styled.button<{ color?: ColorsType, size?: number }>`
   height: ${({ size = 30 }) => size}px;
   width: ${({ size = 30 }) => size}px;
+  min-height: ${({ size = 30 }) => size}px;
+  min-width: ${({ size = 30 }) => size}px;
 
   display: flex;
   align-items: center;

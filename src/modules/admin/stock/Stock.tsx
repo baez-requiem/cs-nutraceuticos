@@ -7,12 +7,12 @@ const Stock = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Mídias</Text>
+      <Text size="xl2" weight="600" color="gray_900">Estoque</Text>
       <Divider my={10} />
 
       <Paper>
         <Flex items="end" justify="space-between">
-          <Button size="sm" color="green_600" onClick={() => {}}>Ajustar</Button>
+          <Button size="sm" color="green_600" onClick={() => {}}>Ajustar estoque</Button>
 
           <SideFilters>
 

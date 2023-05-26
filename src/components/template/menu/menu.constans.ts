@@ -1,5 +1,5 @@
 import { BsBarChart, BsBox } from 'react-icons/bs'
-import { HiOutlineUserGroup } from 'react-icons/hi'
+import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2'
 import { TbReportAnalytics } from 'react-icons/tb'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MdStayPrimaryPortrait } from 'react-icons/md'
@@ -7,27 +7,32 @@ import { MdStayPrimaryPortrait } from 'react-icons/md'
 export const menuItems = [
   {
     label: 'Dashboard',
-    to: '/dashboard',
+    to: '/admin/dashboard',
     Icon: BsBarChart
   },
   {
     label: 'Produtos',
-    to: '/products',
+    to: '/admin/products',
     Icon: AiOutlineShoppingCart
   },
   {
-    label: 'Vendedores',
-    to: '/sellers',
-    Icon: HiOutlineUserGroup
-  },
-  {
     label: 'Mídias',
-    to: '/medias',
+    to: '/admin/medias',
     Icon: MdStayPrimaryPortrait
   },
   {
+    label: 'Vendedores',
+    to: '/admin/sellers',
+    Icon: HiOutlineUsers
+  },
+  {
+    label: 'Equipe de vendas',
+    to: '/admin/sales-team',
+    Icon: HiOutlineUserGroup
+  },
+  {
     label: 'Estoque',
-    to: '/stock',
+    to: '/admin/stock',
     Icon: BsBox
   },
   // {
