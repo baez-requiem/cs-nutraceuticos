@@ -20,9 +20,22 @@ export const router = createBrowserRouter([
         element: lazyLoad(lazy(() => import('src/pages/products/Products')))
       },
       {
+        path: "medias",
+        element: lazyLoad(lazy(() => import('src/pages/medias/Medias')))
+      },
+      {
         path: "sellers",
         element: lazyLoad(lazy(() => import('src/pages/sellers/Sellers')))
       },
+      {
+        path: "stock",
+        element: lazyLoad(lazy(() => import('src/pages/stock/Stock')))
+      },
+      {
+        path: "sales-team",
+        element: lazyLoad(lazy(() => import('src/pages/salesTeam/SalesTeam')))
+      },
     ]
-  }
+  },
+  { path: '/*', element: <Login /> }
 ])

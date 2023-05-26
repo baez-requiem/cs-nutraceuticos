@@ -31,18 +31,18 @@ const ModalSeller: FC<ModalSellerProps> = ({
 
       <Divider my={10} />
 
+      <Text weight="500">Dados principais</Text>
+      <Divider />
       <Grid gap={10} template="1fr 1fr">
-        <Input label="Nome:" />
+        <Input label="Nome*:" />
         <Input label="Telefone:" />
         <Input label="RG:" />
         <Input label="CPF:" />
-        <Input label="Login:" />
-        <Input type="password" label="Senha:" />
+        <Input label="Login*:" />
+        <Input type="password" label="Senha:*" />
         <Input type="date" label="Data inicial:" value="2021-01-10" readOnly />
-        <Select label="Status" options={[{ label: 'Ativo', value: 1 }, { label: 'Desativado', value: 0 }]} />
+        <Select label="Status*" options={[{ label: 'Ativo', value: 1 }, { label: 'Desativado', value: 0 }]} />
         <Select label="Equipe" options={[{ label: 'Alfa', value: 1 }]} />
-        
-        {/* <Textarea label="Anotações:" rows={6} /> */}
       </Grid>
 
       <Divider my={10} />
@@ -59,7 +59,13 @@ const ModalSeller: FC<ModalSellerProps> = ({
       </Grid>
 
       <Divider my={10} />
+
+      <Text weight="500">Anotações</Text>
+      <Divider />
+      <Textarea label="Anotações:" rows={6} />
       
+      <Divider my={10} />
+
       <Flex items="end" justify="end" gap={10}>
         <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>
         <Button size="sm" color="green_600">Salvar</Button>

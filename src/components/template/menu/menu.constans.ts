@@ -21,18 +21,18 @@ export const menuItems = [
     Icon: HiOutlineUserGroup
   },
   {
-    label: 'Estoque',
-    to: '/',
-    Icon: BsBox
-  },
-  {
     label: 'Mídias',
-    to: '/',
+    to: '/medias',
     Icon: MdStayPrimaryPortrait
   },
   {
-    label: 'Relatórios',
-    to: '/',
-    Icon: TbReportAnalytics
+    label: 'Estoque',
+    to: '/stock',
+    Icon: BsBox
   },
+  // {
+  //   label: 'Relatórios',
+  //   to: '/',
+  //   Icon: TbReportAnalytics
+  // },
 ]
