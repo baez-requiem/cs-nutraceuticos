@@ -1,13 +1,23 @@
 import { lazy } from "react"
 
 import { createBrowserRouter } from "react-router-dom"
-import { AdminLayout } from "src/components/template"
+import { AdminLayout, SellerLayout } from "src/components/template"
 import Login from "src/pages/login/Login"
 import lazyLoad from "./lazyLoad"
 
 export const router = createBrowserRouter([
   { path: '*', element: <Login /> },
   { path: '/login', element: <Login /> },
+  {
+    path: '/seller',
+    element: <SellerLayout />,
+    children: [
+      {
+        path: "/seller/dashboard",
+        element: lazyLoad(lazy(() => import('src/modules/seller/dashboard/Dashboard')))
+      }
+    ]
+  },
   {
     path: '/admin',
     element: <AdminLayout />,

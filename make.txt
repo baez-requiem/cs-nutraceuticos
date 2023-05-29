@@ -10,9 +10,10 @@ data
 
 -------------
 
-um vendedor pode estar em varias equipes?
 o que teria que ter no modulo do vendedor?
 
 confirmar informacoes de cadastro
 
 cadastrar clientes?
+
+entender regra de negocios em relação ao estoque, ao passar produtos para um vendedor sairia do estoque, ou só quando vendessem o produto?
