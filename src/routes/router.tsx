@@ -6,36 +6,37 @@ import Login from "src/pages/login/Login"
 import lazyLoad from "./lazyLoad"
 
 export const router = createBrowserRouter([
+  { path: '*', element: <Login /> },
   { path: '/login', element: <Login /> },
   {
-    path: '/admin/',
+    path: '/admin',
     element: <Layout />,
     children: [
       {
-        path: "dashboard",
+        path: "/admin/dashboard",
         element: lazyLoad(lazy(() => import('src/modules/admin/dashboard/Dashboard')))
       },
       {
-        path: "products",
+        path: "/admin/products",
         element: lazyLoad(lazy(() => import('src/modules/admin/products/Products')))
       },
       {
-        path: "medias",
+        path: "/admin/medias",
         element: lazyLoad(lazy(() => import('src/modules/admin/medias/Medias')))
       },
       {
-        path: "sellers",
+        path: "/admin/sellers",
         element: lazyLoad(lazy(() => import('src/modules/admin/sellers/Sellers')))
       },
       {
-        path: "stock",
+        path: "/admin/stock",
         element: lazyLoad(lazy(() => import('src/modules/admin/stock/Stock')))
       },
       {
-        path: "sales-team",
+        path: "/admin/sales-team",
         element: lazyLoad(lazy(() => import('src/modules/admin/salesTeam/SalesTeam')))
       },
     ]
   },
-  { path: '*', element: <Login /> }
+  
 ])
