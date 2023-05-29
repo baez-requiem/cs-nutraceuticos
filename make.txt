@@ -1,1 +1,8 @@
 produto poder colocar fotos
+
+-------------
+
+um vendedor pode estar em varias equipes?
+o que teria que ter no modulo do vendedor?
+
+confirmar informacoes de cadastro

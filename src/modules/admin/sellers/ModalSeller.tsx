@@ -38,11 +38,10 @@ const ModalSeller: FC<ModalSellerProps> = ({
         <Input label="Telefone:" />
         <Input label="RG:" />
         <Input label="CPF:" />
-        <Input label="Login*:" />
+        <Input label="Email*:" />
         <Input type="password" label="Senha:*" />
         <Input type="date" label="Data inicial:" value="2021-01-10" readOnly />
         <Select label="Status*" options={[{ label: 'Ativo', value: 1 }, { label: 'Desativado', value: 0 }]} />
-        <Select label="Equipe" options={[{ label: 'Alfa', value: 1 }]} />
       </Grid>
 
       <Divider my={10} />

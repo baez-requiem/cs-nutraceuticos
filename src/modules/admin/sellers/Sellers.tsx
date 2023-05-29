@@ -40,7 +40,7 @@ const Sellers = () => {
             { label: 'ID', value: 'id' },
             { label: 'Nome', value: 'name' },
             { label: 'Telefone', value: 'phone' },
-            { label: 'login', value: 'login' },
+            { label: 'email', value: 'email' },
             { label: 'Data inicial', value: 'inital_date' },
             {
               label: 'status',
@@ -66,10 +66,10 @@ const Sellers = () => {
             },
           ]}
           data={[
-            { id: 1, name: 'Fulano de tal', phone: '(99) 99999-9999', login: 'fulano', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
-            { id: 2, name: 'Fulano de tal', phone: '(99) 99999-9999', login: 'fulano', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
-            { id: 3, name: 'Fulano de tal', phone: '(99) 99999-9999', login: 'fulano', inital_date: '09/09/2019', status: 0, team: 'Alfas' },
-            { id: 4, name: 'Fulano de tal', phone: '(99) 99999-9999', login: 'fulano', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
+            { id: 1, name: 'Fulano de tal', phone: '(99) 99999-9999', email: 'fulano@email.com', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
+            { id: 2, name: 'Fulano de tal', phone: '(99) 99999-9999', email: 'fulano@email.com', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
+            { id: 3, name: 'Fulano de tal', phone: '(99) 99999-9999', email: 'fulano@email.com', inital_date: '09/09/2019', status: 0, team: 'Alfas' },
+            { id: 4, name: 'Fulano de tal', phone: '(99) 99999-9999', email: 'fulano@email.com', inital_date: '09/09/2019', status: 1, team: 'Alfas' },
           ]}
         />
       </Paper>
