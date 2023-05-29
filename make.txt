@@ -1,8 +1,18 @@
 produto poder colocar fotos
 
+criar tabela de vendas
+
+id
+id produto
+quantidade
+id vendedor
+data
+
 -------------
 
 um vendedor pode estar em varias equipes?
 o que teria que ter no modulo do vendedor?
 
 confirmar informacoes de cadastro
+
+cadastrar clientes?

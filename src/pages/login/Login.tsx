@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { Container, Content, FormContent, Logo, StyledButton } from "./styles"
 
 import { BiUser, BiLock } from 'react-icons/bi'
 
 const Login = () => {
+
+  const navigate = useNavigate()
 
   return (
     <Container>
@@ -27,7 +30,7 @@ const Login = () => {
             placeholder="Senha"
           />
 
-          <StyledButton>Entrar</StyledButton>
+          <StyledButton onClick={() => navigate('/admin/dashboard')}>Entrar</StyledButton>
         </FormContent>
       </Content>
     </Container>

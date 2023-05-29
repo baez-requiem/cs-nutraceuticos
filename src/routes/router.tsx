@@ -1,7 +1,7 @@
 import { lazy } from "react"
 
 import { createBrowserRouter } from "react-router-dom"
-import { Layout } from "src/components/template"
+import { AdminLayout } from "src/components/template"
 import Login from "src/pages/login/Login"
 import lazyLoad from "./lazyLoad"
 
@@ -10,7 +10,7 @@ export const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   {
     path: '/admin',
-    element: <Layout />,
+    element: <AdminLayout />,
     children: [
       {
         path: "/admin/dashboard",

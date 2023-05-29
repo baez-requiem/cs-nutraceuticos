@@ -3,9 +3,11 @@ import { Outlet } from 'react-router-dom'
 import { Menu } from '..'
 import { Container, Content } from './styles'
 
-const Layout: FC = () => (
+import { menuItems } from './constans'
+
+const AdminLayout: FC = () => (
   <Container>
-    <Menu />
+    <Menu menuItems={menuItems} />
     <Content>
       <Outlet />
     </Content>
@@ -13,4 +15,4 @@ const Layout: FC = () => (
 )
 
 
-export default Layout
+export default AdminLayout

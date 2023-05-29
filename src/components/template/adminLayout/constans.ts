@@ -8,32 +8,32 @@ export const menuItems = [
   {
     label: 'Dashboard',
     to: '/admin/dashboard',
-    Icon: BsBarChart
+    Icon: BsBarChart({ size: 22 })
   },
   {
     label: 'Produtos',
     to: '/admin/products',
-    Icon: AiOutlineShoppingCart
+    Icon: AiOutlineShoppingCart({ size: 22 })
   },
   {
     label: 'Mídias',
     to: '/admin/medias',
-    Icon: MdStayPrimaryPortrait
+    Icon: MdStayPrimaryPortrait({ size: 22 })
   },
   {
     label: 'Vendedores',
     to: '/admin/sellers',
-    Icon: HiOutlineUsers
+    Icon: HiOutlineUsers({ size: 22 })
   },
   {
     label: 'Equipe de vendas',
     to: '/admin/sales-team',
-    Icon: HiOutlineUserGroup
+    Icon: HiOutlineUserGroup({ size: 22 })
   },
   {
     label: 'Estoque',
     to: '/admin/stock',
-    Icon: BsBox
+    Icon: BsBox({ size: 22 })
   },
   // {
   //   label: 'Relatórios',

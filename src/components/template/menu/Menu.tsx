@@ -1,4 +1,4 @@
-import React from "react"
+import { FC, ReactNode } from 'react'
 
 import {
   ExitItem,
@@ -18,9 +18,21 @@ import { FiMenu } from 'react-icons/fi'
 import { RxEnter } from 'react-icons/rx'
 
 import { useMenu } from "./hook/useMenu"
-import { menuItems } from "./menu.constans"
 
-const Menu = () => {
+export interface MenuItem {
+  label: string
+  to: string
+  Icon: ReactNode
+  children?: { label: string, to: string }[]
+}
+
+export interface MenuProps {
+  menuItems?: MenuItem[]
+}
+
+const Menu: FC<MenuProps> = ({
+  menuItems = []
+}) => {
   const {
     hasMenuHide,
     inRoute,
@@ -55,7 +67,7 @@ const Menu = () => {
             active={inRoute(item.to)}
             key={`${item.label}-${i}`}
           >
-              <item.Icon size={22} />
+              {item.Icon}
               <span>{item.label}</span>
           </MenuItem>
         ))}
