@@ -1,1 +1,1 @@
-export { default as ModalSale } from './ModalSale'
+export { default as ModalNewSale } from './ModalNewSale'

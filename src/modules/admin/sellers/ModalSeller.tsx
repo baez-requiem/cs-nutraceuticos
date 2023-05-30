@@ -1,7 +1,6 @@
 import { FC } from "react"
 import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Select } from "src/components/ui"
 import { useModalSeller } from "./hooks/useModalSeller"
-import { useSellers } from "./hooks/useSellers"
 
 export interface ModalSellerProps {
   show: boolean

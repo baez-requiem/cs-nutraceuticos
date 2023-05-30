@@ -2,6 +2,7 @@ import { Button, Divider, Flex, IconButton, Paper, Private, SideFilters, Table, 
 
 import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
+import ModalStock from "./ModalStock"
 
 const Stock = () => {
 
@@ -36,6 +37,8 @@ const Stock = () => {
           ]}
         />
       </Paper>
+
+      {/* <ModalStock show onClose={() => {}} /> */}
     </Private>
   )
 }
