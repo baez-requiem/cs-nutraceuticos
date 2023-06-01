@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-export const Container = styled.div<{ block: boolean }>`
+export const Container = styled.div<{ block: boolean, size?: number }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,10 +9,14 @@ export const Container = styled.div<{ block: boolean }>`
 
   height: 50px;
 
-  width: ${({ block }) => block ? '100%' : 'auto'};
+  width: ${({ block, size }) => {
+    if (block) return '100%'
+    if (size) return size + 'px'
+    return 'auto'
+  }};
 `
 
-export const StyledInput = styled.input<{ block: boolean }>`
+export const StyledInput = styled.input<{ block: boolean, size?: number }>`
   margin-top: auto;
   border-radius: 5px;
   padding: 0 10px;
@@ -34,7 +38,11 @@ export const StyledInput = styled.input<{ block: boolean }>`
     border: 1.5px solid ${({ theme }) => theme.colors.sky_600};
   }
 
-  width: ${({ block }) => block ? '100%' : 'auto'};
+  width: ${({ block, size }) => {
+    if (block) return '100%'
+    if (size) return size + 'px'
+    return 'auto'
+  }};
 
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {

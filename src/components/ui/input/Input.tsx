@@ -6,6 +6,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   labelFixed?: boolean
   block?: boolean
+  size?: number
 }
 
 const Input: FC<InputProps> = ({
@@ -13,6 +14,7 @@ const Input: FC<InputProps> = ({
   color = '',
   block = false,
   labelFixed = false,
+  size,
   ...props
 }) => {
   const [useUpLabel, setUpLabel] = useState(false)
@@ -27,7 +29,7 @@ const Input: FC<InputProps> = ({
   }, [])
 
   return (
-    <Container block={block}>
+    <Container block={block} size={size}>
       <StyledLabel
         hasUp={labelFixed || useUpLabel}
         onClick={() => inputRef.current?.focus()}
@@ -35,6 +37,7 @@ const Input: FC<InputProps> = ({
         {label}
       </StyledLabel>
       <StyledInput
+        size={size}
         ref={inputRef}
         color={color}
         block={block}

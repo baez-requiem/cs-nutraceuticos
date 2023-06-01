@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button } from "src/components/ui"
+import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Switch } from "src/components/ui"
 
 export interface ModalProductProps {
   show: boolean
@@ -26,6 +26,12 @@ const ModalProduct: FC<ModalProductProps> = ({
         <Input label="Descrição:" />
         <Textarea label="Anotações:" rows={6} />
       </Grid>
+
+      <Divider my={10} />
+
+      <Text weight="500">Status</Text>
+      <Divider />
+      <Switch label="Ativo" />
 
       <Divider my={10} />
       
