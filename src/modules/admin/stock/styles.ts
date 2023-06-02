@@ -1,32 +1,33 @@
 import styled, { css } from "styled-components";
 
-export const TabActions = styled.div`
-  display: flex;
-`
+export const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
 
-export const TabButton = styled.button<{ active?: boolean }>`
-  font-size: 14px;
-  padding: 0px 30px;
-  height: 40px;
-
-  border: none;
-  border-right: 1px solid;
-  border-top: 1px solid;
-  
-  border-radius: 10px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-
-  border-bottom: 1px solid;
-
-  cursor: pointer;
-
-  :first-child {
-    border-left: 1px solid;
+  tr:nth-child(even) {
+    background-color: #00000009;
   }
 
-  ${({ active }) => active && css`
-    background-color: #fff;
-    border-bottom: 1px solid #fff;
-  `}
+  th, td {
+    padding: 5px;
+  }
+
+  thead th {
+    text-align: left;
+    border-bottom: 1px solid #00000009;
+  }
+
+  thead th:first-child {
+    width: 40%;
+  }
+
+  tbody td > div:not(:first-child) {
+    display: flex;
+    align-items: end;
+    height: 34px;
+  }
+
+  tbody td:last-child > button{
+    margin-top: auto;
+  }
 `

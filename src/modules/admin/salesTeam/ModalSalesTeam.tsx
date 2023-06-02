@@ -30,7 +30,7 @@ const ModalSalesTeam: FC<ModalSalesTeamProps> = ({
       </Grid>
 
       <Divider my={10} />
-
+{/* 
       <Text weight="500">Vendedores</Text>
       <Divider />
       <Flex gap={10} items="end">
@@ -49,9 +49,8 @@ const ModalSalesTeam: FC<ModalSalesTeamProps> = ({
         <SellerCard name="Fulano" />
         <SellerCard name="Fulano" />
       </Grid>
-
       
-      <Divider line opacityLine={.15} my={10} />
+      <Divider line opacityLine={.15} my={10} /> */}
       
       <Flex items="end" justify="end" gap={10}>
         <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>

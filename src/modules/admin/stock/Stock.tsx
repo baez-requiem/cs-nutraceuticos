@@ -1,11 +1,11 @@
 import { Badge, Button, Divider, Flex, IconButton, Paper, Private, SideFilters, Table, Text } from "src/components/ui"
 
-import { BsTrash } from "react-icons/bs"
-import { MdOutlineModeEditOutline } from "react-icons/md"
-import ModalStock from "./ModalStock"
 import { ModalBatch } from "./components"
+import { useStock } from "./hooks/useStock"
 
 const Stock = () => {
+
+  const { closeModal, openModal, useModal } = useStock()
 
   return (
     <Private>
@@ -15,7 +15,7 @@ const Stock = () => {
       <Paper>
         <Flex items="end" justify="space-between">
           <Flex items="end" gap={10}>
-            <Button size="sm" color="green_600" onClick={() => {}}>Novo lote</Button>
+            <Button size="sm" color="green_600" onClick={() => openModal('newBatch')}>Novo lote</Button>
             <Button size="sm" color="sky_600" onClick={() => {}}>Ajustar lotes</Button>
             <Button size="sm" color="red_600" onClick={() => {}}>Registrar extravio</Button>
           </Flex>
@@ -46,8 +46,10 @@ const Stock = () => {
         />
       </Paper>
 
-      {/* <ModalStock show onClose={() => {}} /> */}
-      <ModalBatch />
+      <ModalBatch
+        show={useModal.opened == 'newBatch'}
+        onClose={closeModal}
+      />
     </Private>
   )
 }

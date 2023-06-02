@@ -37,7 +37,7 @@ const ModalSeller: FC<ModalSellerProps> = ({
         <Input label="Telefone:" />
         <Input label="RG:" />
         <Input label="CPF:" />
-        <Input label="Email*:" />
+        <Input label="Login*:" />
         <Input type="password" label="Senha:*" />
         <Input type="date" label="Data inicial:" value="2021-01-10" readOnly />
         <Select label="Status*" options={[{ label: 'Ativo', value: 1 }, { label: 'Desativado', value: 0 }]} />
