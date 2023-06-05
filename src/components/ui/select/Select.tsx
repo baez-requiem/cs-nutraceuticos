@@ -44,9 +44,12 @@ const Select: FC<SelectProps> = ({
         onBlur={verifyUpLabel}
         {...props}
       >
-        {options.map(opt => (
-          <option key={`${opt.value}-${opt.label}`} value={opt.value}>{opt.label}</option>
-        ))}
+        {options.length || props?.value
+          ? options.map(opt => (
+            <option key={`${opt.value}-${opt.label}`} value={opt.value}>{opt.label}</option>
+          ))
+          : <option value=""></option>
+        }
       </StyledSelect>
     </Container>
   )

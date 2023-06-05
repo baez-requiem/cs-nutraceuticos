@@ -3,10 +3,19 @@ import Input from "./components/Input"
 import { Container, Content, FormContent, Logo, StyledButton } from "./styles"
 
 import { BiUser, BiLock } from 'react-icons/bi'
+import { useLogin } from "./hooks/useLogin"
 
 const Login = () => {
 
   const navigate = useNavigate()
+
+  const {
+    formik: {
+      handleChange,
+      values,
+      handleSubmit
+    }
+  } = useLogin()
 
   return (
     <Container>
@@ -18,19 +27,25 @@ const Login = () => {
           <div />
         </Logo>
 
-        <FormContent>
+        <FormContent onSubmit={handleSubmit}>
           <Input
             icon={<BiUser size={20} color="white" />}
             placeholder="Usuário"
+            name="username"
+            value={values.username}
+            onChange={handleChange}
           />
 
           <Input
             icon={<BiLock size={20} color="white" />}
             type="password"
+            name="password"
             placeholder="Senha"
+            value={values.password}
+            onChange={handleChange}
           />
 
-          <StyledButton onClick={() => navigate('/admin/dashboard')}>Entrar</StyledButton>
+          <StyledButton type="submit">Entrar</StyledButton>
         </FormContent>
       </Content>
     </Container>

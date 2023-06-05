@@ -16,7 +16,17 @@ const ModalBatch: FC<ModalBatchProps> = ({
   onClose
 }) => {
 
-  const { products } = useModalBatch()
+  const {
+    addProduct,
+    selectValue,
+    handleSelect,
+    removeProduct,
+    newBatchProducts,
+    selectOpts,
+    onFormSubmit,
+    shipping,
+    onShippingChange
+  } = useModalBatch()
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -28,51 +38,70 @@ const ModalBatch: FC<ModalBatchProps> = ({
         <Select
           block
           label="Produto"
-          options={products.map(p => ({ label: p.name, value: p.id }))}
+          options={selectOpts}
+          onChange={handleSelect}
+          value={selectValue}
+          labelFixed={!!selectValue}
         />
         
-        <IconButton color="sky_600">
+        <IconButton color="sky_600" onClick={addProduct}>
           <AiOutlinePlus size={20} color="white" />
         </IconButton>
       </Flex>
 
       <Divider my={10} />
 
-      <StyledTable>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Custo por Und.</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <LoteItem />
-          <LoteItem />
-          <LoteItem />
-          <LoteItem />
-        </tbody>
-      </StyledTable>
+      <form onSubmit={onFormSubmit}>
+        <StyledTable>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Custo por Und.</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {newBatchProducts.map(p => (
+              <LoteItem
+                id={p.id}
+                key={p.id}
+                name={p.name}
+                onRemove={() => removeProduct(p.id)}
+              />
+            ))}
+          </tbody>
+        </StyledTable>
+        
+        <Divider my={10} />
 
-      <Divider my={10} />
+        <Text weight="500">Dados adicionais</Text>
+        <Divider />
 
-      <Text weight="500">Dados adicionais</Text>
-      <Divider />
+        <Grid template="1fr 3fr" items="end" gap={10}>
+          <Input
+            block
+            name='frete'
+            label="Valor frete"
+            value={shipping}
+            onChange={onShippingChange}
+          />
 
-      <Grid template="1fr 1fr 1fr 1fr" items="end">
-        <Input label="Valor frete" block />
-        <div />
-        <div />
-        <div />
-      </Grid>
+          <Input
+            block
+            name='note'
+            label="Anotações"
+          />
+        </Grid>
+        
+        <Divider my={10} />
+        
+        <Flex items="end" justify="end" gap={10}>
+          <Button size="sm" color="gray_500" onClick={onClose} type='button'>Cancelar</Button>
+          <Button size="sm" color="green_600" type='submit'>Cadastrar</Button>
+        </Flex>
+      </form>
 
-      <Divider my={10} />
-      
-      <Flex items="end" justify="end" gap={10}>
-        <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>
-        <Button size="sm" color="green_600">Salvar</Button>
-      </Flex>
     </Modal>
   )
 }

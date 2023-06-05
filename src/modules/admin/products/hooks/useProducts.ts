@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useQuery } from 'react-query'
+import { productsApi } from "src/services/api"
 
 interface useModalState {
   data?: any
@@ -13,6 +15,15 @@ interface useConfirmState {
 }
 
 const useProducts = () => {
+  const { data, isFetching } = useQuery(['products'], async () => {
+    const response = await productsApi.getAllProducts()
+
+    return response
+
+  })
+
+  console.log(data)
+
   const [useModal, setModal] = useState<useModalState>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
