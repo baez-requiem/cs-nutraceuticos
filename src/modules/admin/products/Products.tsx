@@ -11,9 +11,11 @@ import {
   Badge
 } from "src/components/ui"
 
+import ModalProduct from "./ModalProduct"
+
 import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { BsTrash } from 'react-icons/bs'
-import ModalProduct from "./ModalProduct"
+
 import { useProducts } from "./hooks/useProducts"
 
 const Products = () => {
@@ -55,7 +57,7 @@ const Products = () => {
               label: 'Ações',
               value: 'id',
               align: 'center',
-              render: (value, data) => (
+              render: value => (
                 <Flex justify="center" gap={10}>
                   <IconButton color="blue_600" onClick={() => openModal(parseInt(value.toString()))}>
                     <MdOutlineModeEditOutline color="white" size={20} />

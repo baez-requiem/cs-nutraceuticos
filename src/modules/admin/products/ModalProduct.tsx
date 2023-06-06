@@ -16,7 +16,7 @@ const ModalProduct: FC<ModalProductProps> = ({
   onClose
 }) => {
 
-  const titleText = !data?.id ? 'Adicionar produto' : `Editar produto - ${data.name}`
+  const titleText = !data?.id ? 'Adicionar produto' : `Editar produto: ${data.name}`
   
   const { 
     formik: {

@@ -1,48 +1,73 @@
 import { useState } from "react"
+import { useMutation, useQuery } from 'react-query'
+import { toast } from "react-toastify"
+import { mediasApi } from "src/services/api"
+import { MediaType } from 'src/services/api/medias/medias.types'
 
 interface useModalState {
-  data?: any
+  data?: MediaType
   show: boolean
 }
 
 interface useConfirmState {
-  id?: string | number
+  id?: number
   show?: boolean
   title?: string
   description?: string
 }
 
 const useMedias = () => {
-  const [useModal, setModal] = useState<useModalState>({ show: false })
-  const [useConfirm, setConfirm] = useState<useConfirmState>({ })
+  const { data: medias, isFetching, refetch } = useQuery(['products'], async () => {
+    const response = await mediasApi.getAllMedias()
 
-  const openModal = (data?: any) => {
-    !!data
-      ? setModal({ show: true, data })
-      : setModal({ show: true })
-  }
+    return response
 
-  const closeModal = () => setModal({ show: false })
+  }, { initialData: [] })
 
-  const openConfirm = (id: string|number, name: string|number) => setConfirm({
-    id,
-    show: true,
-    title: 'Atenção',
-    description: `Você tem certeza que deseja excluir a mídia ${name}(#${id}).`,
-  })
+  const mediaMutation = useMutation(async (id: number) => {
+    toast.loading("Excluindo produto...")
 
-  const closeConfirm = (isConfirmed?: boolean) => {
+    const { status: hasDeleted } = await mediasApi.deleteMedia(id)
 
-    if (!isConfirmed) {
-      setConfirm({})
+    toast.dismiss()
+
+    if (!hasDeleted) {
+      toast.error(`Houve um erro ao excluir a mídia.`)
       return
     }
 
-    // make
+    toast.success(`Mídia excluída com sucesso!`)
+    refetch()
+  })
 
+  const [useModal, setModal] = useState<useModalState>({ show: false })
+  const [useConfirm, setConfirm] = useState<useConfirmState>({ })
+
+  const openModal = (id?: MediaType['id']) => {
+    !!id
+      ? setModal({ show: true, data: medias.find(p => p.id == id) })
+      : setModal({ show: true })
+  }
+
+  const closeModal = (hasRefetch?: boolean) => {
+    hasRefetch && refetch()
+    setModal({ show: false })
+  }
+
+  const openConfirm = (id: number) => {
+    const media = medias.find(p => p.id == id)
+    
+    setConfirm({
+      id,
+      show: true,
+      title: 'Atenção',
+      description: `Você tem certeza que deseja excluir a mídia: ${media.name}.`,
+    })
+  }
+
+  const closeConfirm = async (isConfirmed?: boolean) => {
+    isConfirmed && useConfirm.id && mediaMutation.mutateAsync(useConfirm.id)
     setConfirm({})
-
-    console.log('confirmado', isConfirmed)
   }
 
   return {
@@ -51,7 +76,8 @@ const useMedias = () => {
     openModal,
     openConfirm,
     closeConfirm,
-    useConfirm
+    useConfirm,
+    medias
   }
 }
 

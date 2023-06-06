@@ -5,20 +5,20 @@ import {
   IconButton,
   Paper,
   Private,
-  SideFilters,
   Text,
   Table,
   Confirm,
   Badge
 } from "src/components/ui"
 
+import ModalMedia from "./ModalMedia"
+
 import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { BsTrash } from 'react-icons/bs'
-import ModalMedia from "./ModalMedia"
 
 import { useMedias } from "./hooks/useMedias"
 
-const Products = () => {
+const Medias = () => {
 
   const {
     useModal,
@@ -26,7 +26,8 @@ const Products = () => {
     closeModal,
     closeConfirm,
     openConfirm,
-    useConfirm
+    useConfirm,
+    medias
   } = useMedias()
 
   return (
@@ -36,11 +37,7 @@ const Products = () => {
 
       <Paper>
         <Flex items="end" justify="space-between">
-          <Button size="sm" color="green_600" onClick={openModal}>Cadastrar</Button>
-
-          <SideFilters>
-
-          </SideFilters>
+          <Button size="sm" color="green_600" onClick={() => openModal()}>Cadastrar</Button>
         </Flex>
       </Paper>
 
@@ -52,7 +49,7 @@ const Products = () => {
             { label: 'ID', value: 'id' },
             { label: 'Nome', value: 'name' },
             { label: 'Descrição', value: 'description' },
-            { label: 'Anotações', value: 'note' },
+            { label: 'Anotações', value: 'notes' },
             { label: 'Status', value: 'active', render: value => (
               <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
             ) },
@@ -60,25 +57,19 @@ const Products = () => {
               label: 'Ações',
               value: 'id',
               align: 'center',
-              render: (value, data) => (
+              render: value => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => openModal({ id: 1 })}>
+                  <IconButton color="blue_600" onClick={() => openModal(parseInt(value.toString()))}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(value, data?.name || '')}>
+                  <IconButton color="red_600" onClick={() => openConfirm(parseInt(value.toString()))}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>
               ),
             },
           ]}
-          data={[
-            { id: 1, name: 'Teste', description: 'descrição...', note: 'Anotação...', active: 1 },
-            { id: 2, name: 'Teste 2', description: 'descrição...', note: 'Anotação...', active: 1 },
-            { id: 3, name: 'Teste 3', description: 'descrição...', note: 'Anotação...', active: 1 },
-            { id: 4, name: 'Teste 4', description: 'descrição...', note: 'Anotação...', active: 1 },
-            { id: 5, name: 'Teste 5', description: 'descrição...', note: 'Anotação...', active: 0 },
-          ]}
+          data={medias?.map(p => ({ ...p, active: +p.active }))}
         />
       </Paper>
 
@@ -93,4 +84,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default Medias

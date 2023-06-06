@@ -61,21 +61,13 @@ const useProducts = () => {
       id,
       show: true,
       title: 'Atenção',
-      description: `Você tem certeza que deseja excluir o produto ${product.name}(#${id}).`,
+      description: `Você tem certeza que deseja excluir o produto: ${product.name}.`,
     })
   }
 
   const closeConfirm = async (isConfirmed?: boolean) => {
     isConfirmed && useConfirm.id && mutation.mutateAsync(useConfirm.id)
     setConfirm({})
-
-    if (!isConfirmed) {
-      return
-    }
-
-    setConfirm({})
-
-    console.log('confirmado', isConfirmed)
   }
 
   return {
