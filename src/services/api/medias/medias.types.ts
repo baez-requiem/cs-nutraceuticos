@@ -1,4 +1,4 @@
-export type ProductType = {
+export type MediaType = {
   id: number
   name: string
   description: string | null
@@ -8,13 +8,15 @@ export type ProductType = {
   updated_at: string | null
 }
 
-export type CreateProductBody = {
+export type GetAllMediasResponse = MediaType[]
+
+export type CreateMediaBody = {
   name: string
   description: string | null
   notes: string | null
   active: boolean
 }
 
-export type UpdateProductBody = {
+export type UpdateMediaBody = {
   id: number
-} & CreateProductBody
+} & CreateMediaBody

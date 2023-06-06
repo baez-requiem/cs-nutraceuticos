@@ -1,20 +1,20 @@
 import { authenticatedRequest } from "../utils"
 
 import {
-  CreateProductBody,
-  ProductType,
-  UpdateProductBody
-} from "./products.types"
+  CreateMediaBody,
+  MediaType,
+  UpdateMediaBody
+} from "./medias.types"
 
-const getAllProducts = async (): Promise<ProductType[]> => {
+const getAllMedias = async (): Promise<MediaType[]> => {
 
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/medias',
       method: 'get'
     })
 
-    const data: ProductType[] = response.data
+    const data: MediaType[] = response.data
 
     return data
   } catch (error) {
@@ -23,15 +23,15 @@ const getAllProducts = async (): Promise<ProductType[]> => {
   }
 }
 
-const createProduct = async (body: CreateProductBody): Promise<ProductType|null> => {
+const createMedia = async (body: CreateMediaBody): Promise<MediaType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/medias',
       method: 'post',
       data: body
     })
 
-    const data: ProductType = response.data
+    const data: MediaType = response.data
 
     return data
   } catch (error) {
@@ -40,15 +40,15 @@ const createProduct = async (body: CreateProductBody): Promise<ProductType|null>
   }
 }
 
-const updateProduct = async (body: UpdateProductBody): Promise<ProductType|null> => {
+const updateMedia = async (body: UpdateMediaBody): Promise<MediaType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/medias',
       method: 'put',
       data: body
     })
 
-    const data: ProductType = response.data
+    const data: MediaType = response.data
 
     return data
   } catch (error) {
@@ -57,10 +57,10 @@ const updateProduct = async (body: UpdateProductBody): Promise<ProductType|null>
   }
 }
 
-const deleteProduct = async (id: number): Promise<{ status: boolean }> => {
+const deleteMedia = async (id: number): Promise<{ status: boolean }> => {
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/medias',
       method: 'delete',
       data: { id }
     })
@@ -74,4 +74,4 @@ const deleteProduct = async (id: number): Promise<{ status: boolean }> => {
   }
 }
 
-export default { getAllProducts, createProduct, updateProduct, deleteProduct }
+export default { getAllMedias, createMedia, updateMedia, deleteMedia }

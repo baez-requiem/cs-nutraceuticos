@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useFormik } from "formik"
-import { GetAllProductsResponse } from "src/services/api/products/products.types"
+import { ProductType } from "src/services/api/products/products.types"
 import { useMutation } from 'react-query'
 import { productsApi } from 'src/services/api'
 import { toast } from 'react-toastify'
@@ -14,7 +14,7 @@ const initialValues = {
 
 const useModalProduct = (
   onClose: (arg0?: boolean) => void,
-  data?: GetAllProductsResponse[0]
+  data?: ProductType
 ) => {
   const mutation = useMutation(async (values: typeof initialValues) => {
     const idProduct = data?.id

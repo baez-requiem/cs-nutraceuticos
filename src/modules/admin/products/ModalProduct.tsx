@@ -1,13 +1,12 @@
 import { FC } from "react"
 import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Switch } from "src/components/ui"
 
-
-import { GetAllProductsResponse } from "src/services/api/products/products.types"
+import { ProductType } from "src/services/api/products/products.types"
 import { useModalProduct } from "./hooks/useModalProduct"
 
 export interface ModalProductProps {
   show: boolean
-  data?: GetAllProductsResponse[0]
+  data?: ProductType
   onClose: (arg0?: boolean) => void
 }
 

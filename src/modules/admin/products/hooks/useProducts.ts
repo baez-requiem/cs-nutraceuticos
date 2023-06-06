@@ -2,10 +2,10 @@ import { useState } from "react"
 import { useMutation, useQuery } from 'react-query'
 import { toast } from "react-toastify"
 import { productsApi } from "src/services/api"
-import { GetAllProductsResponse } from 'src/services/api/products/products.types'
+import { ProductType } from 'src/services/api/products/products.types'
 
 interface useModalState {
-  data?: GetAllProductsResponse[0]
+  data?: ProductType
   show: boolean
 }
 
@@ -43,7 +43,7 @@ const useProducts = () => {
   const [useModal, setModal] = useState<useModalState>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
-  const openModal = (id?: GetAllProductsResponse[0]['id']) => {
+  const openModal = (id?: ProductType['id']) => {
     !!id
       ? setModal({ show: true, data: products.find(p => p.id == id) })
       : setModal({ show: true })
