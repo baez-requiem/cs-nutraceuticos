@@ -14,7 +14,8 @@ const Login = () => {
       handleChange,
       values,
       handleSubmit
-    }
+    },
+    mutation
   } = useLogin()
 
   return (
@@ -45,7 +46,7 @@ const Login = () => {
             onChange={handleChange}
           />
 
-          <StyledButton type="submit">Entrar</StyledButton>
+          <StyledButton type="submit" disabled={mutation.isLoading}>Entrar</StyledButton>
         </FormContent>
       </Content>
     </Container>

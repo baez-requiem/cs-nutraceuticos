@@ -13,12 +13,9 @@ const useLogin = () => {
   const navigate = useNavigate()
 
   const mutation = useMutation(async (values: typeof initialValues) => {
-    const toastId = toast.loading("Validando os dados...")
+    toast.loading("Validando os dados...")
 
-    console.log(values, toastId)
-    
     const data = await auth.login(values)
-    console.log(data)
 
     toast.dismiss()
     

@@ -128,4 +128,9 @@ export const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.colors.sky_700};
     box-shadow: 0px 0px 2px ${({ theme }) => theme.colors.sky_400};
   }
+
+  :disabled {
+    background-color: ${({ theme }) => theme.colors.gray_600};
+    pointer-events: none;
+  }
 `

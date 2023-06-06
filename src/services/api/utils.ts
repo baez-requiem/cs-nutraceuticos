@@ -54,6 +54,7 @@ export const authenticatedRequest = async <T = any>(config: Config): Promise<Axi
           return await axios(requestConfig);
         } catch (error) {
           console.error('Erro ao obter um novo token de acesso:', error)
+          window.location.href = '/'
           throw error
         }
       }
