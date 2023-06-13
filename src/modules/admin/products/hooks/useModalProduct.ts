@@ -4,15 +4,18 @@ import { ProductType } from "src/services/api/products/products.types"
 import { useMutation } from 'react-query'
 import { productsApi } from 'src/services/api'
 import { toast } from 'react-toastify'
+import { formatReal, realToFloat } from 'src/utils/number.utils'
 
 const initialValues = {
-  name: '',
   description: '',
+  active: false,
+  amount: '',
   notes: '',
-  active: false
+  name: '',
 }
 
 const useModalProduct = (
+  show: boolean,
   onClose: (arg0?: boolean) => void,
   data?: ProductType
 ) => {
@@ -22,8 +25,8 @@ const useModalProduct = (
     toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const product = idProduct
-      ? await productsApi.updateProduct({ ...values, id: idProduct })
-      : await productsApi.createProduct(values)
+      ? await productsApi.updateProduct({ ...values, amount: realToFloat(values.amount), id: idProduct })
+      : await productsApi.createProduct({...values, amount: realToFloat(values.amount) })
 
     toast.dismiss()
 
@@ -48,10 +51,11 @@ const useModalProduct = (
         name: data.name,
         description: data.description || '',
         notes: data.notes || '',
-        active: data.active
+        active: data.active,
+        amount: formatReal(data.amount) ,
       })
       : formik.resetForm()
-  }, [data])
+  }, [show])
 
   return {
     formik

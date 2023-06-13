@@ -25,7 +25,8 @@ const SalesTeam = () => {
     closeModal,
     closeConfirm,
     openConfirm,
-    useConfirm
+    useConfirm,
+    salesTeam
   } = useSalesTeam()
 
   return (
@@ -35,11 +36,7 @@ const SalesTeam = () => {
 
       <Paper>
         <Flex items="end" justify="space-between">
-          <Button size="sm" color="green_600" onClick={openModal}>Cadastrar</Button>
-
-          <SideFilters>
-
-          </SideFilters>
+          <Button size="sm" color="green_600" onClick={() => openModal()}>Cadastrar</Button>
         </Flex>
       </Paper>
 
@@ -48,31 +45,25 @@ const SalesTeam = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'ID', value: 'id' },
-            { label: 'Equipe', value: 'team' },
-            { label: 'Vendedores', value: 'sellers' },
-            { label: 'Anotações', value: 'note' },
+            { label: 'Equipe', value: 'name' },
+            { label: 'Anotações', value: 'notes' },
             {
               label: 'Ações',
               value: 'id',
               align: 'center',
-              render: (value, data) => (
+              render: value => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => openModal({ id: 1 })}>
+                  <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(value, data?.name || '')}>
+                  <IconButton color="red_600" onClick={() => openConfirm(value.toString())}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>
               ),
             },
           ]}
-          data={[
-            { id: 1, team: 'Alfa', sellers: '#1-Fulano de tal, #1-Fulalinho, #1-Fulana', note: 'Anotação...' },
-            { id: 2, team: 'Beta', sellers: '#2-Fulano de tal, #2-Fulalinho, #2-Fulana', note: 'Anotação...' },
-            { id: 3, team: 'Omêga', sellers: '#3-Fulano de tal, #3-Fulalinho, #3-Fulana', note: 'Anotação...' },
-          ]}
+          data={salesTeam}
         />
       </Paper>
 

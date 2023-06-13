@@ -3,6 +3,7 @@ import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Switch } fro
 
 import { ProductType } from "src/services/api/products/products.types"
 import { useModalProduct } from "./hooks/useModalProduct"
+import { handleChangeFormatReal } from "src/utils/form.utils"
 
 export interface ModalProductProps {
   show: boolean
@@ -22,9 +23,10 @@ const ModalProduct: FC<ModalProductProps> = ({
     formik: {
       handleChange,
       submitForm,
-      values
+      values,
+      setFieldValue
     }
-  } = useModalProduct(onClose, data)
+  } = useModalProduct(show, onClose, data)
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -32,7 +34,7 @@ const ModalProduct: FC<ModalProductProps> = ({
 
       <Divider my={10} />
 
-      <Grid gap={10}>
+      <Grid gap={10} template="3fr 1fr" xs="1fr">
         <Input
           label="Nome:"
           name="name"
@@ -40,7 +42,20 @@ const ModalProduct: FC<ModalProductProps> = ({
           value={values.name}
           onChange={handleChange}
         />
+       
+        <Input
+          label="Valor:"
+          name="amount"
+          block
+          labelFixed={!!values.amount}
+          value={values.amount}
+          onChange={handleChangeFormatReal(setFieldValue)}
+        />
+      </Grid>
 
+      <Divider />
+
+      <Grid gap={10}>
         <Input
           label="Descrição:"
           name="description"

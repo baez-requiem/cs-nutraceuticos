@@ -26,7 +26,12 @@ const useLogin = () => {
 
     localStorage.setItem('auth', JSON.stringify(data))
 
-    navigate('/admin/dashboard')
+    if (data.user.role == 'seller') {
+      navigate('/seller/dashboard')
+    } else {
+      navigate('/admin/dashboard')
+    }
+
   })
 
   const formik = useFormik({

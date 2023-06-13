@@ -5,7 +5,7 @@ interface RefreshTokenData {
   refreshToken?: {
     id: string
     expiresIn: number
-    userId: number
+    userId: string
   }
 }
 

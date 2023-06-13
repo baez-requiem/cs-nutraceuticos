@@ -2,7 +2,7 @@ import { BsBarChart, BsBox } from 'react-icons/bs'
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2'
 import { TbReportAnalytics } from 'react-icons/tb'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { MdStayPrimaryPortrait } from 'react-icons/md'
+import { MdOutlineHistory } from 'react-icons/md'
 
 export const menuItems = [
   {
@@ -10,11 +10,11 @@ export const menuItems = [
     to: '/seller/dashboard',
     Icon: BsBarChart({ size: 22 })
   },
-  // {
-  //   label: 'Produtos',
-  //   to: '/admin/products',
-  //   Icon: AiOutlineShoppingCart({ size: 22 })
-  // },
+  {
+    label: 'Histórico de vendas',
+    to: '/seller/sales-history',
+    Icon: MdOutlineHistory({ size: 22 })
+  },
   // {
   //   label: 'Estoque',
   //   to: '/admin/stock',

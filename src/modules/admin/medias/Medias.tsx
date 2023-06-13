@@ -46,7 +46,6 @@ const Medias = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'ID', value: 'id' },
             { label: 'Nome', value: 'name' },
             { label: 'Descrição', value: 'description' },
             { label: 'Anotações', value: 'notes' },
@@ -59,10 +58,10 @@ const Medias = () => {
               align: 'center',
               render: value => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => openModal(parseInt(value.toString()))}>
+                  <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(parseInt(value.toString()))}>
+                  <IconButton color="red_600" onClick={() => openConfirm(value.toString())}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>

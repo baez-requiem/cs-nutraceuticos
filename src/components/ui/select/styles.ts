@@ -12,7 +12,7 @@ export const Container = styled.div<{ block: boolean }>`
   width: ${({ block }) => block ? '100%' : 'auto'};
 `
 
-export const StyledSelect = styled.select<{ block: boolean }>`
+export const StyledSelect = styled.select<{ block: boolean, hasUpLabel: boolean }>`
   margin-top: auto;
   border-radius: 5px;
   padding: 0 10px;
@@ -40,7 +40,13 @@ export const StyledSelect = styled.select<{ block: boolean }>`
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
+  }
+
+  ${({ hasUpLabel }) => !hasUpLabel && css`color: transparent !important;`}
+
+  option {
+    color: ${({ color, theme }) => color || theme.colors.text};
+  }
 
   [type=number] {
     -moz-appearance: textfield;

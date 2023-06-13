@@ -1,20 +1,15 @@
 import { authenticatedRequest } from "../utils"
+import { CreateUserBody, UpdateUserBody, UserType } from "./users.types"
 
-import {
-  CreateProductBody,
-  ProductType,
-  UpdateProductBody
-} from "./products.types"
-
-const getAllProducts = async (): Promise<ProductType[]> => {
+const getAllUsers = async (): Promise<UserType[]> => {
 
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/users',
       method: 'get'
     })
 
-    const data: ProductType[] = response.data
+    const data: UserType[] = response.data
 
     return data
   } catch (error) {
@@ -23,32 +18,15 @@ const getAllProducts = async (): Promise<ProductType[]> => {
   }
 }
 
-const createProduct = async (body: CreateProductBody): Promise<ProductType|null> => {
+const updateUser = async (body: UpdateUserBody): Promise<UserType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/products',
-      method: 'post',
-      data: body
-    })
-
-    const data: ProductType = response.data
-
-    return data
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-}
-
-const updateProduct = async (body: UpdateProductBody): Promise<ProductType|null> => {
-  try {
-    const response = await authenticatedRequest({
-      url: '/products',
+      url: '/users',
       method: 'put',
       data: body
     })
 
-    const data: ProductType = response.data
+    const data: UserType = response.data
 
     return data
   } catch (error) {
@@ -57,10 +35,27 @@ const updateProduct = async (body: UpdateProductBody): Promise<ProductType|null>
   }
 }
 
-const deleteProduct = async (id: string): Promise<{ status: boolean }> => {
+const createUser = async (body: CreateUserBody): Promise<UserType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: '/users',
+      method: 'post',
+      data: body
+    })
+
+    const data: UserType = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+const deleteUser = async(id: string): Promise<{ status: boolean }> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/users',
       method: 'delete',
       data: { id }
     })
@@ -74,4 +69,9 @@ const deleteProduct = async (id: string): Promise<{ status: boolean }> => {
   }
 }
 
-export default { getAllProducts, createProduct, updateProduct, deleteProduct }
+export default {
+  getAllUsers,
+  updateUser,
+  createUser,
+  deleteUser
+}

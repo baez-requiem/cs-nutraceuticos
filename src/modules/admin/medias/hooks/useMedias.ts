@@ -10,21 +10,21 @@ interface useModalState {
 }
 
 interface useConfirmState {
-  id?: number
+  id?: string
   show?: boolean
   title?: string
   description?: string
 }
 
 const useMedias = () => {
-  const { data: medias, isFetching, refetch } = useQuery(['products'], async () => {
+  const { data: medias, refetch } = useQuery(['products'], async () => {
     const response = await mediasApi.getAllMedias()
 
     return response
 
-  }, { initialData: [] })
+  }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
-  const mediaMutation = useMutation(async (id: number) => {
+  const mediaMutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
     const { status: hasDeleted } = await mediasApi.deleteMedia(id)
@@ -54,7 +54,7 @@ const useMedias = () => {
     setModal({ show: false })
   }
 
-  const openConfirm = (id: number) => {
+  const openConfirm = (id: string) => {
     const media = medias.find(p => p.id == id)
     
     setConfirm({

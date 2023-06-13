@@ -44,7 +44,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
           labelFixed={!!selectValue}
         />
         
-        <IconButton color="sky_600" onClick={addProduct}>
+        <IconButton color="sky_600" onClick={addProduct} disabled={!selectOpts.length}>
           <AiOutlinePlus size={20} color="white" />
         </IconButton>
       </Flex>

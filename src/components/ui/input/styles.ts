@@ -16,7 +16,7 @@ export const Container = styled.div<{ block: boolean, size?: number }>`
   }};
 `
 
-export const StyledInput = styled.input<{ block: boolean, size?: number }>`
+export const StyledInput = styled.input<{ block: boolean, size?: number, hasUpLabel: boolean }>`
   margin-top: auto;
   border-radius: 5px;
   padding: 0 10px;
@@ -48,9 +48,14 @@ export const StyledInput = styled.input<{ block: boolean, size?: number }>`
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
 
-  [type=number] {
+  }
+
+  &[type=date] {
+    ${({ hasUpLabel }) => !hasUpLabel && css`color: transparent !important;`}
+  }
+
+  &[type=number] {
     -moz-appearance: textfield;
   }
 `

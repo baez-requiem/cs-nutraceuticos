@@ -40,6 +40,7 @@ const Select: FC<SelectProps> = ({
         ref={selectRef}
         color={color}
         block={block}
+        hasUpLabel={labelFixed || useUpLabel}
         onFocus={() => setUpLabel(true)}
         onBlur={verifyUpLabel}
         {...props}

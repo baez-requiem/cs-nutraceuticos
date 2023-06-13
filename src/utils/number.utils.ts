@@ -39,3 +39,43 @@ export function onlyNumbers(str: number|string = 0): string {
 export function formatReal(number: number | string): string {
   return numberFormat(parseInt(onlyNumbers(number))/100, 2, ',', '.')
 }
+
+export function realToFloat(value: string|number): number {
+  const newValue = value
+    .toString()
+    .replace(/[^\d,-]/g, '')
+    .replace(',', '.')
+    .replace(/(\d)-/g, '$1')
+
+  return parseFloat(newValue)
+}
+
+export function floatToReal(value: number): string {
+  return value.toLocaleString('pt-br',{ currency: 'BRL', minimumFractionDigits: 2 })
+}
+
+export function formatPhone(number: number | string = ''): string {
+  let n = number.toString().replace(/\D/g, "")
+
+  n = n.replace(/^0/, "")
+
+  if (n.length > 10) {
+    n = n.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3")
+  } else if (n.length > 5) {
+    n = n.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3")
+  } else if (n.length > 2) {
+    n = n.replace(/^(\d\d)(\d{0,5})/, "($1) $2")
+  } else {
+    n = n.replace(/^(\d*)/, "($1")
+  }
+
+  return n
+}
+
+export function formatCPF(value: string): string {
+  return value
+    .replace(/\D/g,"")
+    .replace(/(\d{3})(\d)/,"$1.$2")
+    .replace(/(\d{3})(\d)/,"$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/,"$1-$2")
+}

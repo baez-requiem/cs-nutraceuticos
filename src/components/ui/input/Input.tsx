@@ -37,6 +37,7 @@ const Input: FC<InputProps> = ({
         {label}
       </StyledLabel>
       <StyledInput
+        hasUpLabel={labelFixed || useUpLabel}
         size={size}
         ref={inputRef}
         color={color}

@@ -9,7 +9,7 @@ import { numberFormat, onlyNumbers } from 'src/utils/number.utils'
 export interface LoteItemProps {
   onRemove: () => void
   name: string
-  id: string
+  id: number
 }
 
 const LoteItem: FC<LoteItemProps> = ({

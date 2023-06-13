@@ -21,8 +21,8 @@ export const menuItems = [
     Icon: MdStayPrimaryPortrait({ size: 22 })
   },
   {
-    label: 'Vendedores',
-    to: '/admin/sellers',
+    label: 'Usuários',
+    to: '/admin/users',
     Icon: HiOutlineUsers({ size: 22 })
   },
   {

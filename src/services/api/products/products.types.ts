@@ -1,9 +1,10 @@
 export type ProductType = {
-  id: number
+  id: string
   name: string
   description: string | null
   notes: string | null
   active: boolean
+  amount: number
   created_at: string
   updated_at: string | null
 }
@@ -13,8 +14,9 @@ export type CreateProductBody = {
   description: string | null
   notes: string | null
   active: boolean
+  amount: number
 }
 
 export type UpdateProductBody = {
-  id: number
+  id: string
 } & CreateProductBody

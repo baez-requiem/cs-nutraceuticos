@@ -24,7 +24,7 @@ const ModalMedia: FC<ModalMediaProps> = ({
       submitForm,
       values
     }
-  } = useModalMedia(onClose, data)
+  } = useModalMedia(show, onClose, data)
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>

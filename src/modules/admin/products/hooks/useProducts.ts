@@ -10,7 +10,7 @@ interface useModalState {
 }
 
 interface useConfirmState {
-  id?: number
+  id?: string
   show?: boolean
   title?: string
   description?: string
@@ -22,9 +22,9 @@ const useProducts = () => {
 
     return response
 
-  }, { initialData: [] })
+  }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
-  const mutation = useMutation(async (id: number) => {
+  const mutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
     const { status: hasDeleted } = await productsApi.deleteProduct(id)
@@ -54,7 +54,7 @@ const useProducts = () => {
     setModal({ show: false })
   }
 
-  const openConfirm = (id: number) => {
+  const openConfirm = (id: string) => {
     const product = products.find(p => p.id == id)
     
     setConfirm({

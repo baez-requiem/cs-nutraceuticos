@@ -13,6 +13,7 @@ const initialValues = {
 }
 
 const useModalMedia = (
+  show: boolean,
   onClose: (arg0?: boolean) => void,
   data?: MediaType
 ) => {
@@ -51,7 +52,7 @@ const useModalMedia = (
         active: data.active
       })
       : formik.resetForm()
-  }, [data])
+  }, [show])
 
   return {
     formik

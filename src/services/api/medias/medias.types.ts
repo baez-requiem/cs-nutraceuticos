@@ -1,5 +1,5 @@
 export type MediaType = {
-  id: number
+  id: string
   name: string
   description: string | null
   notes: string | null
@@ -18,5 +18,5 @@ export type CreateMediaBody = {
 }
 
 export type UpdateMediaBody = {
-  id: number
+  id: string
 } & CreateMediaBody

@@ -10,6 +10,9 @@ export type LoginResponse = {
     expiresIn: number
     userId: number
   }
+  user: {
+    role: string
+  }
 } | {
   error: {
     message: string

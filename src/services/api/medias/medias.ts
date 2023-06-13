@@ -57,7 +57,7 @@ const updateMedia = async (body: UpdateMediaBody): Promise<MediaType|null> => {
   }
 }
 
-const deleteMedia = async (id: number): Promise<{ status: boolean }> => {
+const deleteMedia = async (id: string): Promise<{ status: boolean }> => {
   try {
     const response = await authenticatedRequest({
       url: '/medias',

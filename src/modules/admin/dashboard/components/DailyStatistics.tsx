@@ -1,4 +1,4 @@
-import { Divider, Flex, IconBadge, Paper, Text } from "src/components/ui"
+import { Divider, Flex, Grid, IconBadge, Paper, Text } from "src/components/ui"
 
 import { BiDollar } from 'react-icons/bi'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
@@ -12,7 +12,7 @@ const Statistics = () => {
       
       <Divider my={10} />
       
-      <Flex justify="space-between">
+      <Grid template="1fr 1fr 1fr" xs="1fr" gap={20}>
         
         <Flex gap={10} items="center">
           <IconBadge color="indigo_400" size={50}>
@@ -44,7 +44,7 @@ const Statistics = () => {
           </Flex>
         </Flex>
         
-      </Flex>
+      </Grid>
     </Paper>
   )
 }

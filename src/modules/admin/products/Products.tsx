@@ -17,6 +17,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { BsTrash } from 'react-icons/bs'
 
 import { useProducts } from "./hooks/useProducts"
+import { floatToReal, formatReal } from "src/utils/number.utils"
 
 const Products = () => {
 
@@ -46,8 +47,12 @@ const Products = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'ID', value: 'id' },
             { label: 'Nome', value: 'name' },
+            { label: 'Valor', value: 'amount', render: value => (
+              <Flex justify="end">
+                <Text>{floatToReal(typeof value == 'number' ? value : parseFloat(value))}</Text>
+              </Flex>
+            ) },
             { label: 'Descrição', value: 'description' },
             { label: 'Anotações', value: 'notes' },
             { label: 'Status', value: 'active', render: value => (
@@ -59,10 +64,10 @@ const Products = () => {
               align: 'center',
               render: value => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => openModal(parseInt(value.toString()))}>
+                  <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(parseInt(value.toString()))}>
+                  <IconButton color="red_600" onClick={() => openConfirm(value.toString())}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>

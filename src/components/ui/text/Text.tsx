@@ -21,6 +21,8 @@ export interface TextProps {
   pt?: number
   pr?: number
   pb?: number
+  full?: boolean
+  align?: 'left' | 'center' | 'right'
 }
 
 const Text = styled.span<TextProps>`
@@ -29,6 +31,7 @@ const Text = styled.span<TextProps>`
   font-style: ${({ fontStyle }) => fontStyle || 'normal'};
   color: ${({ color, theme }) => theme.colors[color || 'black']};
   white-space: ${({ whiteSpace = 'unset' }) => whiteSpace};
+  text-align: ${({ align = 'left' }) => align};
 
   padding: ${({ p = 0 }) => p}px;
   
@@ -36,6 +39,11 @@ const Text = styled.span<TextProps>`
   ${({ pt }) => typeof pt === "number" && css`padding-top: ${pt}px;`}
   ${({ pr }) => typeof pr === "number" && css`padding-right: ${pr}px;`}
   ${({ pb }) => typeof pb === "number" && css`padding-bottom: ${pb}px;`}
+
+  ${({ full }) => full && css`
+    display: inline-block;
+    width: 100%;
+  `}
 `
 
 export default Text
