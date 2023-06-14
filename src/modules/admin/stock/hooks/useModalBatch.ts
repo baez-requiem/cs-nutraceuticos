@@ -1,13 +1,20 @@
 import { useState, ChangeEvent, useEffect, FormEvent } from 'react'
-import { numberFormat, onlyNumbers } from 'src/utils/number.utils'
+import { numberFormat, onlyNumbers, realToFloat } from 'src/utils/number.utils'
 import { productsApi } from 'src/services/api'
 import { ProductType } from 'src/services/api/products/products.types'
 import { useQuery } from 'react-query'
+import { newBatchSchema } from '../utils/schemas'
+
+type ProductFormType = {
+  id_product: string
+  quantity?: number
+  unit_amount?: number
+}
 
 const useModalBatch = () => {
   const [selectValue, setSelectValue] = useState<string>('')
   const [newBatchProducts, setNewBatchProducts] = useState<ProductType[]>([])
-  const [shipping, setShipping] = useState('')
+  const [shipping, setShipping] = useState('0,00')
 
   const { data: products } = useQuery(['products'], async () => {
     const response = await productsApi.getAllProducts()
@@ -23,7 +30,7 @@ const useModalBatch = () => {
   const handleSelect = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => setSelectValue(value)
 
   const addProduct = () => {
-    const hasProduct = products.find(p => p.id === parseInt(selectValue))
+    const hasProduct = products.find(p => p.id === selectValue)
 
     if (!hasProduct) { return }
 
@@ -32,7 +39,7 @@ const useModalBatch = () => {
     setNewBatchProducts(nbpArr)
   }
 
-  const removeProduct = (id: number) => {
+  const removeProduct = (id: string) => {
     const nbpArr = newBatchProducts.filter(p => p.id != id)
 
     setNewBatchProducts(nbpArr)
@@ -46,7 +53,27 @@ const useModalBatch = () => {
     evt.preventDefault()
 
     const formData = new FormData(evt.currentTarget);
-    const formProps = Object.fromEntries(formData);
+    const { shipping: _shipping, notes, ...formProps} = Object.fromEntries(formData);
+
+    const products: ProductFormType[] = []
+
+    Object.keys(formProps).forEach(key => {
+      const field = key.split('--')[0] == 'unit_amount' ? 'unit_amount' : 'quantity'
+      const id_product = key.split('--')[1]
+      const value = field == 'quantity' ? parseInt(formProps[key].toString()) : realToFloat(formProps[key].toString())
+
+      const inProductsArr = products.find(p => p.id_product === id_product)
+
+      inProductsArr
+        ? inProductsArr[field] = value
+        : products.push({ id_product, [field]: value })
+    })
+
+    const data = newBatchSchema.parse({
+      shipping: realToFloat(shipping.toString()),
+      notes,
+      products
+    })
   }
 
   useEffect(() => {

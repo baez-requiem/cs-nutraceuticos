@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { useQuery } from "react-query"
+import { useMutation, useQuery } from "react-query"
+import { toast } from "react-toastify"
 import { salesTeamApi } from "src/services/api"
 import { SalesTeamType } from "src/services/api/salesTeam/salesTeam.types"
 
@@ -23,6 +24,22 @@ const useSalesTeam = () => {
 
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
+  const saleTeamMutation = useMutation(async (id: string) => {
+    toast.loading("Excluindo produto...")
+
+    const { status: hasDeleted } = await salesTeamApi.deleteSaleTeam(id)
+
+    toast.dismiss()
+
+    if (!hasDeleted) {
+      toast.error(`Houve um erro ao excluir a equipe de vendas.`)
+      return
+    }
+
+    toast.success(`Equipe de vendas excluída com sucesso!`)
+    refetch()
+  })
+
   const [useModal, setModal] = useState<useModalState>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
@@ -32,7 +49,10 @@ const useSalesTeam = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = () => setModal({ show: false })
+  const closeModal = (hasRefetch?: boolean) => {
+    hasRefetch && refetch()
+    setModal({ show: false })
+  }
 
   const openConfirm = (id: SalesTeamType['id']) => {
     const st = salesTeam.find(p => p.id == id)
@@ -45,18 +65,9 @@ const useSalesTeam = () => {
     })
   }
 
-  const closeConfirm = (isConfirmed?: boolean) => {
-
-    if (!isConfirmed) {
-      setConfirm({})
-      return
-    }
-
-    // make
-
+  const closeConfirm = async (isConfirmed?: boolean) => {
+    isConfirmed && useConfirm.id && saleTeamMutation.mutateAsync(useConfirm.id)
     setConfirm({})
-
-    console.log('confirmado', isConfirmed)
   }
 
   return {

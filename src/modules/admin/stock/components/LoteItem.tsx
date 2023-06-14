@@ -9,7 +9,7 @@ import { numberFormat, onlyNumbers } from 'src/utils/number.utils'
 export interface LoteItemProps {
   onRemove: () => void
   name: string
-  id: number
+  id: string
 }
 
 const LoteItem: FC<LoteItemProps> = ({
@@ -28,18 +28,18 @@ const LoteItem: FC<LoteItemProps> = ({
     <tr>
       <td>
         <div>
-          {name}
+          {name} 
         </div>
       </td>
       <td>
         <div>
-          <StyledInput name={`quantity-${id}`} type="number" placeholder="Ex: 100" />
+          <StyledInput min={1} name={`quantity--${id}`} type="number" placeholder="Ex: 100" />
         </div>
       </td>
       <td>
         <div>
           <StyledInput
-            name={`amount-${id}`}
+            name={`unit_amount--${id}`}
             placeholder="Ex: 20,00"
             onChange={onAmountChange}
             value={amount}

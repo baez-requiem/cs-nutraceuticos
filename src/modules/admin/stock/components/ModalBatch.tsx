@@ -81,7 +81,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
         <Grid template="1fr 3fr" items="end" gap={10}>
           <Input
             block
-            name='frete'
+            name='shipping'
             label="Valor frete"
             value={shipping}
             onChange={onShippingChange}
@@ -89,7 +89,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
 
           <Input
             block
-            name='note'
+            name='notes'
             label="Anotações"
           />
         </Grid>

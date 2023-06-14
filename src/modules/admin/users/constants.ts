@@ -14,6 +14,6 @@ export const initialDataFormUser = {
   address: '',
   neighborhood: '',
   complement: '',
-  roleId: '',
+  roleId: 'seller',
   salesTeamId: ''
 }

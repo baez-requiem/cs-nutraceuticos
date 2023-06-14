@@ -31,7 +31,6 @@ const Stock = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'ID', value: 'id' },
             { label: 'Produto', value: 'product' },
             { label: 'Estoque disponível', value: 'quantity' },
             { label: 'Status', value: 'active', render: value => (
