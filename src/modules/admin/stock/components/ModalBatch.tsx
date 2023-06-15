@@ -8,7 +8,7 @@ import { useModalBatch } from '../hooks/useModalBatch'
 
 export interface ModalBatchProps {
   show: boolean
-  onClose: () => void
+  onClose: (arg0?: boolean) => void
 }
 
 const ModalBatch: FC<ModalBatchProps> = ({
@@ -26,7 +26,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
     onFormSubmit,
     shipping,
     onShippingChange
-  } = useModalBatch()
+  } = useModalBatch(show, onClose)
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -97,7 +97,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
         <Divider my={10} />
         
         <Flex items="end" justify="end" gap={10}>
-          <Button size="sm" color="gray_500" onClick={onClose} type='button'>Cancelar</Button>
+          <Button size="sm" color="gray_500" onClick={() => onClose()} type='button'>Cancelar</Button>
           <Button size="sm" color="green_600" type='submit'>Cadastrar</Button>
         </Flex>
       </form>

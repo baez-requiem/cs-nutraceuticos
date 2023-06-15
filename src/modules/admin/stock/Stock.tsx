@@ -5,7 +5,7 @@ import { useStock } from "./hooks/useStock"
 
 const Stock = () => {
 
-  const { closeModal, openModal, useModal } = useStock()
+  const { closeModal, openModal, useModal, stockProducts } = useStock()
 
   return (
     <Private>
@@ -31,17 +31,32 @@ const Stock = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'Produto', value: 'product' },
+            { label: 'Produto', value: 'name' },
             { label: 'Estoque disponível', value: 'quantity' },
             { label: 'Status', value: 'active', render: value => (
               <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
             ) },
           ]}
-          data={[
-            { id: 1, product: 'VIAGRA CPS', quantity: '987', note: 'Anotação...', active: 1 },
-            { id: 2, product: 'VITA GOLD', quantity: '0', note: 'Anotação...', active: 1 },
-            { id: 3, product: 'BEAUTY CAPS', quantity: '80', note: 'Anotação...', active: 0 },
+          data={stockProducts.map(sp => ({ ...sp, active: +sp.active }))}
+        />
+      </Paper>
+
+      <Divider my={10} />
+
+      <Paper>
+        <Text size="lg" weight="500" color="gray_900">Lotes Cadastrados</Text>
+        
+        <Divider />
+        
+        <Table
+          columns={[
+            { label: 'Produto', value: 'name' },
+            { label: 'Estoque disponível', value: 'quantity' },
+            { label: 'Status', value: 'active', render: value => (
+              <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
+            ) },
           ]}
+          data={stockProducts.map(sp => ({ ...sp, active: +sp.active }))}
         />
       </Paper>
 

@@ -1,9 +1,11 @@
 import { useState, ChangeEvent, useEffect, FormEvent } from 'react'
 import { numberFormat, onlyNumbers, realToFloat } from 'src/utils/number.utils'
-import { productsApi } from 'src/services/api'
+import { productsApi, stockApi } from 'src/services/api'
 import { ProductType } from 'src/services/api/products/products.types'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { newBatchSchema } from '../utils/schemas'
+import { CreateNewBatchBodyType } from 'src/services/api/stock/stock.types'
+import { toast } from 'react-toastify'
 
 type ProductFormType = {
   id_product: string
@@ -11,7 +13,10 @@ type ProductFormType = {
   unit_amount?: number
 }
 
-const useModalBatch = () => {
+const useModalBatch = (
+  show: boolean,
+  onClose: (arg0?: boolean) => void
+) => {
   const [selectValue, setSelectValue] = useState<string>('')
   const [newBatchProducts, setNewBatchProducts] = useState<ProductType[]>([])
   const [shipping, setShipping] = useState('0,00')
@@ -21,6 +26,20 @@ const useModalBatch = () => {
 
     return response
   }, { initialData: [] })
+
+  const stockMutation = useMutation(async (body: CreateNewBatchBodyType) => {
+    toast.loading(`Inserindo dados...`)
+
+    const batch = await stockApi.createNewBatch(body)
+
+    toast.dismiss()
+
+    batch?.id
+      ? toast.success('Novo lote cadastrado com sucesso!')
+      : toast.error('Houve um erro aou cadastrar um novo lote')
+
+    batch?.id && onClose(true)    
+  })
 
   const onShippingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = numberFormat(parseInt(onlyNumbers(evt.currentTarget.value))/100, 2, ',', '.')
@@ -69,11 +88,17 @@ const useModalBatch = () => {
         : products.push({ id_product, [field]: value })
     })
 
-    const data = newBatchSchema.parse({
+    const data = newBatchSchema.safeParse({
       shipping: realToFloat(shipping.toString()),
       notes,
       products
     })
+
+    if (data.success) {
+
+      stockMutation.mutateAsync(data.data)
+    }
+
   }
 
   useEffect(() => {

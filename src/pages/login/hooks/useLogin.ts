@@ -26,7 +26,7 @@ const useLogin = () => {
 
     localStorage.setItem('auth', JSON.stringify(data))
 
-    if (data.user.role == 'seller') {
+    if (data.user.role == 'Vendedor') {
       navigate('/seller/dashboard')
     } else {
       navigate('/admin/dashboard')
