@@ -10,13 +10,16 @@ interface ModalState {
 const useStock = () => {
   const [useModal, setModal] = useState<ModalState>({ opened: null })
 
-  const { data: stockProducts } = useQuery('stock-products', async () => {
+  const { data: stockProducts, refetch } = useQuery('stock-products', async () => {
     return await stockApi.getStockProducts() 
   }, { initialData: [] })
 
   const openModal = (modal: ModalState['opened'], data?: any) => setModal({ opened: modal, data })
 
-  const closeModal = () => setModal({ opened: null })
+  const closeModal = (hasRefetch?: boolean) => {
+    setModal({ opened: null })
+    hasRefetch && refetch()
+  }
 
   return {
     openModal,
