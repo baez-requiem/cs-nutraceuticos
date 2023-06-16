@@ -2,7 +2,7 @@ import  { FC } from "react"
 
 import { StyledTH, THead } from "./table.styles"
 
-import { TableColumnProps } from './Table'
+import { TableColumnProps } from './table.types'
 
 export interface TableHeaderProps {
   columns: TableColumnProps[]

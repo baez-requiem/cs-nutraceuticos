@@ -1,15 +1,15 @@
-import React, { FC, ReactElement, useState } from "react"
+import React, { FC, ReactElement } from "react"
 
 import { BsPlus } from "react-icons/bs"
 import { AiOutlineMinus } from 'react-icons/ai'
-import { IconButton } from "../"
+import { IconButton } from ".."
 
 import {
   StyledTD,
   TBody,
 } from "./table.styles"
 
-import { TableColumnProps } from './Table'
+import { TableColumnProps } from './table.types'
 
 export interface TableBodyProps {
   columns: TableColumnProps[]
@@ -29,7 +29,7 @@ const TableBody: FC<TableBodyProps> = ({
   <TBody>
     {data.map((dataObj, dataIndex) => (
       <React.Fragment key={dataIndex + 't'}>
-        <tr>
+        <tr className={dataIndex % 2 ? "p-tr p-tr-e" : 'p-tr'}>
           {extraDataRender ? (
             <StyledTD>
               <IconButton onClick={() => toggleRow?.(dataIndex)}>
@@ -63,7 +63,5 @@ const TableBody: FC<TableBodyProps> = ({
     ))}
   </TBody>
 )
-
-
 
 export default TableBody

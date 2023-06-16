@@ -17,3 +17,17 @@ export function formatUTCDate(date: string): string {
 
   return `${d}/${m}/${y}`
 }
+
+export function formatUTCDateTime(date: string): string {
+  const newDate = new Date(date)
+
+  const d = newDate.getUTCDate().toString().padStart(2, '0')
+  const m = (newDate.getUTCMonth()+1).toString().padStart(2, '0')
+  const y = newDate.getUTCFullYear()
+
+  const hour = newDate.getUTCHours().toString().padStart(2, '0')
+  const min = newDate.getUTCMinutes().toString().padStart(2, '0')
+  const sec = newDate.getUTCSeconds().toString().padStart(2, '0')
+
+  return `${d}/${m}/${y} ${hour}:${min}:${sec}`
+}

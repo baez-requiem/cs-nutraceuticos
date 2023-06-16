@@ -79,3 +79,22 @@ export function formatCPF(value: string): string {
     .replace(/(\d{3})(\d)/,"$1.$2")
     .replace(/(\d{3})(\d{1,2})$/,"$1-$2")
 }
+
+export function nextPreviousNumbers(num: number, max: number): number[] {
+  const nextNumbers: number[] = []
+  const previousNumbers: number[] = []
+
+  for (let i = 1; i <= 3; i++) {
+    if (num + i <= max) {
+      nextNumbers.push(num + i)
+    }
+  }
+
+  for (let i = 1; i <= 3; i++) {
+    if (num - i >= 1) {
+      previousNumbers.push(num - i)
+    }
+  }
+
+  return [...nextNumbers, num, ...previousNumbers]
+}

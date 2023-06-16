@@ -1,11 +1,22 @@
 import { Badge, Button, Divider, Flex, IconButton, Paper, Private, SideFilters, Table, Text } from "src/components/ui"
 
-import { ModalBatch } from "./components"
+import { BatchesProducts, ModalBatch } from "./components"
 import { useStock } from "./hooks/useStock"
+import { formatUTCDate, formatUTCDateTime } from "src/utils/date.utils"
+import { formatProducts } from "./utils/functions"
+import { floatToReal } from "src/utils/number.utils"
+import { MdOutlineModeEditOutline } from "react-icons/md"
+import { BsTrash } from "react-icons/bs"
 
 const Stock = () => {
 
-  const { closeModal, openModal, useModal, stockProducts } = useStock()
+  const {
+    closeModal,
+    openModal,
+    useModal,
+    stockProducts,
+    batchesTableData
+  } = useStock()
 
   return (
     <Private>
@@ -50,13 +61,41 @@ const Stock = () => {
         
         <Table
           columns={[
-            { label: 'Produto', value: 'name' },
-            { label: 'Estoque disponível', value: 'quantity' },
-            { label: 'Status', value: 'active', render: value => (
-              <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
-            ) },
+            { label: 'Lote', value: 'idx' },
+            {
+              label: 'Produtos',
+              value: 'products',
+              render: value => <BatchesProducts products={formatProducts(value.toString())} />
+            },
+            {
+              label: 'Frete',
+              value: 'shipping',
+              align: 'right',
+              render: value => <Text align="right" full>R$ {floatToReal(parseFloat(value.toString()))}</Text>
+            },
+            {
+              label: 'Data',
+              value: 'created_at',
+              render: value => <Text>{formatUTCDateTime(value.toString())}</Text>
+            },
+            { label: 'Anotações', value: 'notes' },
+            {
+              label: 'Ações',
+              value: 'id',
+              align: 'center',
+              render: value => (
+                <Flex justify="center" gap={10}>
+                  <IconButton color="blue_600" onClick={() => {}}>
+                    <MdOutlineModeEditOutline color="white" size={20} />
+                  </IconButton>
+                  <IconButton color="red_600" onClick={() => {}}>
+                    <BsTrash color="white" size={18} />
+                  </IconButton>
+                </Flex>
+              )
+            }
           ]}
-          data={stockProducts.map(sp => ({ ...sp, active: +sp.active }))}
+          data={batchesTableData}
         />
       </Paper>
 

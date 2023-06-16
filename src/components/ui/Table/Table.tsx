@@ -1,33 +1,29 @@
-import  { FC, ReactElement, useState } from "react"
+import  { FC, useState } from "react"
+
+import { Divider } from "../"
+
+import { usePagination } from "./hooks/usePagination"
 
 import {
   Container,
   StyledTable,
+  TableTitle,
 } from "./table.styles"
 
+import { Pagination } from "./Pagination"
 import TableBody from "./TableBody"
 import TableHeader from "./TableHeader"
 
-export interface TableColumnProps {
-  label: string | number
-  value: string | number
-  align?: 'left' | 'center' | 'right' | string
-  render?: ((value: string | number, data: { [key: string]: string | number }, index: number) => ReactElement)
-  width?: number
-}
-
-export interface TableProps {
-  columns: TableColumnProps[]
-  data: { [key: string]: string | number }[]
-  extraDataRender?: ((data: { [key: string]: string | number }, index: number) => ReactElement)
-  minWidth?: number
-}
+import { TableProps } from "./table.types"
 
 const Table: FC<TableProps> = ({
   columns = [],
   data = [],
   extraDataRender,
   minWidth,
+  title,
+  id,
+  pagination = true
 }) => {
   const [showExtraRow, setShowExtraRow] = useState<number[]>([])
 
@@ -38,22 +34,35 @@ const Table: FC<TableProps> = ({
     setShowExtraRow(newData)
   }
 
+  const { paginationData, ...paginationProps} = usePagination(data)
+
   return (
-    <Container>
-      <StyledTable minWidth={minWidth}>
-        <TableHeader
-          columns={columns}
-          hasExtraData={!!extraDataRender}
-        />
-        <TableBody
-          extraDataRender={extraDataRender}
-          columns={columns}
-          data={data}
-          toggleRow={toggleRow}
-          extraRow={showExtraRow}
-        />
-      </StyledTable>
-    </Container>
+    <>
+      <Container>
+        {title ? (
+          <TableTitle>{title}</TableTitle>
+        ) : null}
+        <StyledTable minWidth={minWidth} id={id}>
+          <TableHeader
+            columns={columns}
+            hasExtraData={!!extraDataRender}
+          />
+          <TableBody
+            extraDataRender={extraDataRender}
+            columns={columns}
+            data={pagination ? paginationData : data}
+            toggleRow={toggleRow}
+            extraRow={showExtraRow}
+          />
+        </StyledTable>
+      </Container>
+      {pagination ? (
+        <>
+          <Divider />
+          <Pagination totalData={data.length} config={paginationProps} />
+        </>
+      ): null}
+    </>
   )
 }
 

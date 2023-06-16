@@ -25,7 +25,7 @@ const useModalBatch = (
     const response = await productsApi.getAllProducts()
 
     return response
-  }, { initialData: [] })
+  }, { initialData: [], refetchOnWindowFocus: false })
 
   const stockMutation = useMutation(async (body: CreateNewBatchBodyType) => {
     toast.loading(`Inserindo dados...`)
@@ -106,6 +106,11 @@ const useModalBatch = (
 
     setSelectValue(slcValue.toString())
   }, [newBatchProducts, products])
+
+  useEffect(() => {
+    setNewBatchProducts([])
+    setShipping('0,00')
+  }, [show])
 
   return {
     selectValue,

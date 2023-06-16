@@ -1,5 +1,5 @@
 import { authenticatedRequest } from "../utils"
-import { CreateNewBatchBodyType, CreateNewBatchResponseType, StockProductType } from "./stock.types"
+import { BatchType, CreateNewBatchBodyType, CreateNewBatchResponseType, StockProductType } from "./stock.types"
 
 const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBatchResponseType|null> => {
   try {
@@ -34,4 +34,20 @@ const getStockProducts = async (): Promise<StockProductType[]> => {
   }
 }
 
-export default { createNewBatch, getStockProducts }
+const getBatches = async (): Promise<BatchType[]> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/batches',
+      method: 'get'
+    })
+
+    const data: BatchType[] = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export default { createNewBatch, getStockProducts, getBatches }

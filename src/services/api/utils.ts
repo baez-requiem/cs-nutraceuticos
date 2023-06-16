@@ -55,6 +55,7 @@ export const authenticatedRequest = async <T = any>(config: Config): Promise<Axi
           return await axios(requestConfig);
         } catch (error) {
           console.error('Erro ao obter um novo token de acesso:', error)
+          localStorage.setItem('auth', null)
           window.location.href = '/'
           throw error
         }
