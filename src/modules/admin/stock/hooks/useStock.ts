@@ -24,7 +24,10 @@ const useStock = () => {
 
   const openModal = (modal: ModalState['opened'], data?: any) => setModal({ opened: modal, data })
 
-  const closeModal = () => setModal({ opened: null })
+  const closeModal = (hasRefetch?: boolean) => {
+    setModal({ opened: null })
+    hasRefetch && refetch()
+  }
 
   const batchesTableData = batches.map((batch, idx) => ({
     idx: idx+1,

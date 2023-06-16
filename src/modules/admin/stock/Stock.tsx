@@ -30,10 +30,6 @@ const Stock = () => {
             <Button size="sm" color="sky_600" onClick={() => {}}>Ajustar lotes</Button>
             <Button size="sm" color="red_600" onClick={() => {}}>Registrar extravio</Button>
           </Flex>
-
-          <SideFilters>
-
-          </SideFilters>
         </Flex>
       </Paper>
 
