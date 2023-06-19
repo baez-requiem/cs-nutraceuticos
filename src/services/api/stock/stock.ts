@@ -1,5 +1,5 @@
 import { authenticatedRequest } from "../utils"
-import { BatchType, CreateNewBatchBodyType, CreateNewBatchResponseType, StockProductType } from "./stock.types"
+import { BatchType, CreateNewBatchBodyType, CreateNewBatchResponseType, StockProductType, UpdateBatchBodyType, UpdateBatchResponseType } from "./stock.types"
 
 const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBatchResponseType|null> => {
   try {
@@ -10,6 +10,23 @@ const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBa
     })
 
     const data: CreateNewBatchResponseType = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+const updateBatch = async (body: UpdateBatchBodyType): Promise<UpdateBatchResponseType|null> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/batches',
+      method: 'put',
+      data: body
+    })
+
+    const data: UpdateBatchResponseType = response.data
 
     return data
   } catch (error) {
@@ -50,4 +67,27 @@ const getBatches = async (): Promise<BatchType[]> => {
   }
 }
 
-export default { createNewBatch, getStockProducts, getBatches }
+const deleteBatch = async (id: string): Promise<{ status: boolean }> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/batches',
+      method: 'delete',
+      data: { id }
+    })
+
+    const data: { status: boolean } = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return { status: false }
+  }
+}
+
+export default {
+  createNewBatch,
+  getStockProducts,
+  getBatches,
+  deleteBatch,
+  updateBatch
+}

@@ -16,6 +16,12 @@ export type CreateNewBatchResponseType = {
   updated_at: string | null
 }
 
+export type UpdateBatchBodyType = {
+  id: string
+} & CreateNewBatchBodyType
+
+export type UpdateBatchResponseType = {} & CreateNewBatchResponseType
+
 export type StockProductType = {
   id: string
   name: string
@@ -34,16 +40,11 @@ export type BatchType = {
   shipping?: number
   created_at: string
   updated_at: string | null
-  BatchesProducts: {
-    id: string
-    id_batch: string
+  products: {
     id_product: string
     quantity: number
     unit_amount: number
     created_at: string
-    updated_at: string | null
-    product: {
-      name: string
-    }
+    name: string
   }[]
 }

@@ -1,10 +1,10 @@
 import { useState, ChangeEvent, useEffect, FormEvent } from 'react'
-import { numberFormat, onlyNumbers, realToFloat } from 'src/utils/number.utils'
+import { floatToReal, numberFormat, onlyNumbers, realToFloat } from 'src/utils/number.utils'
 import { productsApi, stockApi } from 'src/services/api'
 import { ProductType } from 'src/services/api/products/products.types'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { newBatchSchema } from '../utils/schemas'
-import { CreateNewBatchBodyType } from 'src/services/api/stock/stock.types'
+import { BatchType, CreateNewBatchBodyType } from 'src/services/api/stock/stock.types'
 import { toast } from 'react-toastify'
 
 type ProductFormType = {
@@ -13,13 +13,22 @@ type ProductFormType = {
   unit_amount?: number
 }
 
+type NewBatchProductsState = {
+  unit_amount?: number
+  quantity?: number
+} & ProductType
+
 const useModalBatch = (
   show: boolean,
-  onClose: (arg0?: boolean) => void
+  onClose: () => void,
+  data?: BatchType
 ) => {
   const [selectValue, setSelectValue] = useState<string>('')
-  const [newBatchProducts, setNewBatchProducts] = useState<ProductType[]>([])
+  const [newBatchProducts, setNewBatchProducts] = useState<NewBatchProductsState[]>([])
   const [shipping, setShipping] = useState('0,00')
+  const [notes, setNotes] = useState('')
+
+  const queryClient = useQueryClient()
 
   const { data: products } = useQuery(['products'], async () => {
     const response = await productsApi.getAllProducts()
@@ -30,15 +39,22 @@ const useModalBatch = (
   const stockMutation = useMutation(async (body: CreateNewBatchBodyType) => {
     toast.loading(`Inserindo dados...`)
 
-    const batch = await stockApi.createNewBatch(body)
+    const dataId = data?.id
+
+    const batch = dataId 
+      ? await stockApi.updateBatch({...body, id: dataId})
+      : await stockApi.createNewBatch(body)
 
     toast.dismiss()
 
     batch?.id
-      ? toast.success('Novo lote cadastrado com sucesso!')
-      : toast.error('Houve um erro aou cadastrar um novo lote')
+      ? toast.success(`${dataId ? 'Lote atualizado' : 'Novo lote cadastrado'} com sucesso!`)
+      : toast.error(`Houve um erro ao ${dataId ? 'atualizar o' : 'cadastrar um novo'} lote`)
 
-    batch?.id && onClose(true)    
+    queryClient.refetchQueries({ queryKey: ['batches'] })
+    queryClient.refetchQueries({ queryKey: ['stock-products'] })
+
+    onClose()
   })
 
   const onShippingChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +69,7 @@ const useModalBatch = (
 
     if (!hasProduct) { return }
 
-    const nbpArr: ProductType[]  = [...newBatchProducts, hasProduct]
+    const nbpArr: ProductType[] = [...newBatchProducts, hasProduct]
     
     setNewBatchProducts(nbpArr)
   }
@@ -88,17 +104,16 @@ const useModalBatch = (
         : products.push({ id_product, [field]: value })
     })
 
-    const data = newBatchSchema.safeParse({
+    const validateData = newBatchSchema.safeParse({
       shipping: realToFloat(shipping.toString()),
       notes,
       products
     })
 
-    if (data.success) {
-
-      stockMutation.mutateAsync(data.data)
+    if (validateData.success) {
+      // @ts-ignore
+      stockMutation.mutateAsync(validateData.data)
     }
-
   }
 
   useEffect(() => {
@@ -108,8 +123,29 @@ const useModalBatch = (
   }, [newBatchProducts, products])
 
   useEffect(() => {
-    setNewBatchProducts([])
-    setShipping('0,00')
+    if (data) {
+      const dataProducts = data.products.map(dp => dp.id_product)
+
+      const npb = products
+        .filter(p => dataProducts.includes(p.id))
+        .map(p => {
+          const dataProduct = data.products.find(dp => dp.id_product == p.id)
+
+          return {
+            ...p,
+            unit_amount: dataProduct.unit_amount,
+            quantity: dataProduct.quantity,
+          }
+        })
+
+      setShipping(floatToReal(data.shipping))
+      setNewBatchProducts(npb)
+      setNotes(data.notes || '')
+    } else {
+      setNewBatchProducts([])
+      setShipping('0,00')
+      setNotes('')
+    }
   }, [show])
 
   return {
@@ -121,7 +157,9 @@ const useModalBatch = (
     selectOpts,
     onFormSubmit,
     shipping,
-    onShippingChange
+    onShippingChange,
+    notes,
+    setNotes
   }
 }
 

@@ -1,28 +1,36 @@
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, useState, ChangeEvent, useEffect } from 'react'
 
 import { IconButton } from "src/components/ui"
 import { StyledInput } from "./StyledInput"
 import { FaTimes } from "react-icons/fa"
 
-import { numberFormat, onlyNumbers } from 'src/utils/number.utils'
+import { floatToReal, numberFormat, onlyNumbers } from 'src/utils/number.utils'
 
 export interface LoteItemProps {
   onRemove: () => void
   name: string
   id: string
+  quantity?: number
+  unit_amount?: number
 }
 
 const LoteItem: FC<LoteItemProps> = ({
   onRemove,
   name,
-  id
+  id,
+  quantity,
+  unit_amount
 }) => {
-  const [amount, setAmout] = useState('')
+  const [amount, setAmount] = useState('')
 
   const onAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = numberFormat(parseInt(onlyNumbers(evt.currentTarget.value))/100, 2, ',', '.')
-    setAmout(value)
+    setAmount(value)
   }
+
+  useEffect(() => {
+    unit_amount && setAmount(floatToReal(unit_amount))
+  }, [unit_amount])
 
   return (
     <tr>
@@ -33,7 +41,13 @@ const LoteItem: FC<LoteItemProps> = ({
       </td>
       <td>
         <div>
-          <StyledInput min={1} name={`quantity--${id}`} type="number" placeholder="Ex: 100" />
+          <StyledInput
+            min={1}
+            name={`quantity--${id}`}
+            type="number"
+            placeholder="Ex: 100"
+            defaultValue={quantity}
+          />
         </div>
       </td>
       <td>

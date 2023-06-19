@@ -15,7 +15,7 @@ const BatchesProducts: FC<BatchesProductsType> = ({ products }) => {
   return (
     <>
       {products.map(p => (
-        <Grid template="2fr 1fr 1fr" key={`${p.name}-${p.quantity}-${p.amount}`}>
+        <Grid template="2fr 1fr 1fr" key={`${p.name}-${p.quantity}-${p.amount}`} style={{ minWidth: 300}}>
           <Text size="sm">{p.name}</Text>
           <Text size="sm" align="right">{p.quantity} Und.</Text>
           <Text size="sm" align="right">R$ {floatToReal(parseFloat(p.amount))}</Text>

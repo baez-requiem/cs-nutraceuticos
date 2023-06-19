@@ -5,15 +5,18 @@ import { AiOutlinePlus } from "react-icons/ai"
 import { StyledTable } from "../styles"
 import LoteItem from "./LoteItem"
 import { useModalBatch } from '../hooks/useModalBatch'
+import { BatchType } from 'src/services/api/stock/stock.types'
 
 export interface ModalBatchProps {
   show: boolean
   onClose: (arg0?: boolean) => void
+  data?: BatchType
 }
 
 const ModalBatch: FC<ModalBatchProps> = ({
   show,
-  onClose
+  onClose,
+  data
 }) => {
 
   const {
@@ -25,8 +28,10 @@ const ModalBatch: FC<ModalBatchProps> = ({
     selectOpts,
     onFormSubmit,
     shipping,
-    onShippingChange
-  } = useModalBatch(show, onClose)
+    onShippingChange,
+    notes,
+    setNotes
+  } = useModalBatch(show, onClose, data)
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -67,6 +72,8 @@ const ModalBatch: FC<ModalBatchProps> = ({
                 id={p.id}
                 key={p.id}
                 name={p.name}
+                quantity={p.quantity}
+                unit_amount={p.unit_amount}
                 onRemove={() => removeProduct(p.id)}
               />
             ))}
@@ -91,6 +98,9 @@ const ModalBatch: FC<ModalBatchProps> = ({
             block
             name='notes'
             label="Anotações"
+            value={notes}
+            onChange={({ target: { value } }) => setNotes(value)}
+            labelFixed={!!notes}
           />
         </Grid>
         
@@ -98,7 +108,7 @@ const ModalBatch: FC<ModalBatchProps> = ({
         
         <Flex items="end" justify="end" gap={10}>
           <Button size="sm" color="gray_500" onClick={() => onClose()} type='button'>Cancelar</Button>
-          <Button size="sm" color="green_600" type='submit'>Cadastrar</Button>
+          <Button size="sm" color="green_600" type='submit'>{data?.id ? 'Salvar': 'Cadastrar'}</Button>
         </Flex>
       </form>
 
