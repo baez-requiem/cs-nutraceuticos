@@ -23,8 +23,9 @@ const ModalMisplacements: FC<ModalMisplacementsProps> = ({
     removeProduct,
     selectOpts,
     selectValue,
-    handleNotes
-  } = useModalMisplacements(show)
+    handleNotes,
+    onFormSubmit
+  } = useModalMisplacements(show, onClose)
 
   return (
     <Modal
@@ -57,7 +58,7 @@ const ModalMisplacements: FC<ModalMisplacementsProps> = ({
 
       <Divider my={10} />
 
-      <form action="">
+      <form onSubmit={onFormSubmit}>
         <StyledMisplacementsTable>
           <thead>
             <tr>

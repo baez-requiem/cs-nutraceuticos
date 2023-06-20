@@ -1,8 +1,10 @@
 import { useState, ChangeEvent, useEffect, FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { productsApi } from 'src/services/api'
+import { misplacementsApi, productsApi } from 'src/services/api'
 import { ProductType } from 'src/services/api/products/products.types'
 import { newMisplacementSchema } from '../utils/schemas'
+import { CreateNewMisplacementBodyType } from 'src/services/api/misplacements/misplacements.types'
+import { toast } from 'react-toastify'
 
 type NewMisplacementsProductsState = {
   quantity?: number
@@ -13,7 +15,10 @@ type ProductFormType = {
   quantity: number
 }
 
-const useModalMisplacements = (show: boolean) => {
+const useModalMisplacements = (
+  show: boolean,
+  onClose: () => void
+) => {
   const [selectValue, setSelectValue] = useState<string>('')
   const [newMisplacementProducts, setNewMisplacementProducts] = useState<NewMisplacementsProductsState[]>([])
   const [notes, setNotes] = useState('')
@@ -26,29 +31,26 @@ const useModalMisplacements = (show: boolean) => {
     return response
   }, { initialData: [], refetchOnWindowFocus: false })
 
-  const misplacementMutation = useMutation(async (body: CreateNewB) => {
+  const misplacementMutation = useMutation(async (body: CreateNewMisplacementBodyType) => {
     toast.loading(`Inserindo dados...`)
 
-    const dataId = data?.id
-
-    const batch = dataId 
-      ? await stockApi.updateBatch({...body, id: dataId})
-      : await stockApi.createNewBatch(body)
+    const misplacement = await misplacementsApi.createNewMisplacement(body)
 
     toast.dismiss()
 
-    batch?.id
-      ? toast.success(`${dataId ? 'Lote atualizado' : 'Novo lote cadastrado'} com sucesso!`)
-      : toast.error(`Houve um erro ao ${dataId ? 'atualizar o' : 'cadastrar um novo'} lote`)
+    misplacement?.id
+      ? toast.success(`Novo extravio cadastrado com sucesso!`)
+      : toast.error(`Houve um erro ao cadastrar um novo extravio`)
 
     queryClient.refetchQueries({ queryKey: ['batches'] })
+    queryClient.refetchQueries({ queryKey: ['misplacements'] })
     queryClient.refetchQueries({ queryKey: ['stock-products'] })
 
     onClose()
   })
 
   const handleSelect = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => setSelectValue(value)
-  const handleNotes = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => setSelectValue(value)
+  const handleNotes = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => setNotes(value)
 
   const addProduct = () => {
     const hasProduct = products.find(p => p.id === selectValue)
@@ -90,12 +92,13 @@ const useModalMisplacements = (show: boolean) => {
       products
     })
 
+    console.log(validateData)
+
     if (validateData.success) {
       // @ts-ignore
-      stockMutation.mutateAsync(validateData.data)
+      misplacementMutation.mutateAsync(validateData.data)
     }
   }
-
 
   const selectOpts = products
     .filter(p => !newMisplacementProducts.find(nmp => nmp.id === p.id))
