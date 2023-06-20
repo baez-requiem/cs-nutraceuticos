@@ -3,6 +3,7 @@ import { Button, Divider, Flex, Grid, Paper, Private, Text } from "src/component
 import { BatchesTable, ModalBatch, StockTable } from "./components"
 import { useStock } from "./hooks/useStock"
 import MisplacementsTable from "./components/MisplacementsTable"
+import ModalMisplacements from "./components/ModalMisplacements"
 
 const Stock = () => {
 
@@ -21,7 +22,7 @@ const Stock = () => {
         <Flex items="end" justify="space-between">
           <Flex items="end" gap={10}>
             <Button size="sm" color="green_600" onClick={() => openModal('newBatch')}>Novo lote</Button>
-            <Button size="sm" color="red_600" onClick={() => {}}>Registrar extravio</Button>
+            <Button size="sm" color="red_600" onClick={() => openModal('newMisplacement')}>Registrar extravio</Button>
           </Flex>
         </Flex>
       </Paper>
@@ -36,8 +37,12 @@ const Stock = () => {
 
       <Divider my={10} />
 
-     
       <BatchesTable />
+
+      <ModalMisplacements
+        show={useModal.opened == 'newMisplacement'}
+        onClose={closeModal}
+      />
 
       <ModalBatch
         show={useModal.opened == 'newBatch'}

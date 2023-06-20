@@ -1,10 +1,11 @@
 import { Badge, Divider, Paper, Table, Text } from "src/components/ui"
 import MisplacementsProducts from "./MisplacementsProducts"
 import { formatProducts } from "../utils/functions"
+import ModalMisplacements from "./ModalMisplacements"
+import { useModalMisplacements } from "../hooks/useModalMisplacements"
 
 const MisplacementsTable = () => {
 
-  // const { stockProducts } = useStockTable()
 
   return (
     <Paper>

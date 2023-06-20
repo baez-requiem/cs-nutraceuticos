@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components"
 
 export const StyledTable = styled.table`
   width: 100%;
@@ -29,5 +29,11 @@ export const StyledTable = styled.table`
 
   tbody td:last-child > button{
     margin-top: auto;
+  }
+`
+
+export const StyledMisplacementsTable = styled(StyledTable)`
+  thead th:first-child {
+    width: 70%;
   }
 `

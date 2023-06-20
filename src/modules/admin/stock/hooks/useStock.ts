@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 interface ModalState {
   data?: any
-  opened: null | 'newBatch'
+  opened: null | 'newBatch' | 'newMisplacement'
 }
 
 const useStock = () => {
