@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import Input from "./components/Input"
 import { Container, Content, FormContent, Logo, StyledButton } from "./styles"
 
@@ -6,8 +5,6 @@ import { BiUser, BiLock } from 'react-icons/bi'
 import { useLogin } from "./hooks/useLogin"
 
 const Login = () => {
-
-  const navigate = useNavigate()
 
   const {
     formik: {

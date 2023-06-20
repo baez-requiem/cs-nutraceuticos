@@ -16,10 +16,12 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
 
   const {
     searchCEP,
+    selectPaymentTypesOpt,
+    selectMediasOpt,
     formik: {
       values,
       handleChange
-    }
+    },
   } = useModalNewSale()
 
   return (
@@ -76,8 +78,8 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
       <Text weight="500">Dados da venda</Text>
       <Divider />
       <Grid gap={10} template="1fr 1fr" md="1fr">
-        <Select label="Mídia" options={[]} />
-        <Select label="Forma de pagamento" options={[]} />
+        <Select label="Mídia" options={selectMediasOpt} />
+        <Select label="Forma de pagamento" options={selectPaymentTypesOpt} />
         <Input label="Desconto" />
       </Grid>
 
