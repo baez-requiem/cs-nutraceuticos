@@ -1,8 +1,9 @@
 import { FC } from "react"
-import { Button, Divider, Flex, Grid, Input, Modal, Select, Text } from "src/components/ui"
+import { Button, Divider, Flex, Grid, IconButton, Input, Modal, Select, Text } from "src/components/ui"
 import { useModalNewSale } from "../hooks/useModalNewSale"
 import { StyledTable } from "../styles"
 import ProductItem from "src/modules/admin/stock/components/ProductItem"
+import { AiOutlinePlus } from "react-icons/ai"
 
 export interface ModalNewSaleProps {
   show: boolean
@@ -18,6 +19,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
     searchCEP,
     selectPaymentTypesOpt,
     selectMediasOpt,
+    selectProductsOpt,
     formik: {
       values,
       handleChange
@@ -50,9 +52,28 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
       <Divider my={10} />
 
       <Text weight="500">Produtos</Text>
-      <Select label="Pesquisar produto..." options={[{label: '', value: ''},{ label: 'produto', value: '1' }]} />
-      <Divider />
 
+      <Flex gap={10} items="end">
+        <Select
+          block
+          label="Produto"
+          options={selectProductsOpt}
+          // onChange={handleSelect}
+          // value={selectValue}
+          // labelFixed={!!selectValue}
+        />
+        
+        <IconButton
+          color="sky_600"
+          // onClick={addProduct}
+          disabled={!selectProductsOpt.length}
+        >
+          <AiOutlinePlus size={20} color="white" />
+        </IconButton>
+      </Flex>
+
+      <Divider my={10} />
+     
       <StyledTable>
         <thead>
           <tr>

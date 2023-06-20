@@ -1,30 +1,24 @@
+import { useState } from "react"
 import { useFormik } from "formik"
 import { initialDataFormNewSale } from "../constants"
 import { consultCep } from "src/services/viacep"
 import { useQuery } from "react-query"
-import { mediasApi, salesApi } from "src/services/api"
+import { mediasApi, productsApi, salesApi } from "src/services/api"
+import { ProductType } from "src/services/api/products/products.types"
+
+type NewSaleProductsState = {
+  quantity_sales?: number
+  quantity?: number
+} & ProductType
 
 const useModalNewSale = () => {
-
-  const { data: paymentTypes } = useQuery(
-    'payment-types',
-    salesApi.getPaymentTypes,
-    {
-      initialData: [],
-      keepPreviousData: true,
-      refetchOnWindowFocus: false 
-    }
-  )
- 
-  const { data: medias } = useQuery(
-    'medias',
-    mediasApi.getAllMedias,
-    {
-      initialData: [],
-      keepPreviousData: true,
-      refetchOnWindowFocus: false 
-    }
-  )
+  const [newSaleProducts, setNewSaleProducts] = useState<NewSaleProductsState[]>([])
+  
+  const {
+    medias,
+    paymentTypes,
+    products
+  } = useQueryData()
 
   const formik = useFormik({
     initialValues: initialDataFormNewSale,
@@ -50,6 +44,10 @@ const useModalNewSale = () => {
     })
   }
 
+  const selectProductsOpt = products
+    .filter(p => !newSaleProducts.find(nsp => nsp.id === p.id))
+    .map(p => ({ label: p.name, value: p.id }))
+
   const selectPaymentTypesOpt = paymentTypes.map(pt => ({
     label: pt.name,
     value: pt.id
@@ -65,7 +63,46 @@ const useModalNewSale = () => {
     searchCEP,
     paymentTypes,
     selectPaymentTypesOpt,
-    selectMediasOpt
+    selectMediasOpt,
+    selectProductsOpt
+  }
+}
+
+const useQueryData = () => {
+  const { data: paymentTypes } = useQuery(
+    'payment-types',
+    salesApi.getPaymentTypes,
+    {
+      initialData: [],
+      keepPreviousData: true,
+      refetchOnWindowFocus: false 
+    }
+  )
+ 
+  const { data: medias } = useQuery(
+    'medias',
+    mediasApi.getAllMedias,
+    {
+      initialData: [],
+      keepPreviousData: true,
+      refetchOnWindowFocus: false 
+    }
+  )
+
+  const { data: products } = useQuery(
+    'products',
+    productsApi.getAllProducts,
+    {
+      initialData: [],
+      keepPreviousData: true,
+      refetchOnWindowFocus: false
+    }
+  )
+
+  return {
+    paymentTypes,
+    medias,
+    products
   }
 }
 
