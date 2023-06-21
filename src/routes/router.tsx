@@ -50,6 +50,10 @@ export const router = createBrowserRouter([
         path: "/admin/sales-team",
         element: lazyLoad(lazy(() => import('src/modules/admin/salesTeam/SalesTeam')))
       },
+      {
+        path: "/admin/reports/sales",
+        element: lazyLoad(lazy(() => import('src/modules/admin/reports/sales/SalesReport')))
+      },
     ]
   },
   
