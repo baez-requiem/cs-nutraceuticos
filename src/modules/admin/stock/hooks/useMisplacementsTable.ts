@@ -1,13 +1,34 @@
 import { useState } from 'react'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { toast } from 'react-toastify'
 import { misplacementsApi } from 'src/services/api'
 
 const useMisplacementsTable = () => {
+
+  const queryClient = useQueryClient()
+
   const { data: misplacements } = useQuery(
     'misplacements',
-    async () => await misplacementsApi.getAllMisplacements(),
+    misplacementsApi.getAllMisplacements,
     { initialData: [] }
   )
+
+  const deleteMisplacementMutation = useMutation(async (id: string) => {
+    toast.loading("Excluindo extravio...")
+
+    const { status: hasDeleted } = await misplacementsApi.deleteMisplacement(id)
+
+    toast.dismiss()
+
+    hasDeleted
+      ? toast.success(`Extravio excluído com sucesso!`)
+      : toast.error(`Houve um erro ao excluir o extravio.`)
+  }, {
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: 'misplacements' })
+      queryClient.refetchQueries({ queryKey: 'stock-products' })
+    }
+  })
 
   const misplacementsTableData = misplacements.map((batch, idx) => ({
     idx: idx+1,
@@ -17,8 +38,11 @@ const useMisplacementsTable = () => {
     products: batch.products.map(bp => `${bp.name}__${bp.quantity}`).join('--'),
   })).reverse()
 
+  const deleteMisplacement = (id: string) => async () => await deleteMisplacementMutation.mutateAsync(id)
+
   return {
     misplacementsTableData,
+    deleteMisplacement
   }
 }
 

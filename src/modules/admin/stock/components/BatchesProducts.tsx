@@ -13,7 +13,7 @@ interface BatchesProductsType {
 const BatchesProducts: FC<BatchesProductsType> = ({ products }) => {
 
   return (
-    <div style={{ maxHeight: 52, overflowY: 'auto' }}>
+    <div style={{ maxHeight: 52, overflowY: 'auto', margin: '10px 0' }}>
       {products.map(p => (
         <Grid template="2fr 1fr 1fr" key={`${p.name}-${p.quantity}-${p.amount}`} style={{ minWidth: 300}}>
           <Text size="sm">{p.name}</Text>

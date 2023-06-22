@@ -34,4 +34,25 @@ const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promi
   }
 }
 
-export default { getAllMisplacements, createNewMisplacement }
+const deleteMisplacement = async (id: string): Promise<{ status: boolean }> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/misplacements',
+      method: 'delete',
+      data: { id }
+    })
+
+    const data: { status: boolean } = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return { status: false }
+  }
+}
+
+export default {
+  deleteMisplacement,
+  getAllMisplacements,
+  createNewMisplacement,
+}

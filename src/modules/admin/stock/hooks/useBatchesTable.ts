@@ -34,7 +34,7 @@ const useBatchesTable = () => {
 
   const { data: batches } = useQuery(
     'batches',
-    async () => await stockApi.getBatches(),
+   stockApi.getBatches,
     { initialData: [] }
   )
 

@@ -56,8 +56,8 @@ const BatchesTable = () => {
             align: 'center',
             render: value => (
               <Flex justify="center" gap={10}>
-                <IconButton color="blue_600" onClick={() => {}}>
-                  <MdOutlineModeEditOutline color="white" size={20} onClick={() => openModal(value.toString())} />
+                <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
+                  <MdOutlineModeEditOutline color="white" size={20} />
                 </IconButton>
                 <IconButton color="red_600" onClick={() => openConfirm(value.toString())}>
                   <BsTrash color="white" size={18} />
