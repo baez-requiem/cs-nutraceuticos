@@ -1,9 +1,10 @@
 import { Badge, Divider, Paper, Table, Text } from "src/components/ui"
 import { useStockTable } from "../hooks/useStockTable"
+import { statusVariations } from "../constants"
 
 const StockTable = () => {
 
-  const { stockProducts } = useStockTable()
+  const { tableData } = useStockTable()
 
   return (
     <Paper>
@@ -12,12 +13,12 @@ const StockTable = () => {
       <Table
         columns={[
           { label: 'Produto', value: 'name' },
-          { label: 'Estoque disponível', value: 'quantity' },
-          { label: 'Status', value: 'active', render: value => (
-            <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
+          { label: 'Estoque disponível', value: 'total' },
+          { label: 'Status', value: 'status', render: value => (
+            <Badge color={statusVariations[value].color}>{value}</Badge>
           ) },
         ]}
-        data={stockProducts.map(sp => ({ ...sp, active: +sp.active }))}
+        data={tableData}
       />
     </Paper>
   )

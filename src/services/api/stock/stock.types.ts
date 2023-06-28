@@ -29,7 +29,8 @@ export type StockProductType = {
   notes: string | null
   active: boolean
   amount: number
-  quantity: number
+  supply_quantity_notice: number | null
+  total: number
   created_at: string
   updated_at: string | null
 }
@@ -47,4 +48,9 @@ export type BatchType = {
     created_at: string
     name: string
   }[]
+}
+
+export type GetStockProductsParamsType = {
+  active?: boolean
+  in_stock?: boolean
 }

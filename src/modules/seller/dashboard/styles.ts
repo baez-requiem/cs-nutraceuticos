@@ -1,6 +1,9 @@
 import styled from "styled-components"
 
-export const StyledTable = styled.table`
+export const StyledTable = styled.table<{ show?: boolean }>`
+
+  display: ${({ show = true }) => show ? 'table' : 'none'};
+
   width: 100%;
   border-collapse: collapse;
 
@@ -47,7 +50,9 @@ export const StyledTable = styled.table`
     margin-top: auto;
   }
   
-  tfoot th {}
+  tfoot th {
+    padding: 10px 5px;
+  }
 `
 
 export const CardsContainer = styled.div`

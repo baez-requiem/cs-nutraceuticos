@@ -2,7 +2,13 @@ import styled from "styled-components"
 
 import { ColorsType } from "src/theme/theme.default"
 
-const IconButton = styled.button<{ color?: ColorsType, size?: number }>`
+export interface IconButtonProps {
+  color?: ColorsType
+  size?: number
+  circle?: boolean
+}
+
+const IconButton = styled.button<IconButtonProps>`
   height: ${({ size = 30 }) => size}px;
   width: ${({ size = 30 }) => size}px;
   min-height: ${({ size = 30 }) => size}px;
@@ -12,7 +18,7 @@ const IconButton = styled.button<{ color?: ColorsType, size?: number }>`
   align-items: center;
   justify-content: center;
 
-  border-radius: 3.5px;
+  border-radius: ${({ circle = false }) => circle ? '50%' : '3.5px'};
   border: none;
 
   background-color: ${({ theme, color }) => color ? theme.colors[color] : 'transparent'};

@@ -4,6 +4,7 @@ import { BatchesTable, ModalBatch, StockTable } from "./components"
 import { useStock } from "./hooks/useStock"
 import MisplacementsTable from "./components/MisplacementsTable"
 import ModalMisplacements from "./components/ModalMisplacements"
+import { Header } from "src/components/template"
 
 const Stock = () => {
 
@@ -15,7 +16,7 @@ const Stock = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Estoque</Text>
+      <Header title="Estoque" />
       <Divider my={10} />
 
       <Paper>

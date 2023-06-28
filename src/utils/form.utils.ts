@@ -1,6 +1,6 @@
 import { FormikHelpers } from 'formik'
 import { ChangeEvent } from 'react'
-import { formatPhone, formatReal } from './number.utils'
+import { formatPhone, formatReal, onlyNumbers } from './number.utils'
 
 export function handleChangeFormatReal(
   setFieldValue: FormikHelpers<any>['setFieldValue']
@@ -36,8 +36,11 @@ export function handleChangeFormatPhone(
 
   return (evt: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = evt.currentTarget
+
     const formatedValue = formatPhone(value)
+
+    const hasNumbers = onlyNumbers(formatedValue).length
   
-    setFieldValue(name, formatedValue)
+    setFieldValue(name, hasNumbers ? formatedValue : '')
   }
 }

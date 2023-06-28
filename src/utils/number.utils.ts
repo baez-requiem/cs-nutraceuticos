@@ -61,7 +61,7 @@ export function formatPhone(number: number | string = ''): string {
 
   if (n.length > 10) {
     n = n.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3")
-  } else if (n.length > 5) {
+  } else if (n.length > 7) {
     n = n.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3")
   } else if (n.length > 2) {
     n = n.replace(/^(\d\d)(\d{0,5})/, "($1) $2")

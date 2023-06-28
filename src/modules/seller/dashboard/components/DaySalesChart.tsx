@@ -39,7 +39,7 @@ const DaySalesChart = () => {
     <Paper>
       <Text size="xl" weight="600" color="gray_900">Qtd. Vendas - 01 de janeiro até 07 de janeiro</Text>
       <Divider my={10} />
-      <div style={{ height: 200 }}>
+      <div style={{ height: 260 }}>
         <Chart options={{ data, primaryAxis, secondaryAxes, tooltip: false, dark: false  }} />
       </div>
     </Paper>

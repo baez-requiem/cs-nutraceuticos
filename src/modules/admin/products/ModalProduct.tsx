@@ -55,7 +55,7 @@ const ModalProduct: FC<ModalProductProps> = ({
 
       <Divider />
 
-      <Grid gap={10}>
+      <Grid gap={10} template="1fr 1fr" xs="1fr">
         <Input
           label="Descrição:"
           name="description"
@@ -64,15 +64,28 @@ const ModalProduct: FC<ModalProductProps> = ({
           onChange={handleChange}
         />
 
-        <Textarea
-          rows={6}
-          label="Anotações:"
-          name="notes"
-          labelFixed={!!values.notes}
-          value={values.notes}
+        <Input
+          label="Qntd. aviso de abastecimento:"
+          name="supply_quantity_notice"
+          block
+          labelFixed={!!values.supply_quantity_notice}
+          value={values.supply_quantity_notice}
+          min={0}
+          type="number"
           onChange={handleChange}
         />
       </Grid>
+
+      <Divider />
+
+      <Textarea
+        rows={6}
+        label="Anotações:"
+        name="notes"
+        labelFixed={!!values.notes}
+        value={values.notes}
+        onChange={handleChange}
+      />
 
       <Divider my={10} />
 

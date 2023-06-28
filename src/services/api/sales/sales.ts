@@ -1,5 +1,5 @@
 import { authenticatedRequest } from "../utils"
-import { PaymentType } from "./sales.types"
+import { CreateNewSaleBodyType, CreateNewSaleResponseType, PaymentType } from "./sales.types"
 
 const getPaymentTypes = async (): Promise<PaymentType[]> => {
   try {
@@ -17,4 +17,21 @@ const getPaymentTypes = async (): Promise<PaymentType[]> => {
   }
 }
 
-export default { getPaymentTypes }
+const createNewSale = async (body: CreateNewSaleBodyType): Promise<CreateNewSaleResponseType|null> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/sales',
+      method: 'post',
+      data: body
+    })
+
+    const data: CreateNewSaleResponseType = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export default { getPaymentTypes, createNewSale }

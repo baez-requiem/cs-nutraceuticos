@@ -1,44 +1,71 @@
 import { FC } from 'react'
 
-import { IconButton } from "src/components/ui"
+import { Flex, IconButton } from "src/components/ui"
 import { StyledInput } from "./StyledInput"
 import { FaTimes } from "react-icons/fa"
 
+import { FormikHandlers } from 'formik'
+import { floatToReal } from 'src/utils/number.utils'
+
 export interface ProductItemProps {
   onRemove: () => void
+  id_product: string
+  quantity: number | string
+  sales_quantity: number | string
+  idx: number
   name: string
-  id: string
+  handleChange: FormikHandlers['handleChange']
+  amount: number
 }
 
 const ProductItem: FC<ProductItemProps> = ({
   onRemove,
   name,
-  id
+  idx,
+  quantity,
+  sales_quantity,
+  handleChange,
+  amount
 }) => (
   <tr>
     <td>
+      <Flex justify='space-between'>
+        <span>{name}</span>
+        <span>{floatToReal(amount)} Und.</span>
+      </Flex>
+    </td>
+    <td>
       <div>
-        {name}
+        <StyledInput
+          type="number"
+          name={`products.${idx}.quantity`}
+          value={quantity}
+          min={1}
+          onChange={handleChange}
+          placeholder="Ex: 10"
+        />
       </div>
     </td>
     <td>
       <div>
-        <StyledInput name={`quantity-${id}`} type="number" defaultValue={1} min={1} placeholder="Ex: 10" />
+        <StyledInput
+          type="number"
+          min={1}
+          value={sales_quantity}
+          placeholder="Ex: 5"
+          onChange={handleChange}
+          name={`products.${idx}.sales_quantity`}
+        />
       </div>
     </td>
     <td>
       <div>
-        <StyledInput name={`sales-${id}`} type="number" defaultValue={1} min={1} placeholder="Ex: 5" />
+        {floatToReal(amount * parseInt(quantity.toString()))}
       </div>
     </td>
     <td>
       <div>
-        100,00
-      </div>
-    </td>
-    <td>
-      <div>
-        <IconButton color="red_600" onClick={onRemove}>
+        <IconButton color="red_600" onClick={onRemove} type="button">
           <FaTimes size={18} color="white" />
         </IconButton>
       </div>

@@ -12,6 +12,7 @@ const initialValues = {
   amount: '',
   notes: '',
   name: '',
+  supply_quantity_notice: ''
 }
 
 const useModalProduct = (
@@ -24,9 +25,17 @@ const useModalProduct = (
 
     toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
 
+    const body = {
+      ...values,
+      supply_quantity_notice: parseInt(values.supply_quantity_notice),
+      amount: realToFloat(values.amount)
+    }
+
+    console.log(body)
+
     const product = idProduct
-      ? await productsApi.updateProduct({ ...values, amount: realToFloat(values.amount), id: idProduct })
-      : await productsApi.createProduct({...values, amount: realToFloat(values.amount) })
+      ? await productsApi.updateProduct({ ...body, id: idProduct })
+      : await productsApi.createProduct(body)
 
     toast.dismiss()
 
@@ -52,6 +61,7 @@ const useModalProduct = (
         description: data.description || '',
         notes: data.notes || '',
         active: data.active,
+        supply_quantity_notice: data.supply_quantity_notice?.toString() || '',
         amount: formatReal(data.amount) ,
       })
       : formik.resetForm()

@@ -52,7 +52,7 @@ export const authenticatedRequest = async <T = any>(config: Config): Promise<Axi
             }
           }
           
-          return await axios(requestConfig);
+          return await httpClient(requestConfig);
         } catch (error) {
           console.error('Erro ao obter um novo token de acesso:', error)
           localStorage.setItem('auth', null)
@@ -65,4 +65,17 @@ export const authenticatedRequest = async <T = any>(config: Config): Promise<Axi
     console.error('Erro na solicitação protegida:', error)
     throw error
   }
+}
+
+export const makeGETParams = (url: string = '', obj: { [key: string]: string | number | boolean }): string => {
+  const params: string[] = [];
+
+  for (const key in obj) {
+    const value = obj[key]
+    const param = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+
+    params.push(param)
+  }
+
+  return `${url}?${params.join('&')}`
 }
