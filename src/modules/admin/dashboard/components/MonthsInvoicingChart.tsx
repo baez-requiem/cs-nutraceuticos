@@ -2,57 +2,58 @@ import { useMemo } from "react"
 import { AxisOptions, Chart } from "react-charts"
 import { Divider, Paper, Text } from "src/components/ui"
 
-const mockChartData = [
-  { date: 1, invoicing: 38000 },
-  { date: 2, invoicing: 72666 },
-  { date: 3, invoicing: 100654 },
-  { date: 4, invoicing: 163875 },
-  { date: 5, invoicing: 195687 },
-  { date: 6, invoicing: 258755 },
-  { date: 7, invoicing: 286576 },
-  { date: 8, invoicing: 287864 },
-  { date: 9, invoicing: 310587 },
-  { date: 10, invoicing: 340587 },
-  { date: 11, invoicing: 360587 },
-  { date: 12, invoicing: 380587 },
-  { date: 13, invoicing: 410587 },
-  { date: 14, invoicing: 440587 },
-  { date: 15, invoicing: 470587 },
-]
+import { useQuery } from "react-query"
+import { dashboardApi } from "src/services/api"
+import { DayItemType } from "src/services/api/dashboard/dashboard.types"
 
-type DailyStars = {
-  date: number,
-  invoicing: number,
-}
+const mounth = (new Date().getMonth() + 1).toString().padStart(2, '0')
+const year = new Date().getUTCFullYear()
 
 const MonthsInvoicingChart = () => {
 
+  const { data: monthStatisticsResume } = useQuery(
+    'dashboard/month-statistics-resume',
+    dashboardApi.getMonthStatisticsResume,
+    { refetchInterval: 10000, initialData: [{ day: 1, amount: 0 }] }
+  )
+
   const data = [{
-    data: mockChartData,
+    data: monthStatisticsResume
   }]
 
-  const primaryAxis = useMemo((): AxisOptions<DailyStars> => ({
-    getValue: datum => datum.date,
+  const primaryAxis = useMemo((): AxisOptions<DayItemType> => ({
+    getValue: datum => datum.day,
     formatters: {
-      scale: value => value + '/05'
-    }
+      scale: value => `${value?.toString().padStart(2, '0')}/${mounth}`,
+    },
+    hardMin: 1,
+    tickCount: monthStatisticsResume.length,
+    scaleType: 'linear'
   }), [])
 
-  const secondaryAxes = useMemo((): AxisOptions<DailyStars>[] => [{
-    getValue: datum => datum.invoicing,
+  const secondaryAxes = useMemo((): AxisOptions<DayItemType>[] => [{
+    getValue: datum => datum.amount,
     formatters: {
-      tooltip: value => value?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
-      scale: value => value?.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+      tooltip: value => value?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
+      scale: value => value?.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
     },
   }], [])
 
   return (
     <Paper>
-      <Text size="xl" weight="600" color="gray_900">Receita 05/2023</Text>
+      <Text size="xl" weight="600" color="gray_900">Receita {mounth}/{year}</Text>
       <Divider my={10} />
       <div style={{ height: 350 }}>
-          <Chart options={{ data, primaryAxis, secondaryAxes, tooltip: false, dark: false,  }} />
-        </div>
+        <Chart
+          options={{
+            data,
+            primaryAxis,
+            secondaryAxes,
+            tooltip: false,
+            dark: false,
+          }}
+        />
+      </div>
     </Paper>
   )
 }

@@ -66,8 +66,6 @@ export const NavContainer = styled.nav<{ hasMenuHide?: boolean }>`
       animation: ${showMobileAdmin} .75s linear reverse;
       left: -720px;
       opacity: 0;
-
-      
     ` : css`
       animation: ${showMobileAdmin} .75s linear;
       left: 0px;

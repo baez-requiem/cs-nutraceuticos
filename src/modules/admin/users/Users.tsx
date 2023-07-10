@@ -4,6 +4,7 @@ import { Button, Confirm, Divider, Flex, IconButton, Paper, Private, Table, Text
 import ModalUser from "./ModalUser"
 import { useUsers } from "./hooks/useUsers"
 import { formatUTCDate } from "src/utils/date.utils"
+import { Header } from "src/components/template"
 
 const Users = () => {
 
@@ -19,7 +20,7 @@ const Users = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Usuários</Text>
+      <Header title="Usuários" />
       <Divider my={10} />
       
       <Paper>
@@ -52,7 +53,7 @@ const Users = () => {
                   <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(value, 'fulano de tal')}>
+                  <IconButton color="red_600" onClick={() => openConfirm(value.toString(), 'fulano de tal')}>
                     <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>

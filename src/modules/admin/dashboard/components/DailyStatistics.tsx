@@ -1,14 +1,26 @@
+import { FC } from "react"
 import { Divider, Flex, Grid, IconBadge, Paper, Text } from "src/components/ui"
 
 import { BiDollar } from 'react-icons/bi'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { TbMoodDollar } from 'react-icons/tb'
+import { floatToReal } from "src/utils/number.utils"
 
-const Statistics = () => {
+interface DailyStatisticsProps {
+  totalSales?: number
+  totalProducts?: number
+  totalAmount?: number
+}
+
+const DailyStatistics: FC<DailyStatisticsProps> = ({
+  totalAmount = 0,
+  totalProducts = 0,
+  totalSales = 0
+}) => {
 
   return (
     <Paper>
-      <Text size="xl" weight="600" color="gray_900">Estatísticas hoje({new Date().getDate()}/06)</Text>
+      <Text size="xl" weight="600" color="gray_900">Estatísticas hoje({new Date().getDate().toString().padStart(2, '0')}/06)</Text>
       
       <Divider my={10} />
       
@@ -19,7 +31,7 @@ const Statistics = () => {
             <TbMoodDollar size={28} color="white" />
           </IconBadge>
           <Flex direction="column" gap={5}>
-            <Text size="lg" weight="600" color="gray_700">196</Text>
+            <Text size="lg" weight="600" color="gray_700">{totalSales}</Text>
             <Text weight="600" color="gray_700">Vendas</Text>
           </Flex>
         </Flex>
@@ -29,7 +41,7 @@ const Statistics = () => {
             <AiOutlineShoppingCart size={28} color="white" />
           </IconBadge>
           <Flex direction="column" gap={5}>
-            <Text size="lg" weight="600" color="gray_700">983</Text>
+            <Text size="lg" weight="600" color="gray_700">{totalProducts}</Text>
             <Text weight="600" color="gray_700">Produtos</Text>
           </Flex>
         </Flex>
@@ -39,7 +51,7 @@ const Statistics = () => {
             <BiDollar size={28} color="white" />
           </IconBadge>
           <Flex direction="column" gap={5}>
-            <Text size="lg" weight="600" color="gray_700">R$ 32.456,32</Text>
+            <Text size="lg" weight="600" color="gray_700">{floatToReal(totalAmount)}</Text>
             <Text weight="600" color="gray_700">Receita</Text>
           </Flex>
         </Flex>
@@ -49,4 +61,4 @@ const Statistics = () => {
   )
 }
 
-export default Statistics
+export default DailyStatistics

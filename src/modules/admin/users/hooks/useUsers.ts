@@ -54,7 +54,7 @@ const useUsers = () => {
     setModal({ show: false })
   }
 
-  const openConfirm = (id: string, name: string|number) => setConfirm({
+  const openConfirm = (id: string, name: string) => setConfirm({
     id,
     show: true,
     title: 'Atenção',

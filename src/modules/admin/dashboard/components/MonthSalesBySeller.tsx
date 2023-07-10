@@ -3,8 +3,17 @@ import { Divider, Flex, IconBadge, Paper, Text } from "src/components/ui"
 import { BiDollar } from 'react-icons/bi'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { TbMoodDollar } from 'react-icons/tb'
+import { useQuery } from "react-query"
+import { dashboardApi } from "src/services/api"
+import { floatToReal } from "src/utils/number.utils"
 
 const MonthSalesBySeller = () => {
+
+  const { data: monthSalesBySeller } = useQuery(
+    'dashboard/month-sales-by-seller',
+    dashboardApi.getMonthSalesBySeller,
+    { refetchInterval: 10000, initialData: [] }
+  )
 
   return (
     <Paper>
@@ -12,11 +21,11 @@ const MonthSalesBySeller = () => {
       
       <Divider my={10} />
       
-      <Flex justify="space-between" gap={20} style={{ overflowX: 'auto' }}>
+      <Flex gap={20} style={{ overflowX: 'auto' }}>
 
-        {Array(10).fill('').map(_ => (
-          <Paper color="sky_700" style={{ minWidth: '250px' }}>
-            <Text weight="600" size="lg" color="white">Fulano de tal</Text>
+        {monthSalesBySeller.map(sale => (
+          <Paper key={`month-sales-by-seller-${sale.id}`} color="sky_700" style={{ minWidth: '250px' }}>
+            <Text weight="600" size="lg" color="white">{sale.name}</Text>
 
             <Divider />
 
@@ -25,7 +34,7 @@ const MonthSalesBySeller = () => {
                 <TbMoodDollar size={20} />
               </Text>
 
-              <Text size="sm" weight="600" color="gray_50">4</Text>
+              <Text size="sm" weight="600" color="gray_50">{sale.totalSales}</Text>
             </Flex>
 
             <Divider my={2.5} line opacityLine={.1} color="white" />
@@ -35,7 +44,7 @@ const MonthSalesBySeller = () => {
                 <AiOutlineShoppingCart size={20} />
               </Text>
 
-              <Text size="sm" weight="600" color="gray_50">21</Text>
+              <Text size="sm" weight="600" color="gray_50">{sale.totalProducts}</Text>
             </Flex>
 
             <Divider my={2.5} line opacityLine={.1} color="white" />
@@ -45,12 +54,10 @@ const MonthSalesBySeller = () => {
                 <BiDollar size={20} />
               </Text>
 
-              <Text size="sm" weight="600" color="gray_50">R$ 903,56</Text>
+              <Text size="sm" weight="600" color="gray_50">R$ {floatToReal(sale.totalAmount)}</Text>
             </Flex>
           </Paper>
         )) }
-        
-      
       </Flex>
     </Paper>
   )

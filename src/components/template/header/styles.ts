@@ -81,3 +81,21 @@ export const NotifyLowStock = styled.div`
 
   cursor: pointer;
 `
+
+export const MenuButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 30px;
+  height: 30px;
+
+  border: 1px solid blue;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition: all .3s;
+
+  
+`

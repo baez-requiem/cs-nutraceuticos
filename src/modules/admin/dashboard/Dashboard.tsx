@@ -3,17 +3,24 @@ import { MonthsInvoicingChart, DailyStatistics, MonthStatistics, LastSales, Dail
 import { CardsContainer } from "./styles"
 import MonthSalesByTeam from "./components/MonthSalesByTeam"
 import { Header } from "src/components/template"
+import { useDashboard } from "./hooks/useDashboard"
 
 const Dashboard = () => {
+
+  const {
+    dailyStatistics,
+    monthStatistics,
+    lastSales
+  } = useDashboard()
 
   return (
     <Private>
       <Header title="Dashboard" />
       <Divider my={10} />
       <CardsContainer>
-        <DailyStatistics />
-        <MonthStatistics />
-        <LastSales />
+        <DailyStatistics {...dailyStatistics} />
+        <MonthStatistics {...monthStatistics} />
+        <LastSales sales={lastSales} />
         <MonthsInvoicingChart />
         <DailySalesBySeller />
         <MonthSalesBySeller />

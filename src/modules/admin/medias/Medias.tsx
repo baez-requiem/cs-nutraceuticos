@@ -17,6 +17,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { BsTrash } from 'react-icons/bs'
 
 import { useMedias } from "./hooks/useMedias"
+import { Header } from "src/components/template"
 
 const Medias = () => {
 
@@ -32,7 +33,7 @@ const Medias = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Mídias</Text>
+      <Header title="Mídias" />
       <Divider my={10} />
 
       <Paper>

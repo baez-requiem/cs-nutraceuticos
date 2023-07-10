@@ -16,6 +16,7 @@ import { BsTrash } from 'react-icons/bs'
 import ModalSalesTeam from "./ModalSalesTeam"
 
 import { useSalesTeam } from "./hooks/useSalesTeam"
+import { Header } from "src/components/template"
 
 const SalesTeam = () => {
 
@@ -31,7 +32,7 @@ const SalesTeam = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Equipes de venda</Text>
+      <Header title="Equipes de venda" />
       <Divider my={10} />
 
       <Paper>

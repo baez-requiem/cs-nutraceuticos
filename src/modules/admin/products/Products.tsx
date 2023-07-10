@@ -18,6 +18,7 @@ import { BsTrash } from 'react-icons/bs'
 
 import { useProducts } from "./hooks/useProducts"
 import { floatToReal, formatReal } from "src/utils/number.utils"
+import { Header } from "src/components/template"
 
 const Products = () => {
 
@@ -33,7 +34,7 @@ const Products = () => {
 
   return (
     <Private>
-      <Text size="xl2" weight="600" color="gray_900">Produtos</Text>
+      <Header title="Produtos" />
       <Divider my={10} />
 
       <Paper>

@@ -11,7 +11,7 @@ type State = {
 }
 
 const menuStore = create<State>(set => ({
-  show: true,
+  show: false,
   open: () => set(() => ({ show: true })),
   close: () => set(() => ({ show: false })),
   subMenuOpen: [],
