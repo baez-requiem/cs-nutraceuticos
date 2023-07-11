@@ -1,17 +1,19 @@
 import { FC } from 'react'
-import { BiBell } from 'react-icons/bi'
 import { Flex, IconButton, Text } from "src/components/ui"
 import { BellButton, Container, MenuButton } from './styles'
 import { Notifications } from './components'
 import { FiMenu } from 'react-icons/fi'
 import { useHeader } from './hooks/useHeader'
+import { HiChevronRight } from 'react-icons/hi2'
 
 export interface HeaderProps {
   title?: string
+  subtitle?: string
 }
 
 const Header: FC<HeaderProps> = ({
-  title = ''
+  title = '',
+  subtitle = ''
 }) => {
 
   const { openMenu, isMobile } = useHeader()
@@ -19,9 +21,17 @@ const Header: FC<HeaderProps> = ({
   return (
     <Container>
 
-
       <Flex items="center" justify="space-between">
-        <Text size="xl2" weight="600" color="gray_900">{title}</Text>
+        {subtitle ? (
+          <Flex gap={10} items='center'>
+            <Text size="md" weight="600" color="gray_700">{subtitle}</Text>
+            <HiChevronRight size={12} />
+            <Text size="xl2" weight="600" color="gray_900">{title}</Text>
+          </Flex>
+
+        ) : (
+          <Text size="xl2" weight="600" color="gray_900">{title}</Text>
+        )}
 
         <Flex items="center" justify="end" gap={10}>
           <Notifications />
