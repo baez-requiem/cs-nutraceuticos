@@ -143,7 +143,7 @@ const useModalNewSale = (
 
 const useQueryData = () => {
   const { data: paymentTypes } = useQuery(
-    'payment-types',
+    'sales/payment-types',
     salesApi.getPaymentTypes,
     {
       initialData: [],

@@ -1,10 +1,10 @@
 import { authenticatedRequest } from "../utils"
-import { CreateNewSaleBodyType, CreateNewSaleResponseType, PaymentType } from "./sales.types"
+import { CreateNewSaleBodyType, CreateNewSaleResponseType, PaymentType, SaleType } from "./sales.types"
 
 const getPaymentTypes = async (): Promise<PaymentType[]> => {
   try {
     const response = await authenticatedRequest({
-      url: '/payment-types',
+      url: '/sales/payment-types',
       method: 'get'
     })
 
@@ -34,4 +34,20 @@ const createNewSale = async (body: CreateNewSaleBodyType): Promise<CreateNewSale
   }
 }
 
-export default { getPaymentTypes, createNewSale }
+const getSales = async (): Promise<SaleType[]> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/sales',
+      method: 'get'
+    })
+
+    const data: SaleType[] = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
+export default { getPaymentTypes, createNewSale, getSales }

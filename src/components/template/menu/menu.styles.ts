@@ -91,7 +91,7 @@ export const NavLogo = styled.div.attrs({
   height: 40px;
   width: 130px;
 
-  color: ${({ theme }) => theme.colors.secondary };
+  color: ${({ theme }) => theme.colors.secondary};
   text-align: center;
   font-weight: 900;
 
@@ -153,14 +153,14 @@ export const MenuContent = styled.ul`
 //     padding: 8px 20px;
 
 //     border-radius: 5px;
-    
+
 //     display: flex;
 //     align-items: center;
 //     gap: 12px;
-    
+
 //     cursor: pointer;
 //     transition: all .3s;
-  
+
 //     ${({ active }) => active ? css`
 //       background-color: #ffffff20;
 
@@ -204,6 +204,49 @@ export const MenuItem = styled.li<{ active?: boolean }>`
       box-shadow: 0px 0px 5px 5px #ffffff05;
     }
   `}
+`
+
+export const SubMenu = styled.li<{ active?: boolean }>`
+  padding: 12px 20px;
+
+  ${({ active = true }) => active && css`
+    background-color: #00000020;
+  `}
+  
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  > ul {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+  }
+
+  cursor: pointer;
+  transition: all .3s;
+`
+
+export const SubMenuItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 3px;
+
+  transition: all .3s;
+
+  :hover {
+    background-color: #ffffff10;
+    box-shadow: 0px 0px 5px 5px #ffffff05;
+  }
 `
 
 export const ExitItem = styled(MenuItem)`

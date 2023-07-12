@@ -10,6 +10,8 @@ import {
   NavLogo,
   UserContent,
   StyledSpan,
+  SubMenu,
+  SubMenuItem,
 } from "./menu.styles"
 
 import { Divider } from "src/components/ui"
@@ -18,6 +20,7 @@ import { FiMenu } from 'react-icons/fi'
 import { RxEnter } from 'react-icons/rx'
 
 import { useMenu } from "./hook/useMenu"
+import { BsDot } from 'react-icons/bs'
 
 export interface MenuItem {
   label: string
@@ -40,8 +43,6 @@ const Menu: FC<MenuProps> = ({
     toggleMenu
   } = useMenu()
 
-  console.count('menu')
-
   return (
     <NavContainer hasMenuHide={hasMenuHide}>
       <NavHeader>
@@ -61,15 +62,33 @@ const Menu: FC<MenuProps> = ({
       </UserContent>
 
       <MenuContent>
-        {menuItems.map((item, i) => (
+        {menuItems.map((item, i) => item.to ? (
           <MenuItem
             onClick={navigateTo(item.to)}
             active={inRoute(item.to)}
             key={`${item.label}-${i}`}
           >
+            {item.Icon}
+            <span>{item.label}</span>
+          </MenuItem>
+        ) : (
+          <SubMenu>
+            <div>
               {item.Icon}
               <span>{item.label}</span>
-          </MenuItem>
+            </div>
+            <ul>
+              {item.children.map(ic => (
+                <SubMenuItem
+                  onClick={navigateTo(ic.to)}
+                  key={`${item.label}-${i}-${ic}`}
+                >
+                  <BsDot size={20} />
+                  <span>{ic.label}</span>
+                </SubMenuItem>
+              ))}
+            </ul>
+          </SubMenu>
         ))}
       </MenuContent>
 

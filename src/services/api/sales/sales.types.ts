@@ -36,3 +36,24 @@ export type CreateNewSaleBodyType = {
 export type CreateNewSaleResponseType = {
   id: string
 }
+
+export type SaleType = {
+  id: string
+  name: string
+  phone: string | null
+  rg: string | null
+  cpf: string | null
+  email: string | null
+  cep: string | null
+  state: string | null
+  neighborhood: string | null
+  address: string | null
+  complement: string | null
+  payment_type_id: string
+  id_user: string
+  id_sales_team: string | null
+  discounts: number
+  notes: string | null
+  created_at: string | Date
+  updated_at: string | Date | null
+}

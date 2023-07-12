@@ -3,6 +3,7 @@ import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2'
 import { TbReportAnalytics } from 'react-icons/tb'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MdStayPrimaryPortrait } from 'react-icons/md'
+import { FaTruckLoading } from 'react-icons/fa'
 
 export const menuItems = [
   {
@@ -34,6 +35,14 @@ export const menuItems = [
     label: 'Estoque',
     to: '/admin/stock',
     Icon: BsBox({ size: 22 })
+  },
+  {
+    label: 'Logística',
+    Icon: FaTruckLoading({ size: 22 }),
+    children: [
+      { label: 'Vendas', to: '/admin/logistic/sales', },
+      { label: 'Vendas', to: '/admin/logistic/sales', },
+    ]
   },
   // {
   //   label: 'Relatórios',
