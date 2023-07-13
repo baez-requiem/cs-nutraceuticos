@@ -4,7 +4,7 @@ import { useMenuStore } from "src/stores"
 import { useWindowSize } from 'src/hooks'
 
 const useMenu = () => {
-  const { show, close, open } = useMenuStore()
+  const { show, close, open, subMenuOpen, toggleSubMenuOpen } = useMenuStore()
   
   const [width] = useWindowSize()
   const isMobile = width < 720
@@ -27,7 +27,9 @@ const useMenu = () => {
     inRoute,
     hasMenuHide: !show,
     navigateTo,
-    toggleMenu
+    toggleMenu,
+    subMenuOpen,
+    toggleSubMenuOpen
   }
 }
 

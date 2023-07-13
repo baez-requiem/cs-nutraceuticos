@@ -40,7 +40,9 @@ const Menu: FC<MenuProps> = ({
     hasMenuHide,
     inRoute,
     navigateTo,
-    toggleMenu
+    toggleMenu,
+    subMenuOpen,
+    toggleSubMenuOpen
   } = useMenu()
 
   return (
@@ -72,22 +74,29 @@ const Menu: FC<MenuProps> = ({
             <span>{item.label}</span>
           </MenuItem>
         ) : (
-          <SubMenu>
-            <div>
+          <SubMenu
+            key={`submenu-${item.label}`}
+            active={subMenuOpen.includes('logistic') || item.children.some(ic => inRoute(ic.to))}
+            hasMenuHide={hasMenuHide}
+          >
+            <div onClick={() => toggleSubMenuOpen('logistic')}>
               {item.Icon}
               <span>{item.label}</span>
             </div>
-            <ul>
-              {item.children.map(ic => (
-                <SubMenuItem
-                  onClick={navigateTo(ic.to)}
-                  key={`${item.label}-${i}-${ic}`}
-                >
-                  <BsDot size={20} />
-                  <span>{ic.label}</span>
-                </SubMenuItem>
-              ))}
-            </ul>
+            <div>
+              <ul>
+                {item.children.map(ic => (
+                  <SubMenuItem
+                    onClick={navigateTo(ic.to)}
+                    key={`${item.label}-${i}-${ic}`}
+                    active={inRoute(ic.to)}
+                  >
+                    <BsDot size={20} />
+                    <span>{ic.label}</span>
+                  </SubMenuItem>
+                ))}
+              </ul>
+            </div>
           </SubMenu>
         ))}
       </MenuContent>

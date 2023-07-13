@@ -31,3 +31,17 @@ export function formatUTCDateTime(date: string): string {
 
   return `${d}/${m}/${y} ${hour}:${min}:${sec}`
 }
+
+export function formatDateTime(date: string): string {
+  const newDate = new Date(date)
+
+  const d = newDate.getDate().toString().padStart(2, '0')
+  const m = (newDate.getMonth()+1).toString().padStart(2, '0')
+  const y = newDate.getFullYear()
+
+  const hour = newDate.getHours().toString().padStart(2, '0')
+  const min = newDate.getMinutes().toString().padStart(2, '0')
+  const sec = newDate.getSeconds().toString().padStart(2, '0')
+
+  return `${d}/${m}/${y} ${hour}:${min}:${sec}`
+}

@@ -3,8 +3,16 @@ import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
 import { Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
+import { useSales } from "./hooks/useSales"
+import { ModalSale } from "./components"
 
 export const Sales = () => {
+
+  const {
+    tableData,
+    openModalSale,
+    useModal
+  } = useSales()
 
   return (
     <Private>
@@ -27,18 +35,18 @@ export const Sales = () => {
         <Paper>
           <Table
             columns={[
-              { label: 'Data', value: 'idx' },
-              { label: 'Vendedor', value: 'idx' },
-              { label: 'Qntd. total de vendas', value: 'idx' },
-              { label: 'Qntd. total de produtos', value: 'idx' },
-              { label: 'Valor total', value: 'idx' },
-              { label: 'Status', value: 'idx' },
-              { label: 'Ações', align: 'center', value: 'idx', render: value => (
+              { label: 'Data', value: 'date' },
+              { label: 'Vendedor', value: 'user_name' },
+              { label: 'Qntd. total de vendas', value: 'total_sales' },
+              { label: 'Qntd. total de produtos', value: 'total_products' },
+              { label: 'Valor total', value: 'total_amount' },
+              { label: 'Status', value: 'status' },
+              { label: 'Ações', align: 'center', value: 'id', render: value => (
                 <Flex justify="center" gap={10}>
                   <IconButton color="sky_500" title="Visualizar">
                     <AiOutlineEye color="white" size={20} />
                   </IconButton>
-                  <IconButton color="blue_600" title="Editar">
+                  <IconButton color="blue_600" title="Editar" onClick={openModalSale(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
                   <IconButton color="red_600" title="Excluir">
@@ -47,10 +55,12 @@ export const Sales = () => {
                 </Flex>
               ) },
             ]}
-            data={[{},{},{},{},{}]}
+            data={tableData}
           />
         </Paper>
       </Grid>
+
+      <ModalSale show={useModal.show == 'sale'} data={useModal.data!} onClose={() => {}} />
     </Private>
   )
 }

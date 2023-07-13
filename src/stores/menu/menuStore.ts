@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type SubMenuType = 'reports'
+type SubMenuType = 'logistic'
 
 type State = {
   show: boolean
@@ -16,13 +16,16 @@ const menuStore = create<State>(set => ({
   close: () => set(() => ({ show: false })),
   subMenuOpen: [],
   toggleSubMenuOpen: subMenu => set(state => {
-    const newSubMenuOpen = state.subMenuOpen
+    const inSubMenuOpen = state.subMenuOpen.includes(subMenu)
+    
+    const newSubMenuOpen = inSubMenuOpen
+      ? state.subMenuOpen.filter(sbm => sbm != subMenu)
+      : [...state.subMenuOpen, subMenu]
 
     return {
       ...state,
-      subMenuOpen: state.subMenuOpen.includes(subMenu)
-        ? newSubMenuOpen.filter(sbm => sbm != subMenu)
-        : [...newSubMenuOpen, subMenu]
+      subMenuOpen: newSubMenuOpen,
+      show: true
     }
   })
 }))

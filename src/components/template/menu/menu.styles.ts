@@ -145,40 +145,6 @@ export const MenuContent = styled.ul`
   list-style: none;
 `
 
-// export const MenuItem = styled.li.attrs({
-//   className: 'hide-justify-center'
-// })<{ active?: boolean }>`
-//   > span, > div {
-//     font-size: 16px;
-//     padding: 8px 20px;
-
-//     border-radius: 5px;
-
-//     display: flex;
-//     align-items: center;
-//     gap: 12px;
-
-//     cursor: pointer;
-//     transition: all .3s;
-
-//     ${({ active }) => active ? css`
-//       background-color: #ffffff20;
-
-//       * {
-//         color: #fff !important;
-//         font-weight: 500;
-//       }
-
-//       cursor: unset;
-//     ` : css`
-//       :hover {
-//         background-color: #ffffff10;
-//         box-shadow: 0px 0px 5px 5px #ffffff05;
-//       }
-//     `}
-//   }
-// `
-
 export const MenuItem = styled.li<{ active?: boolean }>`
   display: flex;
   align-items: center;
@@ -206,10 +172,10 @@ export const MenuItem = styled.li<{ active?: boolean }>`
   `}
 `
 
-export const SubMenu = styled.li<{ active?: boolean }>`
+export const SubMenu = styled.li<{ active?: boolean, hasMenuHide?: boolean }>`
   padding: 12px 20px;
 
-  ${({ active = true }) => active && css`
+  ${({ active }) => active && css`
     background-color: #00000020;
   `}
   
@@ -219,22 +185,38 @@ export const SubMenu = styled.li<{ active?: boolean }>`
     gap: 12px;
 
     span {
+      display: ${({ hasMenuHide }) => hasMenuHide ? 'none' : 'inline'};
+
       font-size: 16px;
       font-weight: 500;
     }
   }
 
+  > div:last-child {
+    display: ${({ hasMenuHide }) => hasMenuHide ? 'none' : 'block'};
+
+    padding-top: 10px;
+
+    overflow-y: hidden;
+    transition: all .4s;
+
+    max-height: 0px;
+
+    ${({ active }) => active && css`
+      max-height: 1000px;
+    `}
+  }
+
   > ul {
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
   }
 
   cursor: pointer;
   transition: all .3s;
 `
 
-export const SubMenuItem = styled.li`
+export const SubMenuItem = styled.li<{ active?: boolean }>`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -243,10 +225,16 @@ export const SubMenuItem = styled.li`
 
   transition: all .3s;
 
-  :hover {
-    background-color: #ffffff10;
-    box-shadow: 0px 0px 5px 5px #ffffff05;
-  }
+  ${({ active }) => active ? css`
+    background-color: #ffffff20;
+
+    cursor: unset;
+  ` : css`
+    :hover {
+      background-color: #ffffff10;
+      box-shadow: 0px 0px 5px 5px #ffffff05;
+    }
+  `}
 `
 
 export const ExitItem = styled(MenuItem)`
@@ -254,65 +242,7 @@ export const ExitItem = styled(MenuItem)`
   border-top: 1px solid rgb(63 63 70 / 0.8);
 `
 
-// export const SubMenu = styled(MenuContent).attrs({
-//   className: 'hide-none'
-// })<{ show?: boolean }>`
-//   display: ${({ show }) => show ? 'flex' : 'none'};
-//   flex-direction: column;
-//   gap: 4px;
-
-//   position: relative;
-
-//   transition: all .5s;
-
-//   padding-left: 45px;
-//   padding-right: 20px;
-//   padding-bottom: 10px;
-
-//   * {
-//     color: #F8FAFC;
-//   }
-
-//   background-color: #0004;
-
-//   ${({ show }) => !show ? css`
-//     opacity: 0;
-//     max-height: 0px;
-//     animation: ${showSubmenuAnim} .5s linear reverse;
-//   ` : css`
-//     animation: ${showSubmenuAnim} .5s linear;
-//     max-height: 800px;
-//     opacity: 1;
-//   `}
-// `
-
-// export const SubMenuTitle = styled.div.attrs({
-//   className: 'hide-justify-center'
-// })<{ hasOpen?: boolean }>`
-//   display: flex;
-//   align-items: center;
-//   gap: 132px;
-
-//   padding-left: 8px;
-//   padding-right: 24px !important;
-
-//   ${({ hasOpen }) => hasOpen && css`
-//     background-color: #0004;
-//   `}
-
-//   > span {
-//     font-size: 16px;
-//   }
-// `
-
 export const StyledSpan = styled.span.attrs({
   className: 'hide-none'
 })`
 `
-
-// export const SubMenuItemTitle = styled.li`
-//   font-weight: 600;
-//   color: #ffffff40;
-
-//   padding-top: 10px;
-// `
