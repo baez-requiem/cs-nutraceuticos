@@ -25,13 +25,15 @@ const useModalSale = (
   const createNewSaleMutation = useMutation(async (values: CreateNewSaleBodyType) => {
     toast.loading(`Inserindo dados...`)
 
-    const sale = await salesApi.createNewSale(values)
+    // const sale = await salesApi.createNewSale(values)
 
     toast.dismiss()
 
-    sale?.id
-      ? toast.success(`Venda efetuada com sucesso!`)
-      : toast.error(`Houve um erro ao efetuar a venda.`)
+    // return;
+
+    // sale?.id
+    //   ? toast.success(`Venda efetuada com sucesso!`)
+    //   : toast.error(`Houve um erro ao efetuar a venda.`)
 
     onClose()
   })
@@ -99,6 +101,31 @@ const useModalSale = (
     if (!show) {
       formik.resetForm()
       return
+    } else {
+      formik.setValues({
+        address: data.address,
+        cep: data.cep,
+        city: data.city,
+        complement: data.complement,
+        cpf: data.cpf,
+        discounts: floatToReal(data.discounts),
+        email: data.email,
+        media_id: data.media_id,
+        name: data.name,
+        neighborhood: data.neighborhood,
+        notes: data.notes,
+        payment_type_id: data.payment_type_id,
+        phone: data.phone,
+        rg: data.rg,
+        state: data.state,
+        products: data.sale_products.map(sp => ({ 
+          id_product: sp.id_product,
+          quantity: sp.quantity,
+          name: sp.product.name,
+          amount: sp.product.amount,
+          sales_quantity: sp.sales_quantity
+        }))
+      })
     }
 
     const slcValue = stockProducts.filter(p => !formik.values.products.find(fp => fp.id_product === p.id))[0]?.id || ''

@@ -2,16 +2,18 @@ import { AiOutlineEye } from "react-icons/ai"
 import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
-import { Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
+import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
 import { ModalSale } from "./components"
+import { matchColor } from "src/utils/theme"
 
 export const Sales = () => {
 
   const {
     tableData,
     openModalSale,
-    useModal
+    useModal,
+    closeModal
   } = useSales()
 
   return (
@@ -40,7 +42,9 @@ export const Sales = () => {
               { label: 'Qntd. total de vendas', value: 'total_sales' },
               { label: 'Qntd. total de produtos', value: 'total_products' },
               { label: 'Valor total', value: 'total_amount' },
-              { label: 'Status', value: 'status' },
+              { label: 'Status', value: 'status', render: (value, data) => (
+                <Badge color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
+              ) },
               { label: 'Ações', align: 'center', value: 'id', render: value => (
                 <Flex justify="center" gap={10}>
                   <IconButton color="sky_500" title="Visualizar">
@@ -60,7 +64,7 @@ export const Sales = () => {
         </Paper>
       </Grid>
 
-      <ModalSale show={useModal.show == 'sale'} data={useModal.data!} onClose={() => {}} />
+      <ModalSale show={useModal.show == 'sale'} data={useModal.data!} onClose={closeModal} />
     </Private>
   )
 }

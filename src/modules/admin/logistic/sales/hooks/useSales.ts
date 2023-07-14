@@ -21,6 +21,7 @@ const useSales = () => {
     total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
     total_amount: floatToReal(sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - discounts),
     status: sale_status.status,
+    color_status: sale_status.color,
     date: formatDateTime(new Date(created_at).toUTCString())
   }))
 
@@ -29,10 +30,15 @@ const useSales = () => {
     data: sales.find(sale => sale.id === id)
   })
 
+  const closeModal = () => setModal({
+    show: null
+  })
+
   return {
     tableData,
     useModal,
-    openModalSale
+    openModalSale,
+    closeModal
   }
 }
 

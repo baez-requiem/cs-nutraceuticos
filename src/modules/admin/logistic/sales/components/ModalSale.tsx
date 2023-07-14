@@ -53,6 +53,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="name"
             value={values.name}
             onChange={handleChange}
+            labelFixed={!!values.name}
           />
 
           <Input
@@ -60,6 +61,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="phone"
             value={values.phone}
             onChange={handleChangeFormatPhone(setFieldValue)}
+            labelFixed={!!values.phone}
           />
 
           <Input
@@ -67,6 +69,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="rg"
             value={values.rg}
             onChange={handleChange}
+            labelFixed={!!values.rg}
           />
 
           <Input
@@ -74,6 +77,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="cpf"
             value={values.cpf}
             onChange={handleChangeFormatCPF(setFieldValue)}
+            labelFixed={!!values.cpf}
           />
 
           <Input
@@ -82,6 +86,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="email"
             value={values.email}
             onChange={handleChange}
+            labelFixed={!!values.email}
           />
 
           <Input
@@ -164,6 +169,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             name="discounts"
             value={values.discounts}
             onChange={handleChangeFormatReal(setFieldValue)}
+            labelFixed={!!values.discounts}
           />
 
         </Grid>
@@ -229,13 +235,14 @@ const ModalNewSale: FC<ModalSaleProps> = ({
           name="notes"
           value={values.notes}
           onChange={handleChange}
+          labelFixed={!!values.notes}
         />
 
         <Divider my={10} line opacityLine={.15} />
 
         <Flex items="end" justify="end" gap={10}>
           <Button size="sm" color="gray_500" type="button" onClick={onClose}>Cancelar</Button>
-          <Button size="sm" color="green_600" type="submit">Finalizar</Button>
+          <Button size="sm" color="green_600" type="submit">Salvar</Button>
         </Flex>
       </form>
     </Modal>

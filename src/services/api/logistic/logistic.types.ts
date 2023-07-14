@@ -29,6 +29,7 @@ type PaymentType = {
 
 type SaleStatus = {
   id: string
+  color?: string
   status: string
 }
 
