@@ -15,7 +15,7 @@ const Stock = () => {
   } = useStock()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Grid gap={20}>
         <Header title="Estoque" />
 

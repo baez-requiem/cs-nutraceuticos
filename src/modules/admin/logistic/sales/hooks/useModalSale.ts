@@ -2,12 +2,11 @@ import { ChangeEvent, useState, useEffect } from "react"
 import { useFormik } from "formik"
 import { initialDataFormNewSale } from "../constants"
 import { consultCep } from "src/services/viacep"
-import { useMutation, useQuery } from "react-query"
-import { mediasApi, productsApi, salesApi, stockApi } from "src/services/api"
-import { ProductType } from "src/services/api/products/products.types"
+import { useMutation, useQuery, useQueryClient } from "react-query"
+import { mediasApi, salesApi, stockApi } from "src/services/api"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
-import { CreateNewSaleBodyType } from "src/services/api/sales/sales.types"
+import { SaleBodyType } from "src/services/api/sales/sales.types"
 
 const useModalSale = (
   show: boolean,
@@ -16,26 +15,30 @@ const useModalSale = (
 ) => {
   const [selectValue, setSelectValue] = useState<string>('')
   
+  const queryClient = useQueryClient()
+  
   const {
     medias,
     paymentTypes,
     stockProducts
   } = useQueryData()
 
-  const createNewSaleMutation = useMutation(async (values: CreateNewSaleBodyType) => {
+  const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     toast.loading(`Inserindo dados...`)
 
-    // const sale = await salesApi.createNewSale(values)
+    const sale = await salesApi.updateSale(values)
 
     toast.dismiss()
 
-    // return;
-
-    // sale?.id
-    //   ? toast.success(`Venda efetuada com sucesso!`)
-    //   : toast.error(`Houve um erro ao efetuar a venda.`)
+    sale?.id
+      ? toast.success(`Venda efetuada com sucesso!`)
+      : toast.error(`Houve um erro ao efetuar a venda.`)
 
     onClose()
+  }, {
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: 'logistic/sales' })
+    }
   })
 
   const formik = useFormik({
@@ -43,6 +46,7 @@ const useModalSale = (
     onSubmit: values => {
       const formatedValues = {
         ...values,
+        id: data.id,
         discounts: parseInt(values.discounts.toString() || '0'),
         products: values.products.map(p => ({
           id_product: p.id_product,
@@ -132,9 +136,8 @@ const useModalSale = (
 
     setSelectValue(slcValue.toString())
 
-    !!medias.length && formik.setFieldValue('media_id', medias[0].id)
-    
-    !!paymentTypes.length && formik.setFieldValue('payment_type_id', paymentTypes[0].id)
+    // !!medias.length && formik.setFieldValue('media_id', medias[0].id)
+    // !!paymentTypes.length && formik.setFieldValue('payment_type_id', paymentTypes[0].id)
   }, [stockProducts, medias, paymentTypes, show])
 
   const selectProductsOpt = stockProducts

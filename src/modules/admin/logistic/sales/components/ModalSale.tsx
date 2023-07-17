@@ -39,7 +39,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
-      <Text size="xl" weight="600">Nova venda</Text>
+      <Text size="xl" weight="600">Informações da venda</Text>
 
       <Divider my={10} />
 

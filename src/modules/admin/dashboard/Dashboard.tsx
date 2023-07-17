@@ -14,7 +14,7 @@ const Dashboard = () => {
   } = useDashboard()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Header title="Dashboard" />
       <Divider my={10} />
       <CardsContainer>

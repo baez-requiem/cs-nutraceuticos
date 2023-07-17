@@ -1,3 +1,5 @@
+import { httpClient } from '../httpClient'
+import { RoleType } from '../roles/roles.types'
 import { authenticatedRequest } from "../utils"
 import { CreateUserBody, UpdateUserBody, UserType } from "./users.types"
 
@@ -69,9 +71,23 @@ const deleteUser = async(id: string): Promise<{ status: boolean }> => {
   }
 }
 
+const getRoles = async () => {
+  try {
+    const response = await httpClient.get('/users/roles')
+
+    const data: RoleType[] = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
+
 export default {
   getAllUsers,
   updateUser,
   createUser,
-  deleteUser
+  deleteUser,
+  getRoles
 }

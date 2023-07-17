@@ -3,7 +3,7 @@ import { Button, Divider, Flex, Grid, Input, Paper, Private, Table, Text } from 
 const SalesHistory = () => {
 
   return (
-    <Private>
+    <Private roles={['Vendedor']} logout>
       <Text size="xl2" weight="600" color="gray_900">Histórico de vendas</Text>
       <Divider my={10} />
 

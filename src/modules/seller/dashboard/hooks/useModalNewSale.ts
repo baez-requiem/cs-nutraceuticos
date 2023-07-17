@@ -7,7 +7,7 @@ import { mediasApi, productsApi, salesApi, stockApi } from "src/services/api"
 import { ProductType } from "src/services/api/products/products.types"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
-import { CreateNewSaleBodyType } from "src/services/api/sales/sales.types"
+import { SaleBodyType } from "src/services/api/sales/sales.types"
 
 const useModalNewSale = (
   show: boolean,
@@ -21,7 +21,7 @@ const useModalNewSale = (
     stockProducts
   } = useQueryData()
 
-  const createNewSaleMutation = useMutation(async (values: CreateNewSaleBodyType) => {
+  const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     toast.loading(`Inserindo dados...`)
 
     const sale = await salesApi.createNewSale(values)

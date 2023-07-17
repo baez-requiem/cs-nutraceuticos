@@ -17,4 +17,15 @@ const login = async ({ username, password }: LoginParams): Promise<LoginResponse
   }
 }
 
-export default { login }
+const matchUserRole = async (request: {id_user: string, roles: string[]}): Promise<{ match: boolean }> => {
+  try {
+    const response = await httpClient.post('/auth/match-user-role', request)
+    const data: { match: boolean } = response.data
+    
+    return data
+  } catch (error) {
+    return { match: false }
+  }
+}
+
+export default { login, matchUserRole }

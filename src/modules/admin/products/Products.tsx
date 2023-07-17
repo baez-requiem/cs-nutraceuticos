@@ -33,7 +33,7 @@ const Products = () => {
   } = useProducts()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Header title="Produtos" />
       <Divider my={10} />
 

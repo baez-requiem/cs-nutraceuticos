@@ -4,7 +4,7 @@ import { Divider, Flex, Paper, Private, SideFilters, Table, Text } from "src/com
 const SalesReport = () => {
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Flex gap={10} items="center">
         <Text size="lg" weight="400" color="gray_900">Relatórios</Text>
 

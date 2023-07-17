@@ -19,7 +19,7 @@ const Users = () => {
   } = useUsers()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Header title="Usuários" />
       <Divider my={10} />
       

@@ -3,7 +3,7 @@ type AuthType = {
   refreshToken: {
     id: string
     expiresIn: number
-    userId: number
+    userId: string
   }
 }
 

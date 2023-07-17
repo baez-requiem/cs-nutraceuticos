@@ -31,7 +31,7 @@ const SalesTeam = () => {
   } = useSalesTeam()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Header title="Equipes de venda" />
       <Divider my={10} />
 

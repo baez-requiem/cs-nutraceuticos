@@ -33,6 +33,19 @@ type SaleStatus = {
   status: string
 }
 
+type LogisticInfos = {
+  id: string
+  id_sale_status: string
+  delivery_value: number
+  id_delivery_type: string | null
+  delivery_date: string | Date
+  id_motoboy: string | null
+  id_sale: string
+  notes: string | null
+  created_at: string | Date
+  sale_status: SaleStatus
+}
+
 type User = {
   id: string
   name: string
@@ -83,15 +96,14 @@ type Sale = {
   payment_type_id: string
   id_user: string
   id_sales_team: string | null
-  id_sale_status: string
   discounts: number | null
   notes: string | null
   created_at: string
   updated_at: string | null
   media: Media
   payment_type: PaymentType
-  sale_status: SaleStatus
   sales_team: string | null
   user: User
   sale_products: SaleProduct[]
+  logistic_infos: LogisticInfos[]
 }

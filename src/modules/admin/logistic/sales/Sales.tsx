@@ -1,10 +1,9 @@
 import { AiOutlineEye } from "react-icons/ai"
-import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
 import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { ModalSale } from "./components"
+import { ModalLogisticInfos, ModalSale } from "./components"
 import { matchColor } from "src/utils/theme"
 
 export const Sales = () => {
@@ -12,12 +11,13 @@ export const Sales = () => {
   const {
     tableData,
     openModalSale,
+    openModalLogisticInfos,
     useModal,
     closeModal
   } = useSales()
 
   return (
-    <Private>
+    <Private roles={['Admin']} logout>
       <Grid gap={20}>
         <Header title="Vendas" subtitle="Logística" />
 
@@ -47,14 +47,11 @@ export const Sales = () => {
               ) },
               { label: 'Ações', align: 'center', value: 'id', render: value => (
                 <Flex justify="center" gap={10}>
-                  <IconButton color="sky_500" title="Visualizar">
+                  <IconButton color="sky_500" title="Visualizar" onClick={openModalSale(value.toString())}>
                     <AiOutlineEye color="white" size={20} />
                   </IconButton>
-                  <IconButton color="blue_600" title="Editar" onClick={openModalSale(value.toString())}>
+                  <IconButton color="blue_600" title="Editar" onClick={openModalLogisticInfos(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
-                  </IconButton>
-                  <IconButton color="red_600" title="Excluir">
-                    <BsTrash color="white" size={18} />
                   </IconButton>
                 </Flex>
               ) },
@@ -64,7 +61,17 @@ export const Sales = () => {
         </Paper>
       </Grid>
 
-      <ModalSale show={useModal.show == 'sale'} data={useModal.data!} onClose={closeModal} />
+      <ModalSale
+        show={useModal.show == 'sale'}
+        data={useModal.data!}
+        onClose={closeModal}
+      />
+
+      <ModalLogisticInfos
+        show={useModal.show == 'logistic-infos'}
+        data={useModal.data!}
+        onClose={closeModal}
+      />
     </Private>
   )
 }

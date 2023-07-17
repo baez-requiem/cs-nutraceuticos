@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { showModal, setShowModal } = useDashboard()
 
   return (
-    <Private>
+    <Private roles={['Vendedor']} logout>
       <Text size="xl2" weight="600" color="gray_900">Dashboard</Text>
       <Divider my={10} />
       <CardsContainer>

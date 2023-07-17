@@ -5,7 +5,9 @@ export type PaymentType = {
   created_at: string | Date
 }
 
-export type CreateNewSaleBodyType = {
+export type SaleBodyType = {
+  id?: string
+  
   name: string
   phone: string
 

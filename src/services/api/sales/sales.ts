@@ -1,5 +1,5 @@
 import { authenticatedRequest } from "../utils"
-import { CreateNewSaleBodyType, CreateNewSaleResponseType, PaymentType, SaleType } from "./sales.types"
+import { SaleBodyType, CreateNewSaleResponseType, PaymentType, SaleType } from "./sales.types"
 
 const getPaymentTypes = async (): Promise<PaymentType[]> => {
   try {
@@ -17,11 +17,28 @@ const getPaymentTypes = async (): Promise<PaymentType[]> => {
   }
 }
 
-const createNewSale = async (body: CreateNewSaleBodyType): Promise<CreateNewSaleResponseType|null> => {
+const createNewSale = async (body: SaleBodyType): Promise<CreateNewSaleResponseType|null> => {
   try {
     const response = await authenticatedRequest({
       url: '/sales',
       method: 'post',
+      data: body
+    })
+
+    const data: CreateNewSaleResponseType = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+const updateSale = async (body: SaleBodyType): Promise<CreateNewSaleResponseType|null> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/sales',
+      method: 'put',
       data: body
     })
 
@@ -50,4 +67,4 @@ const getSales = async (): Promise<SaleType[]> => {
   }
 }
 
-export default { getPaymentTypes, createNewSale, getSales }
+export default { getPaymentTypes, createNewSale, getSales, updateSale }
