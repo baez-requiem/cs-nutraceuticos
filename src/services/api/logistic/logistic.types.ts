@@ -107,3 +107,29 @@ type Sale = {
   sale_products: SaleProduct[]
   logistic_infos: LogisticInfos[]
 }
+
+type DeliveryType = {
+  id: string
+  name: string
+  notes: string | null
+  created_at: string
+}
+
+type MotoboyType = {
+  id: string
+  name: string
+  active: boolean
+  notes: string | null
+  created_at: string
+}
+
+
+type CreateNewLogisticInfoBodyType = {
+  id_sale: string
+  id_delivery_type: string
+  id_sale_status: string
+  id_motoboy?: string
+  delivery_date: string
+  delivery_value: number
+  notes: string | null
+}

@@ -5,6 +5,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   color?: string
   label?: string
   labelFixed?: boolean
+  nullable?: boolean
   block?: boolean
   options?: { label: string, value: number|string }[]
 }
@@ -15,6 +16,7 @@ const Select: FC<SelectProps> = ({
   block = false,
   labelFixed = false,
   options = [],
+  nullable,
   ...props
 }) => {
   const [useUpLabel, setUpLabel] = useState(false)
@@ -45,11 +47,12 @@ const Select: FC<SelectProps> = ({
         onBlur={verifyUpLabel}
         {...props}
       >
+        {nullable ? <option value=""></option> : null}
         {options.length || props?.value
           ? options.map(opt => (
             <option key={`${opt.value}-${opt.label}`} selected={opt.value == selectRef.current?.value} value={opt.value}>{opt.label}</option>
           ))
-          : <option value=""></option>
+          : (!nullable ? <option value=""></option> : null)
         }
       </StyledSelect>
     </Container>

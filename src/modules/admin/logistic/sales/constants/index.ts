@@ -32,3 +32,12 @@ export const initialDataFormNewSale = {
 
   products
 }
+
+export const initialDataFormLogisticInfos = {
+  id_sale_status: '',
+  delivery_value: '',
+  delivery_type: '',
+  delivery_date: '',
+  motoboy: '',
+  notes: '',
+}

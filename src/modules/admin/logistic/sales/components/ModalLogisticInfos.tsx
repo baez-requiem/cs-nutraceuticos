@@ -1,8 +1,9 @@
 import { FC } from "react"
-import { Divider, Flex, Grid, Modal, Select, Text, Textarea } from "src/components/ui"
+import { Divider, Fade, Flex, Grid, Input, Modal, Select, Text, Textarea } from "src/components/ui"
 import { formatDateTime } from "src/utils/date.utils"
 import { mapSaleProductsLogistic, totalSaleValue } from "../utils"
 import { floatToReal } from "src/utils/number.utils"
+import { useModalLogisticInfos } from "../hooks/useModalLogisticInfos"
 
 export interface ModalLogisticInfosProps {
   show: boolean
@@ -15,6 +16,16 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
   show,
   data
 }) => {
+
+  const {
+    saleStatus,
+    deliveryTypes,
+    motoboys,
+    formik: {
+      values,
+      handleChange
+    }
+  } = useModalLogisticInfos({ show })
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={700}>
@@ -116,6 +127,9 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
         <Grid gap={10} template="1fr 1fr" md="1fr">
           <Select
             label="Status"
+            name="id_sale_status"
+            options={saleStatus.map(status => ({ label: status.status, value: status.id }))}
+            onChange={handleChange}
           />
         </Grid>
 
@@ -125,17 +139,40 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
         <Divider />
         <Grid gap={10} template="1fr 1fr" md="1fr">
           <Select
+            nullable
             label="Tipo de entrega:"
+            name="delivery_type"
+            options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
+            onChange={handleChange}
           />
 
-          <Select
-            label="Motoboy:"
+          <Input
+            label="Data de entrega:"
+            name="delivery_date"
+            type="date"
+            value={values.delivery_date}
+            onChange={handleChange}
           />
+          
+          <Fade.FadeIn show={values.delivery_type == 'motoboy'}>
+            <Select
+              nullable
+              label="Motoboy:"
+              name="motoboy"
+              options={motoboys.map(motoboy => ({ label: motoboy.name, value: motoboy.id }))}
+              value={values.motoboy}
+              onChange={handleChange}
+            />
+          </Fade.FadeIn>
+          
         </Grid>
         <Divider />
         <Textarea
           rows={7}
+          name="notes"
           label="Anotações da entrega:"
+          value={values.notes}
+          onChange={handleChange}
         />
       </form>
     </Modal>
