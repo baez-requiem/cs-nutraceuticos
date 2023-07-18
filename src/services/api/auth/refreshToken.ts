@@ -16,7 +16,7 @@ export const getNewToken = async () => {
   const refreshToken = authData?.refreshToken?.id || ''
 
   try {
-    const response = await httpClient.post('/refresh-token', {
+    const response = await httpClient.post('/auth/refresh-token', {
       refresh_token: refreshToken
     })
 

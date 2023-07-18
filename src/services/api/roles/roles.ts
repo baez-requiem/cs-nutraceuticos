@@ -4,7 +4,7 @@ import { RoleType } from "./roles.types"
 const getAllRoles = async (): Promise<RoleType[]> => {
   try {
     const response = await authenticatedRequest({
-      url: '/roles',
+      url: '/users/roles',
       method: 'get'
     })
 

@@ -1,10 +1,9 @@
 import { httpClient } from "../httpClient"
-import { ErrorResponse } from "../types"
 import { LoginParams, LoginResponse } from "./login.types"
 
 const login = async ({ username, password }: LoginParams): Promise<LoginResponse> => {
   try {
-    const response = await httpClient.post('login', { username, password })
+    const response = await httpClient.post('auth/login', { username, password })
     const data: LoginResponse = response.data
 
     return data
