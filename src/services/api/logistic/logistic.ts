@@ -67,20 +67,20 @@ const getMotoboys = async (): Promise<MotoboyType[]> => {
   }
 }
 
-const createNewLogisticInfo = async (body: CreateNewLogisticInfoBodyType): Promise<{ status: boolean }> => {
+const createNewLogisticInfo = async (body: CreateNewLogisticInfoBodyType): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
-      url: '/medias',
+      url: '/logistic/logistic-info',
       method: 'post',
       data: body
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus201 = response.status == 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

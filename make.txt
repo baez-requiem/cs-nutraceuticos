@@ -1,9 +1,3 @@
 produto poder colocar fotos
 
-criar tabela de vendas
-
-id
-id produto
-quantidade
-id vendedor
-data
+revisar datas de inserção no banco

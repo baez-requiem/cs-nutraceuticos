@@ -5,14 +5,14 @@ import { formatDateTime, formatUTCDateTime } from "src/utils/date.utils"
 import { floatToReal } from "src/utils/number.utils"
 
 interface ModalState {
-  show: 'sale' | 'logistic-infos' | null
+  show: 'sale' | 'logistic-infos' | 'history' | null
   data?: Sale
 }
 
 const useSales = () => {
   const [useModal, setModal] = useState<ModalState>({ show: null })
 
-  const { data: sales } = useQuery('logistic/sales', logisticApi.getSales, { initialData: [], refetchInterval: 10000 })
+  const { data: sales } = useQuery('logistic/sales', logisticApi.getSales, { initialData: [], refetchOnWindowFocus: false })
 
   const tableData = sales.map(({ id, user, sale_products, discounts, logistic_infos, created_at }) => ({
     id,
@@ -35,6 +35,11 @@ const useSales = () => {
     data: sales.find(sale => sale.id === id)
   })
 
+  const openModalHistory = (id: string) => () => setModal({
+    show: 'history',
+    data: sales.find(sale => sale.id === id)
+  })
+
   const closeModal = () => setModal({
     show: null
   })
@@ -43,6 +48,7 @@ const useSales = () => {
     tableData,
     useModal,
     openModalSale,
+    openModalHistory,
     openModalLogisticInfos,
     closeModal
   }

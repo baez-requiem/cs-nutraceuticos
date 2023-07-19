@@ -1,9 +1,10 @@
 import { FC } from "react"
-import { Divider, Fade, Flex, Grid, Input, Modal, Select, Text, Textarea } from "src/components/ui"
+import { Button, Divider, Fade, Flex, Grid, Input, Modal, Select, Text, Textarea } from "src/components/ui"
 import { formatDateTime } from "src/utils/date.utils"
 import { mapSaleProductsLogistic, totalSaleValue } from "../utils"
 import { floatToReal } from "src/utils/number.utils"
 import { useModalLogisticInfos } from "../hooks/useModalLogisticInfos"
+import { handleChangeFormatReal } from "src/utils/form.utils"
 
 export interface ModalLogisticInfosProps {
   show: boolean
@@ -23,9 +24,11 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
     motoboys,
     formik: {
       values,
-      handleChange
+      handleChange,
+      handleSubmit,
+      setFieldValue
     }
-  } = useModalLogisticInfos({ show })
+  } = useModalLogisticInfos({ show, onClose, data })
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={700}>
@@ -81,7 +84,7 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
       <Grid gap={10} template="2fr 1fr 1fr">
         <div></div>
         <div></div>
-        <Text size="sm" align="right">{totalSaleValue(data)}</Text>
+        <Text size="sm" align="right">{floatToReal(totalSaleValue(data))}</Text>
       </Grid>
 
       <Divider my={10} line opacityLine={0.15} />
@@ -120,7 +123,7 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
 
       <Divider my={10} />
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <Text weight="500">Dados da venda</Text>
         <Divider />
 
@@ -130,6 +133,8 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
             name="id_sale_status"
             options={saleStatus.map(status => ({ label: status.status, value: status.id }))}
             onChange={handleChange}
+            value={values.id_sale_status}
+            labelFixed={!!values.id_sale_status}
           />
         </Grid>
 
@@ -141,9 +146,11 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
           <Select
             nullable
             label="Tipo de entrega:"
-            name="delivery_type"
+            name="id_delivery_type"
+            value={values.id_delivery_type}
             options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
             onChange={handleChange}
+            labelFixed={!!values.id_delivery_type}
           />
 
           <Input
@@ -152,19 +159,29 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
             type="date"
             value={values.delivery_date}
             onChange={handleChange}
+            labelFixed={!!values.delivery_date}
           />
-          
-          <Fade.FadeIn show={values.delivery_type == 'motoboy'}>
+
+          <Fade.FadeIn show={values.id_delivery_type == 'motoboy'}>
             <Select
               nullable
               label="Motoboy:"
-              name="motoboy"
+              name="id_motoboy"
               options={motoboys.map(motoboy => ({ label: motoboy.name, value: motoboy.id }))}
-              value={values.motoboy}
+              value={values.id_motoboy}
               onChange={handleChange}
+              labelFixed={!!values.id_motoboy}
             />
           </Fade.FadeIn>
-          
+
+          <Input
+            label="Valor da entrega:"
+            name="delivery_value"
+            value={values.delivery_value}
+            onChange={handleChangeFormatReal(setFieldValue)}
+            labelFixed={!!values.delivery_value}
+          />
+
         </Grid>
         <Divider />
         <Textarea
@@ -173,7 +190,15 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
           label="Anotações da entrega:"
           value={values.notes}
           onChange={handleChange}
+          labelFixed={!!values.notes}
         />
+
+        <Divider my={10} />
+
+        <Flex items="end" justify="end" gap={10}>
+          <Button size="sm" color="gray_500" type="button" onClick={onClose}>Cancelar</Button>
+          <Button size="sm" color="green_600" type="submit">Salvar</Button>
+        </Flex>
       </form>
     </Modal>
   )

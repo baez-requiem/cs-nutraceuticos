@@ -92,8 +92,6 @@ const useModalMisplacements = (
       products
     })
 
-    console.log(validateData)
-
     if (validateData.success) {
       // @ts-ignore
       misplacementMutation.mutateAsync(validateData.data)

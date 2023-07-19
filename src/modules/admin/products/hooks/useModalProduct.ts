@@ -31,8 +31,6 @@ const useModalProduct = (
       amount: realToFloat(values.amount)
     }
 
-    console.log(body)
-
     const product = idProduct
       ? await productsApi.updateProduct({ ...body, id: idProduct })
       : await productsApi.createProduct(body)

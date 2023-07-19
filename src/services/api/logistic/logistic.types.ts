@@ -44,6 +44,9 @@ type LogisticInfos = {
   notes: string | null
   created_at: string | Date
   sale_status: SaleStatus
+  motoboy?: MotoboyType
+  delivery_type?: DeliveryType
+  user: User
 }
 
 type User = {

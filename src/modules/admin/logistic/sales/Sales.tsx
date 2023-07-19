@@ -3,8 +3,10 @@ import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
 import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { ModalLogisticInfos, ModalSale } from "./components"
+import { ModalHistory, ModalLogisticInfos, ModalSale } from "./components"
 import { matchColor } from "src/utils/theme"
+import { BiHistory } from "react-icons/bi"
+import RefreshDataButton from "src/components/context/refreshDataButton/RefreshDataButton"
 
 export const Sales = () => {
 
@@ -12,6 +14,7 @@ export const Sales = () => {
     tableData,
     openModalSale,
     openModalLogisticInfos,
+    openModalHistory,
     useModal,
     closeModal
   } = useSales()
@@ -22,7 +25,9 @@ export const Sales = () => {
         <Header title="Vendas" subtitle="Logística" />
 
         <Paper>
-          <Flex justify="end">
+          <Flex justify="end" gap={20}>
+            <RefreshDataButton queries={['logistic/sales']} />
+
             <SideFilters>
               <Grid gap={10}>
                 <Input label="Data" type="date" />
@@ -53,6 +58,9 @@ export const Sales = () => {
                   <IconButton color="blue_600" title="Editar" onClick={openModalLogisticInfos(value.toString())}>
                     <MdOutlineModeEditOutline color="white" size={20} />
                   </IconButton>
+                  <IconButton color="gray_500" title="Histórico" onClick={openModalHistory(value.toString())}>
+                    <BiHistory color="white" size={20} />
+                  </IconButton>
                 </Flex>
               ) },
             ]}
@@ -69,6 +77,12 @@ export const Sales = () => {
 
       <ModalLogisticInfos
         show={useModal.show == 'logistic-infos'}
+        data={useModal.data!}
+        onClose={closeModal}
+      />
+      
+      <ModalHistory
+        show={useModal.show == 'history'}
         data={useModal.data!}
         onClose={closeModal}
       />

@@ -12,6 +12,7 @@ const Badge = styled.span<BadgeProps>`
   padding: 5px 10px;
 
   width: ${({ block }) => block ? '100%' : 'auto'};
+  text-align: ${({ block }) => block ? 'center' : 'left'};
   font-weight: 500;
 
   background-color: ${({ color, theme }) => color ? theme.colors[color] : 'transparent'};

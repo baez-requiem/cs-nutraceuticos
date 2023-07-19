@@ -18,7 +18,27 @@ export function formatUTCDate(date: string): string {
   return `${d}/${m}/${y}`
 }
 
-export function formatUTCDateTime(date: string): string {
+export function formatDate(date: string | Date): string {
+  if (typeof date === 'string' && date.length === 10) {
+    const arrDate = date.split("-")
+  
+    const y = arrDate[0]
+    const m = arrDate[1]
+    const d = arrDate[2]
+  
+    return `${d}/${m}/${y}`
+  }
+
+  const newDate = new Date(date)
+
+  const d = newDate.getDate().toString().padStart(2, '0')
+  const m = (newDate.getMonth()+1).toString().padStart(2, '0')
+  const y = newDate.getFullYear()
+
+  return `${d}/${m}/${y}`
+}
+
+export function formatUTCDateTime(date: string | Date): string {
   const newDate = new Date(date)
 
   const d = newDate.getUTCDate().toString().padStart(2, '0')
@@ -32,7 +52,7 @@ export function formatUTCDateTime(date: string): string {
   return `${d}/${m}/${y} ${hour}:${min}:${sec}`
 }
 
-export function formatDateTime(date: string): string {
+export function formatDateTime(date: string | Date): string {
   const newDate = new Date(date)
 
   const d = newDate.getDate().toString().padStart(2, '0')
@@ -44,4 +64,14 @@ export function formatDateTime(date: string): string {
   const sec = newDate.getSeconds().toString().padStart(2, '0')
 
   return `${d}/${m}/${y} ${hour}:${min}:${sec}`
+}
+
+export function formatDateValue(date: string | Date): string {
+  const newDate = new Date(date)
+
+  const d = newDate.getDate().toString().padStart(2, '0')
+  const m = (newDate.getMonth()+1).toString().padStart(2, '0')
+  const y = newDate.getFullYear()
+
+  return `${y}-${m}-${d}`
 }
