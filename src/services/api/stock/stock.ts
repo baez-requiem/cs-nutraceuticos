@@ -4,7 +4,7 @@ import { BatchType, CreateNewBatchBodyType, CreateNewBatchResponseType, GetStock
 const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBatchResponseType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/stock-new-batch',
+      url: '/stock/batches',
       method: 'post',
       data: body
     })
@@ -21,7 +21,7 @@ const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBa
 const updateBatch = async (body: UpdateBatchBodyType): Promise<UpdateBatchResponseType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/batches',
+      url: '/stock/batches',
       method: 'put',
       data: body
     })
@@ -38,7 +38,7 @@ const updateBatch = async (body: UpdateBatchBodyType): Promise<UpdateBatchRespon
 const getStockProducts = async (params: GetStockProductsParamsType = {}): Promise<StockProductType[]> => {
   try {
     const response = await authenticatedRequest({
-      url: makeGETParams('/stock-products', params),
+      url: makeGETParams('/stock/products', params),
       method: 'get'
     })
 
@@ -54,7 +54,7 @@ const getStockProducts = async (params: GetStockProductsParamsType = {}): Promis
 const getBatches = async (): Promise<BatchType[]> => {
   try {
     const response = await authenticatedRequest({
-      url: '/batches',
+      url: '/stock/batches',
       method: 'get'
     })
 
@@ -70,7 +70,7 @@ const getBatches = async (): Promise<BatchType[]> => {
 const deleteBatch = async (id: string): Promise<{ status: boolean }> => {
   try {
     const response = await authenticatedRequest({
-      url: '/batches',
+      url: '/stock/batches',
       method: 'delete',
       data: { id }
     })

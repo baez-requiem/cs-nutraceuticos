@@ -4,7 +4,7 @@ import { CreateNewMisplacementBodyType, CreateNewMisplacementResponseType, Mispl
 const getAllMisplacements = async (): Promise<MisplacementType[]> => {
   try {
     const response = await authenticatedRequest({
-      url: '/misplacements',
+      url: '/stock/misplacements',
       method: 'get'
     })
 
@@ -20,7 +20,7 @@ const getAllMisplacements = async (): Promise<MisplacementType[]> => {
 const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promise<CreateNewMisplacementResponseType|null> => {
   try {
     const response = await authenticatedRequest({
-      url: '/misplacements',
+      url: '/stock/misplacements',
       method: 'post',
       data: body
     })
@@ -37,7 +37,7 @@ const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promi
 const deleteMisplacement = async (id: string): Promise<{ status: boolean }> => {
   try {
     const response = await authenticatedRequest({
-      url: '/misplacements',
+      url: '/stock/misplacements',
       method: 'delete',
       data: { id }
     })
