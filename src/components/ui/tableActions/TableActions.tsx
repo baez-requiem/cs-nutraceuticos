@@ -4,12 +4,13 @@ import Flex from "../flex/Flex"
 
 import {
   DeleteAciton,
-  EditAciton
+  EditAciton,
+  StockAciton
 } from './TableButtonActions'
 
 interface TableActionsProps {
   actions?: {
-    type: 'Edit' | 'Delete'
+    type: 'Edit' | 'Delete' | 'Stock'
     onClick?: () => void
     title?: string
   }[]
@@ -19,6 +20,7 @@ const ActionButton = ({ type, onClick, title }: TableActionsProps['actions'][0])
   switch (type) {
     case 'Edit': return <EditAciton />
     case 'Delete': return <DeleteAciton />
+    case 'Stock': return <StockAciton />
   }
 }
 

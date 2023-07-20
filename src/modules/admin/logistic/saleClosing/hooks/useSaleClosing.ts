@@ -23,10 +23,8 @@ const useSaleClosing = () => {
       delivery_date: formatDate(logisticInfos.delivery_date),
       delivery_type: logisticInfos.delivery_type.name,
       delivery_value: floatToReal(logisticInfos.delivery_value),
-      motoboy:  logisticInfos.motoboy?.name || '',
+      motoboy: logisticInfos?.motoboy?.name || '',
   
-      // total_sales: sale.sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
-      // total_products: sale.sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
       total_amount: floatToReal(sale.sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - sale.discounts),
   
       seller_name: sale.user.name,

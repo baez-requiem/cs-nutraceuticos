@@ -123,6 +123,7 @@ type MotoboyType = {
   name: string
   active: boolean
   notes: string | null
+  phone: string | null
   created_at: string
 }
 

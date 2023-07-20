@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
 import IconButton from "../iconButton/IconButton"
+
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { BsTrash } from "react-icons/bs"
+import { BsBoxSeam, BsTrash } from "react-icons/bs"
 
 interface ActionProps {
   onClick?: () => void
@@ -18,5 +19,11 @@ export const EditAciton: FC<ActionProps> = ({ onClick, title = 'Editar' }) => (
 export const DeleteAciton: FC<ActionProps> = ({ onClick, title = 'Excluir' }) => (
   <IconButton color="red_600" onClick={onClick} title={title}>
     <BsTrash color="white" size={18} />
+  </IconButton>
+)
+
+export const StockAciton: FC<ActionProps> = ({ onClick, title = 'Excluir' }) => (
+  <IconButton color="cyan_500" onClick={onClick} title={title}>
+    <BsBoxSeam color="white" size={18} />
   </IconButton>
 )

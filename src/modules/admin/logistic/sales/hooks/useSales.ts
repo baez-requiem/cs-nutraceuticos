@@ -20,8 +20,8 @@ const useSales = () => {
     total_sales: sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
     total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
     total_amount: floatToReal(sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - discounts),
-    status: logistic_infos[0].sale_status.status,
-    color_status: logistic_infos[0].sale_status.color,
+    status: logistic_infos[0]?.sale_status.status,
+    color_status: logistic_infos[0]?.sale_status.color,
     date: formatDateTime(new Date(created_at).toUTCString())
   }))
 

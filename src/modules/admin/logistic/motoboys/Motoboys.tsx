@@ -3,10 +3,16 @@ import { Button, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilt
 import { useMotoboys } from "./hooks/useMotoboys"
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { BsTrash } from "react-icons/bs"
+import { ModalMotoboy } from "./components"
 
 export const Motoboys = () => {
 
-  const { tableData } = useMotoboys()
+  const {
+    tableData,
+    closeModal,
+    useModal,
+    openModal
+  } = useMotoboys()
 
   return (
     <Private roles={['Admin']} logout>
@@ -14,8 +20,8 @@ export const Motoboys = () => {
         <Header title="Motoboys" subtitle="Logística" />
 
         <Paper>
-          <Button color="green_600">
-            Registar motoboy
+          <Button color="green_600" onClick={openModal()}>
+            Cadastrar motoboy
           </Button>
         </Paper>
 
@@ -37,6 +43,8 @@ export const Motoboys = () => {
           />
         </Paper>
       </Grid>
+
+      <ModalMotoboy show={useModal.show} data={useModal.data} onClose={closeModal} />
     </Private>
   )
 }
