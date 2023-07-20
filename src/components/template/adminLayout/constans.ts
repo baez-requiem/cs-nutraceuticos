@@ -41,6 +41,7 @@ export const menuItems = [
     Icon: FaTruckLoading({ size: 22 }),
     children: [
       { label: 'Vendas', to: '/admin/logistic/sales', },
+      { label: 'Motoboys', to: '/admin/logistic/motoboys', },
       { label: 'Fechamentos', to: '/admin/logistic/sale-closing', }
     ]
   },

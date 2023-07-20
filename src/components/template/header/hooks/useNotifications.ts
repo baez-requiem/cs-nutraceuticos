@@ -8,7 +8,7 @@ const useNotifications = () => {
   const { data: stockProducts } = useQuery(
     ['stock-products', { active: true }],
     async () => await stockApi.getStockProducts({ active: true }),
-    { initialData: [], refetchInterval: 5000 }
+    { initialData: [], refetchInterval: 10000 }
   )
 
   const hasLowStockProduct = stockProducts

@@ -11,6 +11,7 @@ const StockTable = () => {
       <Text size="lg" weight="500" color="gray_900">Estoque disponível</Text>
       <Divider />
       <Table
+        rows={5}
         columns={[
           { label: 'Produto', value: 'name' },
           { label: 'Estoque disponível', value: 'total' },

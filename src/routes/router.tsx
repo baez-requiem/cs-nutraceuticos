@@ -55,8 +55,12 @@ export const router = createBrowserRouter([
         element: lazyLoad(lazy(() => import('src/modules/admin/logistic/sales/Sales')))
       },
       {
-        path: "/admin/reports/sales",
-        element: lazyLoad(lazy(() => import('src/modules/admin/reports/sales/SalesReport')))
+        path: "/admin/logistic/motoboys",
+        element: lazyLoad(lazy(() => import('src/modules/admin/logistic/motoboys/Motoboys')))
+      },
+      {
+        path: "/admin/logistic/sale-closing",
+        element: lazyLoad(lazy(() => import('src/modules/admin/logistic/saleClosing/SaleClosing')))
       },
     ]
   },

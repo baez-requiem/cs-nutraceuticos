@@ -16,4 +16,5 @@ export interface TableProps {
   title?: string
   id?: string
   pagination?: boolean
+  rows?: number
 }

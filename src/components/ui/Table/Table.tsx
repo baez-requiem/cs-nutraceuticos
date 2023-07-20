@@ -23,7 +23,8 @@ const Table: FC<TableProps> = ({
   minWidth,
   title,
   id,
-  pagination = true
+  pagination = true,
+  rows
 }) => {
   const [showExtraRow, setShowExtraRow] = useState<number[]>([])
 
@@ -34,7 +35,7 @@ const Table: FC<TableProps> = ({
     setShowExtraRow(newData)
   }
 
-  const { paginationData, ...paginationProps} = usePagination(data)
+  const { paginationData, ...paginationProps} = usePagination(data, rows)
 
   return (
     <>

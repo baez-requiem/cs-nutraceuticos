@@ -17,6 +17,7 @@ const MisplacementsTable = () => {
       <Text size="lg" weight="500" color="gray_900">Extravios</Text>
       <Divider />
       <Table
+        rows={5}
         columns={[
           {
             label: '#',

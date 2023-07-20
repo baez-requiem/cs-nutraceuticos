@@ -22,9 +22,13 @@ import { RxEnter } from 'react-icons/rx'
 import { useMenu } from "./hook/useMenu"
 import { BsDot } from 'react-icons/bs'
 
+export interface MenuItemChildren {
+
+}
+
 export interface MenuItem {
   label: string
-  to: string
+  to?: string
   Icon: ReactNode
   children?: { label: string, to: string }[]
 }
@@ -88,7 +92,7 @@ const Menu: FC<MenuProps> = ({
                 {item.children.map(ic => (
                   <SubMenuItem
                     onClick={navigateTo(ic.to)}
-                    key={`${item.label}-${i}-${ic}`}
+                    key={`${item.label}-${i}-${ic.label}`}
                     active={inRoute(ic.to)}
                   >
                     <BsDot size={20} />

@@ -27,10 +27,11 @@ const BatchesTable = () => {
   return (
     <Paper>
       <Text size="lg" weight="500" color="gray_900">Lotes Cadastrados</Text>
-      
+
       <Divider />
-      
+
       <Table
+        rows={5}
         columns={[
           { label: 'Lote', value: 'idx' },
           {
