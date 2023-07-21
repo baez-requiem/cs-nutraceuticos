@@ -138,7 +138,7 @@ type CreateNewLogisticInfoBodyType = {
   notes: string | null
 }
 
-export type GetSalesParams = {
+type GetSalesParams = {
   init_date?: string | null
   end_date?: string | null
   status?: string | null
