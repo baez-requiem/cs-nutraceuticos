@@ -137,3 +137,12 @@ type CreateNewLogisticInfoBodyType = {
   delivery_value: number
   notes: string | null
 }
+
+export type GetSalesParams = {
+  init_date?: string | null
+  end_date?: string | null
+  status?: string | null
+  seller?: string | null
+  client_name?: string | null
+  client_phone?: string | null
+}

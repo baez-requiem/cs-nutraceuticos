@@ -34,6 +34,9 @@ export const Sales = () => {
                 <Input label="até" type="date" />
                 <Select label="Status" />
                 <Select label="Vendedor" />
+
+                <Select label="Nome do cliente" />
+                <Select label="Telefone" />
               </Grid>
             </SideFilters>
           </Flex>

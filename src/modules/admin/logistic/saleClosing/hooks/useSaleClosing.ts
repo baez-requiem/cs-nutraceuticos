@@ -5,7 +5,10 @@ import { floatToReal } from "src/utils/number.utils"
 
 const useSaleClosing = () => {
 
-  const { data: sales } = useQuery('logistic/sales', logisticApi.getSales, { initialData: [], refetchOnWindowFocus: false })
+  const { data: sales } = useQuery(
+    'logistic/sales',
+    async () => logisticApi.getSales(),
+    { initialData: [], refetchOnWindowFocus: false })
 
   const tableData = sales.map(sale => {
 

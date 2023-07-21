@@ -12,7 +12,10 @@ interface ModalState {
 const useSales = () => {
   const [useModal, setModal] = useState<ModalState>({ show: null })
 
-  const { data: sales } = useQuery('logistic/sales', logisticApi.getSales, { initialData: [], refetchOnWindowFocus: false })
+  const { data: sales } = useQuery(
+    'logistic/sales',
+    async () => logisticApi.getSales(),
+    { initialData: [], refetchOnWindowFocus: false })
 
   const tableData = sales.map(({ id, user, sale_products, discounts, logistic_infos, created_at }) => ({
     id,

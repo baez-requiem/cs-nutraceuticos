@@ -1,9 +1,9 @@
-import { authenticatedRequest } from "../utils"
+import { authenticatedRequest, makeGETParams } from "../utils"
 
-const getSales = async (): Promise<Sale[]> => {
+const getSales = async (params?: GetSalesParams): Promise<Sale[]> => {
   try {
     const response = await authenticatedRequest({
-      url: '/logistic/sales',
+      url: makeGETParams('/logistic/sales', params),
       method: 'get'
     })
 
