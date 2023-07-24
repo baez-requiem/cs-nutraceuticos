@@ -5,12 +5,15 @@ import Flex from "../flex/Flex"
 import {
   DeleteAciton,
   EditAciton,
-  StockAciton
+  HistoryAciton,
+  PDFAciton,
+  StockAciton,
+  VizualizerAciton
 } from './TableButtonActions'
 
 interface TableActionsProps {
   actions?: {
-    type: 'Edit' | 'Delete' | 'Stock'
+    type: 'Edit' | 'Delete' | 'Stock' | 'PDF' | 'Vizualizer' | 'History'
     onClick?: () => void
     title?: string
   }[]
@@ -18,9 +21,12 @@ interface TableActionsProps {
 
 const ActionButton = ({ type, onClick, title }: TableActionsProps['actions'][0]) => {
   switch (type) {
-    case 'Edit': return <EditAciton />
-    case 'Delete': return <DeleteAciton />
-    case 'Stock': return <StockAciton />
+    case 'PDF':        return <PDFAciton onClick={onClick} title={title} />
+    case 'Edit':       return <EditAciton onClick={onClick} title={title} />
+    case 'Stock':      return <StockAciton onClick={onClick} title={title} />
+    case 'Delete':     return <DeleteAciton onClick={onClick} title={title} />
+    case 'History':    return <HistoryAciton onClick={onClick} title={title} />
+    case 'Vizualizer': return <VizualizerAciton onClick={onClick} title={title} />
   }
 }
 

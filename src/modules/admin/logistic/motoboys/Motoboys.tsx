@@ -1,8 +1,6 @@
 import { Header } from "src/components/template"
-import { Button, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
+import { Badge, Button, Confirm, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
 import { useMotoboys } from "./hooks/useMotoboys"
-import { MdOutlineModeEditOutline } from "react-icons/md"
-import { BsTrash } from "react-icons/bs"
 import { ModalMotoboy } from "./components"
 
 export const Motoboys = () => {
@@ -11,7 +9,10 @@ export const Motoboys = () => {
     tableData,
     closeModal,
     useModal,
-    openModal
+    openModal,
+    closeConfirm,
+    openConfirm,
+    useConfirm
   } = useMotoboys()
 
   return (
@@ -29,12 +30,15 @@ export const Motoboys = () => {
           <Table
             columns={[
               { label: 'Nome', value: 'name' },
-              { label: 'Status', value: 'status' },
+              { label: 'Telefone', value: 'phone' },
+              { label: 'Status', value: 'status', render: value => (
+                <Badge color={value ? 'green_600' : 'gray_500'}>{value ? 'Ativo' : 'desativado'}</Badge>
+              ) },
               { label: 'Ações', value: 'id', align: 'center', render: value => (
                 <TableActions
                   actions={[
-                    { type: 'Edit' },
-                    { type: 'Delete' },
+                    { type: 'Edit', onClick: openModal(value.toString()) },
+                    { type: 'Delete', onClick: openConfirm(value.toString()) },
                   ]}
                 />
               ) },
@@ -45,6 +49,12 @@ export const Motoboys = () => {
       </Grid>
 
       <ModalMotoboy show={useModal.show} data={useModal.data} onClose={closeModal} />
+
+      <Confirm
+        {...useConfirm}
+        onClose={closeConfirm}
+        onConfirm={closeConfirm}
+      />
     </Private>
   )
 }

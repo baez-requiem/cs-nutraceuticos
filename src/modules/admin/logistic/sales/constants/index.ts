@@ -1,3 +1,4 @@
+import { getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 
 type FormProductType = {
   id_product: string
@@ -40,4 +41,13 @@ export const initialDataFormLogisticInfos = {
   delivery_date: '',
   id_motoboy: '',
   notes: '',
+}
+
+export const initialDataSalesFilters = {
+  init_date: getStartMonthValue(new Date()),
+  end_date: getEndMonthValue(new Date()),
+  status: '',
+  seller: '',
+  client_name: '',
+  client_phone: '',
 }

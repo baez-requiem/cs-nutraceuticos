@@ -1,8 +1,8 @@
 import { FC } from "react"
-import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Select, Switch } from "src/components/ui"
+import { Divider, Grid, Modal, Text, Input, Textarea, Flex, Button, Select, Switch, Fade } from "src/components/ui"
 import { useModalUser } from "./hooks/useModalUser"
 import { UserType } from "src/services/api/users/users.types"
-import { handleChangeFormatCPF, handleChangeFormatPhone } from "src/utils/form.utils"
+import { handleChangeFormatCEP, handleChangeFormatCPF, handleChangeFormatPhone } from "src/utils/form.utils"
 
 export interface ModalUserProps {
   show: boolean
@@ -16,7 +16,7 @@ const ModalUser: FC<ModalUserProps> = ({
   onClose
 }) => {
 
-  const titleText = !data?.id ? 'Cadastrar vendedor' : `Editar vendedor - ${data?.name || 'Fulano de tal'}`
+  const titleText = !data?.id ? 'Cadastrar usuário' : `Editar usuário - ${data.name}`
 
   const {
     roles,
@@ -105,17 +105,20 @@ const ModalUser: FC<ModalUserProps> = ({
           options={roles.map(role => ({ label: role.name, value: role.id }))}
         />
 
-        <Select
-          label="Equipe de vendas:"
-          name="salesTeamId"
-          value={values.salesTeamId}
-          onChange={handleChange}
-          labelFixed={!!values.salesTeamId}
-          options={[
-            { label: 'Nenhuma equipe', value: '' },
-            ...salesTeam.map(saleTeam => ({ label: saleTeam.name, value: saleTeam.id }))
-          ]}
-        />
+        <Fade.FadeIn show={values.roleId == 'seller'}>
+          <Select
+            label="Equipe de vendas:"
+            name="salesTeamId"
+            value={values.salesTeamId}
+            onChange={handleChange}
+            labelFixed={!!values.salesTeamId}
+            options={[
+              { label: 'Nenhuma equipe', value: '' },
+              ...salesTeam.map(saleTeam => ({ label: saleTeam.name, value: saleTeam.id }))
+            ]}
+          />
+        </Fade.FadeIn>
+
       </Grid>
 
       <Divider my={10} />
@@ -138,7 +141,7 @@ const ModalUser: FC<ModalUserProps> = ({
           label="CEP:"
           name="cep"
           value={values.cep}
-          onChange={handleChange}
+          onChange={handleChangeFormatCEP(setFieldValue)}
           onKeyUp={searchCEP}
           labelFixed={!!values.cep}
         />
@@ -196,7 +199,8 @@ const ModalUser: FC<ModalUserProps> = ({
         name="notes"
         label="Anotações:"
         value={values.notes}
-        onChange={handleChange} 
+        onChange={handleChange}
+        labelFixed={!!values.notes}
       />
       
       <Divider my={10} />

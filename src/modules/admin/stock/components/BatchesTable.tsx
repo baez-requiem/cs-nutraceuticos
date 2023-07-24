@@ -4,7 +4,7 @@ import BatchesProducts from "./BatchesProducts"
 
 import { formatProducts } from "../utils/functions"
 import { floatToReal } from "src/utils/number.utils"
-import { formatUTCDateTime } from "src/utils/date.utils"
+import { formatDateTime, formatUTCDateTime } from "src/utils/date.utils"
 
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { BsTrash } from "react-icons/bs"
@@ -48,7 +48,7 @@ const BatchesTable = () => {
           {
             label: 'Data',
             value: 'created_at',
-            render: value => <Text>{formatUTCDateTime(value.toString())}</Text>
+            render: value => <Text>{formatDateTime(value.toString())}</Text>
           },
           { label: 'Anotações', value: 'notes' },
           {

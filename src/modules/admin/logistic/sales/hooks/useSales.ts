@@ -1,21 +1,60 @@
-import { useState } from "react"
+import { useFormik } from "formik"
+import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { logisticApi } from "src/services/api"
-import { formatDateTime, formatUTCDateTime } from "src/utils/date.utils"
+import { logisticApi, usersApi } from "src/services/api"
+import { formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal } from "src/utils/number.utils"
+import { initialDataSalesFilters } from "../constants"
+import { toast } from "react-toastify"
+import { removeNullAndEmptyFields } from "src/utils/objetct"
+import { makeSalePDF } from "../utils"
 
 interface ModalState {
   show: 'sale' | 'logistic-infos' | 'history' | null
   data?: Sale
 }
 
+interface FiltersState {
+  init_date?: string
+  end_date?: string
+  status?: string
+  seller?: string
+  client_name?: string
+  client_phone?: string
+}
+
 const useSales = () => {
   const [useModal, setModal] = useState<ModalState>({ show: null })
+  const [useFilters, setFilters] = useState<FiltersState>({
+    init_date: getStartMonthValue(new Date()),
+    end_date: getEndMonthValue(new Date())
+  })
 
-  const { data: sales } = useQuery(
-    'logistic/sales',
-    async () => logisticApi.getSales(),
-    { initialData: [], refetchOnWindowFocus: false })
+  const { data: sales, refetch: refetchSales  } = useQuery(
+    ['logistic/sales', useFilters],
+    async () => {
+      toast.loading('Carregando dados...')
+
+      const data = await logisticApi.getSales(useFilters)
+
+      toast.dismiss()
+
+      return data
+    },
+    { initialData: [], refetchOnWindowFocus: false }
+  )
+  
+  const { data: saleStatus } = useQuery(
+    ['logistic/sale-status'],
+    async () => logisticApi.getSaleStatus(),
+    { initialData: [], refetchOnWindowFocus: false }
+  )
+
+  const { data: users } = useQuery(
+    ['users', { user_role: 'seller' }],
+    async () => usersApi.getAllUsers({ user_role: 'seller' }),
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
+  )
 
   const tableData = sales.map(({ id, user, sale_products, discounts, logistic_infos, created_at }) => ({
     id,
@@ -47,13 +86,44 @@ const useSales = () => {
     show: null
   })
 
+  const formik = useFormik({
+    initialValues: initialDataSalesFilters,
+    onSubmit: values => {
+      setFilters(removeNullAndEmptyFields(values))
+    },
+  })
+
+  useEffect(() => {
+    refetchSales()
+  }, [useFilters])
+
+  const statusOpts = [
+    { value: '', label: 'Todos' },
+    ...saleStatus.map(status => ({ label: status.status, value: status.id }))
+  ]
+
+  const usersOpts = [
+    { value: '', label: 'Todos' },
+    ...users.map(user => ({ label: user.name, value: user.id }))
+  ]
+
+  const salePDF = (id: string) => () => {
+    const sale = sales.find(sale => sale.id === id)
+
+    makeSalePDF(sale)
+  }
+
   return {
     tableData,
+    statusOpts,
+    usersOpts,
     useModal,
     openModalSale,
     openModalHistory,
     openModalLogisticInfos,
-    closeModal
+    closeModal,
+    formik,
+    salePDF
   }
 }
 

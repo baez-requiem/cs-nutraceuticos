@@ -25,9 +25,9 @@ const useSalesTeam = () => {
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
   const saleTeamMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    toast.loading("Excluindo Equipe de vendas...")
 
-    const { status: hasDeleted } = await salesTeamApi.deleteSaleTeam(id)
+    const hasDeleted = await salesTeamApi.deleteSaleTeam(id)
 
     toast.dismiss()
 

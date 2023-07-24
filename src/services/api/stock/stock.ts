@@ -1,7 +1,7 @@
 import { authenticatedRequest, makeGETParams } from "../utils"
 import { BatchType, CreateNewBatchBodyType, CreateNewBatchResponseType, GetStockProductsParamsType, StockProductType, UpdateBatchBodyType, UpdateBatchResponseType } from "./stock.types"
 
-const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBatchResponseType|null> => {
+const createNewBatch = async (body: CreateNewBatchBodyType): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/stock/batches',
@@ -9,16 +9,16 @@ const createNewBatch = async (body: CreateNewBatchBodyType): Promise<CreateNewBa
       data: body
     })
 
-    const data: CreateNewBatchResponseType = response.data
+    const isStatus201 = response.status === 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const updateBatch = async (body: UpdateBatchBodyType): Promise<UpdateBatchResponseType|null> => {
+const updateBatch = async (body: UpdateBatchBodyType): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/stock/batches',
@@ -26,12 +26,12 @@ const updateBatch = async (body: UpdateBatchBodyType): Promise<UpdateBatchRespon
       data: body
     })
 
-    const data: UpdateBatchResponseType = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
@@ -67,7 +67,7 @@ const getBatches = async (): Promise<BatchType[]> => {
   }
 }
 
-const deleteBatch = async (id: string): Promise<{ status: boolean }> => {
+const deleteBatch = async (id: string): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/stock/batches',
@@ -75,12 +75,12 @@ const deleteBatch = async (id: string): Promise<{ status: boolean }> => {
       data: { id }
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

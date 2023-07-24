@@ -16,7 +16,7 @@ const useMisplacementsTable = () => {
   const deleteMisplacementMutation = useMutation(async (id: string) => {
     toast.loading("Excluindo extravio...")
 
-    const { status: hasDeleted } = await misplacementsApi.deleteMisplacement(id)
+    const hasDeleted = await misplacementsApi.deleteMisplacement(id)
 
     toast.dismiss()
 

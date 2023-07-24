@@ -1,13 +1,13 @@
 import { httpClient } from '../httpClient'
 import { RoleType } from '../roles/roles.types'
-import { authenticatedRequest } from "../utils"
-import { CreateUserBody, UpdateUserBody, UserType } from "./users.types"
+import { authenticatedRequest, makeGETParams } from "../utils"
+import { CreateUserBody, GetUserParams, UpdateUserBody, UserType } from "./users.types"
 
-const getAllUsers = async (): Promise<UserType[]> => {
+const getAllUsers = async (params: GetUserParams): Promise<UserType[]> => {
 
   try {
     const response = await authenticatedRequest({
-      url: '/users',
+      url: makeGETParams('/users', params),
       method: 'get'
     })
 
@@ -20,7 +20,7 @@ const getAllUsers = async (): Promise<UserType[]> => {
   }
 }
 
-const updateUser = async (body: UpdateUserBody): Promise<UserType|null> => {
+const updateUser = async (body: UpdateUserBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/users',
@@ -28,16 +28,16 @@ const updateUser = async (body: UpdateUserBody): Promise<UserType|null> => {
       data: body
     })
 
-    const data: UserType = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const createUser = async (body: CreateUserBody): Promise<UserType|null> => {
+const createUser = async (body: CreateUserBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/users',
@@ -45,16 +45,16 @@ const createUser = async (body: CreateUserBody): Promise<UserType|null> => {
       data: body
     })
 
-    const data: UserType = response.data
+    const isStatus201 = response.status === 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
     return null
   }
 }
 
-const deleteUser = async(id: string): Promise<{ status: boolean }> => {
+const deleteUser = async(id: string): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/users',
@@ -62,12 +62,12 @@ const deleteUser = async(id: string): Promise<{ status: boolean }> => {
       data: { id }
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

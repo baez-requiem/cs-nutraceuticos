@@ -1,4 +1,3 @@
-import RefreshDataButton from "src/components/context/refreshDataButton/RefreshDataButton"
 import { Header } from "src/components/template"
 import { Flex, Grid, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
 import { useSaleClosing } from "./hooks/useSaleClosing"
@@ -14,11 +13,8 @@ export const SaleClosing = () => {
 
         <Paper>
           <Flex justify="end" gap={20}>
-            <RefreshDataButton queries={['logistic/sales']} />
-
             <SideFilters>
               <Grid gap={10}>
-                <Input label="Cliente" />
                 <Input label="Data" type="date" />
                 <Input label="até" type="date" />
                 <Select label="Tipo de entrega" />

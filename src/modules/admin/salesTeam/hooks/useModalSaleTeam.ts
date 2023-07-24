@@ -16,29 +16,27 @@ const useModalSaleTeam = (
   data?: ProductType
 ) => {
   const saleTeamMutation = useMutation(async (values: typeof initialValues) => {
-    const idProduct = data?.id
+    const idSalesTeam = data?.id
 
-    toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
+    toast.loading(`${idSalesTeam ? 'Atualizando' : 'Inserindo'} dados...`)
 
-    const product = idProduct
-      ? await salesTeamApi.updateSaleTeam({ ...values, id: idProduct })
+    const ok = idSalesTeam
+      ? await salesTeamApi.updateSaleTeam({ ...values, id: idSalesTeam })
       : await salesTeamApi.createSaleTeam(values)
 
     toast.dismiss()
 
-    if (!product?.id) {
-      toast.error(`Houve um erro ao ${idProduct ? 'atualizar' : 'cadastrar'} o produto.`)
+    if (!ok) {
+      toast.error(`Houve um erro ao ${idSalesTeam ? 'atualizar' : 'cadastrar'} a equipe.`)
     } else {
-      toast.success(`Produto ${idProduct ? 'atualizado' : 'cadastrado'} com sucesso!`)
+      toast.success(`Equipe ${idSalesTeam ? 'atualizada' : 'cadastrada'} com sucesso!`)
       onClose(true)
     }
   })
   
   const formik = useFormik({
     initialValues,
-    onSubmit(values) {
-      saleTeamMutation.mutateAsync(values)
-    },
+    onSubmit: values => saleTeamMutation.mutateAsync(values),
   })
 
   useEffect(() => {

@@ -17,7 +17,7 @@ const getAllSalesTeam = async (): Promise<SalesTeamType[]> => {
   }
 }
 
-const createSaleTeam = async (body: CreateSaleTeamBody): Promise<SalesTeamType|null> => {
+const createSaleTeam = async (body: CreateSaleTeamBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/sales-team',
@@ -25,16 +25,16 @@ const createSaleTeam = async (body: CreateSaleTeamBody): Promise<SalesTeamType|n
       data: body
     })
 
-    const data: SalesTeamType = response.data
+    const isStatus201 = response.status === 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const updateSaleTeam = async (body: UpdateSaleTeamBody): Promise<SalesTeamType|null> => {
+const updateSaleTeam = async (body: UpdateSaleTeamBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/sales-team',
@@ -42,16 +42,16 @@ const updateSaleTeam = async (body: UpdateSaleTeamBody): Promise<SalesTeamType|n
       data: body
     })
 
-    const data: SalesTeamType = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const deleteSaleTeam = async (id: string): Promise<{ status: boolean }> => {
+const deleteSaleTeam = async (id: string): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/sales-team',
@@ -59,12 +59,12 @@ const deleteSaleTeam = async (id: string): Promise<{ status: boolean }> => {
       data: { id }
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

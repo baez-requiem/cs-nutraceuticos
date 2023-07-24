@@ -23,7 +23,7 @@ const getAllMedias = async (): Promise<MediaType[]> => {
   }
 }
 
-const createMedia = async (body: CreateMediaBody): Promise<MediaType|null> => {
+const createMedia = async (body: CreateMediaBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/medias',
@@ -31,16 +31,16 @@ const createMedia = async (body: CreateMediaBody): Promise<MediaType|null> => {
       data: body
     })
 
-    const data: MediaType = response.data
+    const isStatus201 = response.status === 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const updateMedia = async (body: UpdateMediaBody): Promise<MediaType|null> => {
+const updateMedia = async (body: UpdateMediaBody): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/medias',
@@ -48,16 +48,16 @@ const updateMedia = async (body: UpdateMediaBody): Promise<MediaType|null> => {
       data: body
     })
 
-    const data: MediaType = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const deleteMedia = async (id: string): Promise<{ status: boolean }> => {
+const deleteMedia = async (id: string): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/medias',
@@ -65,12 +65,12 @@ const deleteMedia = async (id: string): Promise<{ status: boolean }> => {
       data: { id }
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

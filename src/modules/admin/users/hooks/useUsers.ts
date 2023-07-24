@@ -22,7 +22,7 @@ const useUsers = () => {
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
   const { data: users, refetch } = useQuery(['users'], async () => {
-    const response = await usersApi.getAllUsers()
+    const response = await usersApi.getAllUsers({})
 
     return response
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
@@ -30,7 +30,7 @@ const useUsers = () => {
   const deleteUserMutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
-    const { status: hasDeleted } = await usersApi.deleteUser(id)
+    const hasDeleted = await usersApi.deleteUser(id)
 
     toast.dismiss()
 
@@ -74,7 +74,8 @@ const useUsers = () => {
       name: user.name,
       role: user.role?.name,
       username: user.username,
-      initial_date: user.initial_date
+      initial_date: user.initial_date,
+      status: +user.active
     }
   })
 

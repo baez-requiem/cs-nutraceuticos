@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Divider, Flex, Paper, Text } from "src/components/ui"
 import { LastSaleType } from "src/services/api/dashboard/dashboard.types"
-import { formatUTCDateTime } from 'src/utils/date.utils'
+import { formatDate, formatDateTime } from 'src/utils/date.utils'
 import { floatToReal } from 'src/utils/number.utils'
 
 interface LastSalesProps {
@@ -37,7 +37,7 @@ const LastSales: FC<LastSalesProps> = ({ sales = [] }) => {
 
             <Divider />
 
-            <Text size="xs" color="gray_500">{formatUTCDateTime(sale.created_at)}</Text>  
+            <Text size="xs" color="gray_500">{formatDateTime(sale.created_at)}</Text>  
 
             <Divider my={10} line opacityLine={0.15} />
           </div>

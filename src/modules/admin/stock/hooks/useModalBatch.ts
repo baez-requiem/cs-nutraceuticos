@@ -41,13 +41,13 @@ const useModalBatch = (
 
     const dataId = data?.id
 
-    const batch = dataId 
+    const ok = dataId 
       ? await stockApi.updateBatch({...body, id: dataId})
       : await stockApi.createNewBatch(body)
 
     toast.dismiss()
 
-    batch?.id
+    ok
       ? toast.success(`${dataId ? 'Lote atualizado' : 'Novo lote cadastrado'} com sucesso!`)
       : toast.error(`Houve um erro ao ${dataId ? 'atualizar o' : 'cadastrar um novo'} lote`)
 

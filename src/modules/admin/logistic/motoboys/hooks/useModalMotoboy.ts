@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useFormik } from "formik"
-import { useMutation } from 'react-query'
-import { mediasApi } from 'src/services/api'
+import { useMutation, useQueryClient } from 'react-query'
+import { logisticApi } from 'src/services/api'
 import { toast } from 'react-toastify'
 
 const initialValues = {
@@ -16,21 +16,27 @@ const useModalMotoboy = (
   onClose: () => void,
   data?: MotoboyType
 ) => {
-  const mutation = useMutation(async (values: typeof initialValues) => {
-    const idMedia = data?.id
 
-    toast.loading(`${idMedia ? 'Atualizando' : 'Inserindo'} dados...`)
+  const queryClient = useQueryClient()
 
-    const media = idMedia
-      ? await mediasApi.updateMedia({ ...values, id: idMedia })
-      : await mediasApi.createMedia(values)
+  const mototobyMutation = useMutation(async (values: typeof initialValues) => {
+    const idMotoboy = data?.id
+
+    toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
+
+    const ok = idMotoboy
+      ? await logisticApi.updateMotoboy({ ...values, id: idMotoboy })
+      : await logisticApi.createMotoboy(values)
 
     toast.dismiss()
 
-    if (!media?.id) {
-      toast.error(`Houve um erro ao ${idMedia ? 'atualizar' : 'cadastrar'} a mídia.`)
+    if (!ok) {
+      toast.error(`Houve um erro ao ${idMotoboy ? 'atualizar' : 'cadastrar'} o motoboy.`)
     } else {
-      toast.success(`Mídia ${idMedia ? 'atualizado' : 'cadastrado'} com sucesso!`)
+      toast.success(`Motoboy ${idMotoboy ? 'atualizado' : 'cadastrado'} com sucesso!`)
+      
+      queryClient.refetchQueries(['logistic/motoboys'])
+      
       onClose()
     }
   })
@@ -38,7 +44,7 @@ const useModalMotoboy = (
   const formik = useFormik({
     initialValues,
     onSubmit(values) {
-      mutation.mutateAsync(values)
+      mototobyMutation.mutateAsync(values)
     },
   })
 
@@ -47,7 +53,7 @@ const useModalMotoboy = (
       ? formik.setValues({
         name: data.name,
         notes: data.notes || '',
-        phone: data.notes || '',
+        phone: data.phone || '',
         active: data.active
       })
       : formik.resetForm()

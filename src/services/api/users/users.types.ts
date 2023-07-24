@@ -46,3 +46,8 @@ export type CreateUserBody = {
 export type UpdateUserBody = {
   id: string
 } & CreateUserBody
+
+export type GetUserParams = {
+  active?: boolean
+  user_role?: string 
+}

@@ -84,6 +84,12 @@ export function formatCPF(value: string): string {
     .replace(/(\d{3})(\d{1,2})$/,"$1-$2")
 }
 
+export function formatCEP(value: string): string {
+  return value
+    .replace(/\D/g,"")
+    .replace(/(\d{5})(\d)/,'$1-$2')
+}
+
 export function nextPreviousNumbers(num: number, max: number): number[] {
   const nextNumbers: number[] = []
   const previousNumbers: number[] = []

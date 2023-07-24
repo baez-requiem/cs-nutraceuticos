@@ -11,21 +11,6 @@ interface useConfirmState {
   description?: string
 }
 
-interface ModalBatchState {
-  idx: number
-  id: string
-  notes: string
-  shipping: number
-  created_at: string
-  products: {
-    id_product: string
-    quantity: number
-    unit_amount: number
-    created_at: string
-    name: string
-  }[]
-}
-
 const useBatchesTable = () => {
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
   const [useModal, setModal] = useState<BatchType|null>(null)
@@ -41,7 +26,7 @@ const useBatchesTable = () => {
   const batchMutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
-    const { status: hasDeleted } = await stockApi.deleteBatch(id)
+    const hasDeleted = await stockApi.deleteBatch(id)
 
     toast.dismiss()
 

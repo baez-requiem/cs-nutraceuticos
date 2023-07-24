@@ -87,7 +87,7 @@ const useModalSale = (
   const searchCEP = async () => {
     const cep = formik.values.cep || ''
 
-    if (cep.length != 8) { return }
+    if (cep.length != 9) { return }
 
     const data = await consultCep(cep)
   

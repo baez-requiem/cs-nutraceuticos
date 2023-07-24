@@ -22,13 +22,13 @@ const useModalMedia = (
 
     toast.loading(`${idMedia ? 'Atualizando' : 'Inserindo'} dados...`)
 
-    const media = idMedia
+    const ok = idMedia
       ? await mediasApi.updateMedia({ ...values, id: idMedia })
       : await mediasApi.createMedia(values)
 
     toast.dismiss()
 
-    if (!media?.id) {
+    if (!ok) {
       toast.error(`Houve um erro ao ${idMedia ? 'atualizar' : 'cadastrar'} a mídia.`)
     } else {
       toast.success(`Mídia ${idMedia ? 'atualizado' : 'cadastrado'} com sucesso!`)

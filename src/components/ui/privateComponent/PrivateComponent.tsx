@@ -31,8 +31,6 @@ const PrivateComponent: FC<PrivateComponentProps> = ({
   
       const { match } = await matchUserRoleMutation.mutateAsync({ id_user, roles })
 
-      await new Promise(r => setTimeout(r, 2000))
-
       !match && hasLogout && logout()
 
       setHasPermission(match)

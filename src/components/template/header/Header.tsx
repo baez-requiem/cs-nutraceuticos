@@ -30,7 +30,7 @@ const Header: FC<HeaderProps> = ({
           </Flex>
 
         ) : (
-          <Text size="xl2" weight="600" color="gray_900">{title}</Text>
+          <Text size="xl2" weight="600" color="gray_900" whiteSpace='nowrap'>{title}</Text>
         )}
 
         <Flex items="center" justify="end" gap={10}>

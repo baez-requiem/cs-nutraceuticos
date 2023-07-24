@@ -84,8 +84,62 @@ const createNewLogisticInfo = async (body: CreateNewLogisticInfoBodyType): Promi
   }
 }
 
+const createMotoboy = async (body: CreateMotoboyBodyType): Promise<boolean> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/logistic/motoboys',
+      method: 'post',
+      data: body
+    })
+
+    const isStatus201 = response.status === 201
+
+    return isStatus201
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
+const updateMotoboy = async (body: UpdateMotoboyBodyType): Promise<boolean> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/logistic/motoboys',
+      method: 'put',
+      data: body
+    })
+
+    const isStatus200 = response.status === 200
+
+    return isStatus200
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
+const deleteMotoboy = async (body: { id: string }): Promise<boolean> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/logistic/motoboys',
+      method: 'delete',
+      data: body
+    })
+
+    const isStatus200 = response.status === 200
+
+    return isStatus200
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export default {
   getSales,
+  createMotoboy,
+  deleteMotoboy,
+  updateMotoboy,
   getSaleStatus,
   getDeliveryTypes,
   getMotoboys,

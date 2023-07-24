@@ -146,3 +146,14 @@ type GetSalesParams = {
   client_name?: string | null
   client_phone?: string | null
 }
+
+type CreateMotoboyBodyType = {
+  name: string
+  phone: string
+  active: boolean
+  notes: string | null
+}
+
+type UpdateMotoboyBodyType = {
+  id: string
+} & CreateMotoboyBodyType

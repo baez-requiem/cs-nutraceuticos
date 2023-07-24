@@ -17,7 +17,7 @@ const getAllMisplacements = async (): Promise<MisplacementType[]> => {
   }
 }
 
-const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promise<CreateNewMisplacementResponseType|null> => {
+const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/stock/misplacements',
@@ -25,16 +25,16 @@ const createNewMisplacement = async (body: CreateNewMisplacementBodyType): Promi
       data: body
     })
 
-    const data: CreateNewMisplacementResponseType = response.data
+    const isStatus201 = response.status === 201
 
-    return data
+    return isStatus201
   } catch (error) {
     console.log(error)
-    return null
+    return false
   }
 }
 
-const deleteMisplacement = async (id: string): Promise<{ status: boolean }> => {
+const deleteMisplacement = async (id: string): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/stock/misplacements',
@@ -42,12 +42,12 @@ const deleteMisplacement = async (id: string): Promise<{ status: boolean }> => {
       data: { id }
     })
 
-    const data: { status: boolean } = response.data
+    const isStatus200 = response.status === 200
 
-    return data
+    return isStatus200
   } catch (error) {
     console.log(error)
-    return { status: false }
+    return false
   }
 }
 

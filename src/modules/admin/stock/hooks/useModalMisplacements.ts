@@ -34,11 +34,11 @@ const useModalMisplacements = (
   const misplacementMutation = useMutation(async (body: CreateNewMisplacementBodyType) => {
     toast.loading(`Inserindo dados...`)
 
-    const misplacement = await misplacementsApi.createNewMisplacement(body)
+    const ok = await misplacementsApi.createNewMisplacement(body)
 
     toast.dismiss()
 
-    misplacement?.id
+    ok
       ? toast.success(`Novo extravio cadastrado com sucesso!`)
       : toast.error(`Houve um erro ao cadastrar um novo extravio`)
 

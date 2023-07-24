@@ -6,9 +6,12 @@ import { floatToReal } from "src/utils/number.utils"
 const useSaleClosing = () => {
 
   const { data: sales } = useQuery(
-    'logistic/sales',
+    'logistic/sales2e',
     async () => logisticApi.getSales(),
-    { initialData: [], refetchOnWindowFocus: false })
+    { initialData: [], refetchOnWindowFocus: false }
+  )
+
+  console.log(sales)
 
   const tableData = sales.map(sale => {
 
@@ -24,7 +27,7 @@ const useSaleClosing = () => {
       client_phone: sale.phone,
   
       delivery_date: formatDate(logisticInfos.delivery_date),
-      delivery_type: logisticInfos.delivery_type.name,
+      delivery_type: logisticInfos.delivery_type?.name,
       delivery_value: floatToReal(logisticInfos.delivery_value),
       motoboy: logisticInfos?.motoboy?.name || '',
   

@@ -1,3 +1,15 @@
-produto poder colocar fotos
+Revisão OK
 
-revisar datas de inserção no banco
+admin/dashboard
+admin/products
+admin/medias
+admin/sales-team
+admin/users
+admin/logistic/sales
+admin/logistic/motoboys
+
+|----------------------------------------------------------------|
+
+TODO
+
+criar fleg nas tabelas de user/motoboy/etc "deleted" para manter registros

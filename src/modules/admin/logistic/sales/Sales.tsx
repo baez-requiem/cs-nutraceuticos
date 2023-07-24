@@ -1,22 +1,32 @@
 import { AiOutlineEye } from "react-icons/ai"
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
-import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
+import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
 import { ModalHistory, ModalLogisticInfos, ModalSale } from "./components"
 import { matchColor } from "src/utils/theme"
-import { BiHistory } from "react-icons/bi"
-import RefreshDataButton from "src/components/context/refreshDataButton/RefreshDataButton"
+
+import { handleChangeFormatPhone } from "src/utils/form.utils"
+
 
 export const Sales = () => {
 
   const {
     tableData,
+    statusOpts,
+    usersOpts,
     openModalSale,
     openModalLogisticInfos,
     openModalHistory,
     useModal,
-    closeModal
+    closeModal,
+    salePDF,
+    formik: {
+      values,
+      handleChange,
+      submitForm,
+      setFieldValue
+    }
   } = useSales()
 
   return (
@@ -26,17 +36,50 @@ export const Sales = () => {
 
         <Paper>
           <Flex justify="end" gap={20}>
-            <RefreshDataButton queries={['logistic/sales']} />
-
-            <SideFilters>
+            <SideFilters onFilter={submitForm}>
               <Grid gap={10}>
-                <Input label="Data" type="date" />
-                <Input label="até" type="date" />
-                <Select label="Status" />
-                <Select label="Vendedor" />
+                <Input
+                  name="init_date"
+                  label="Data"
+                  type="date"
+                  onChange={handleChange}
+                  value={values.init_date}
+                />
+                <Input
+                  name="end_date"
+                  label="até"
+                  type="date"
+                  onChange={handleChange}
+                  value={values.end_date}
+                />
 
-                <Select label="Nome do cliente" />
-                <Select label="Telefone" />
+                <Select
+                  label="Status"
+                  name="status"
+                  onChange={handleChange}
+                  value={values.status}
+                  options={statusOpts}
+                />
+                <Select
+                  label="Vendedor"
+                  name="seller"
+                  onChange={handleChange}
+                  value={values.seller}
+                  options={usersOpts}
+                />
+
+                <Input
+                  label="Nome do cliente"
+                  name="client_name"
+                  onChange={handleChange}
+                  value={values.client_name}
+                />
+                <Input
+                  label="Telefone"
+                  name="client_phone"
+                  onChange={handleChangeFormatPhone(setFieldValue)}
+                  value={values.client_phone}
+                />
               </Grid>
             </SideFilters>
           </Flex>
@@ -54,17 +97,12 @@ export const Sales = () => {
                 <Badge color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
               ) },
               { label: 'Ações', align: 'center', value: 'id', render: value => (
-                <Flex justify="center" gap={10}>
-                  <IconButton color="sky_500" title="Visualizar" onClick={openModalSale(value.toString())}>
-                    <AiOutlineEye color="white" size={20} />
-                  </IconButton>
-                  <IconButton color="blue_600" title="Editar" onClick={openModalLogisticInfos(value.toString())}>
-                    <MdOutlineModeEditOutline color="white" size={20} />
-                  </IconButton>
-                  <IconButton color="gray_500" title="Histórico" onClick={openModalHistory(value.toString())}>
-                    <BiHistory color="white" size={20} />
-                  </IconButton>
-                </Flex>
+                <TableActions actions={[
+                  { type: 'Vizualizer', onClick: openModalSale(value.toString()) },
+                  { type: 'Edit', onClick: openModalLogisticInfos(value.toString()) },
+                  { type: 'History', onClick: openModalHistory(value.toString()) },
+                  { type: 'PDF', onClick: salePDF(value.toString()) },
+                ]} />
               ) },
             ]}
             data={tableData}

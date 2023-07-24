@@ -31,13 +31,13 @@ const useModalProduct = (
       amount: realToFloat(values.amount)
     }
 
-    const product = idProduct
+    const ok = idProduct
       ? await productsApi.updateProduct({ ...body, id: idProduct })
       : await productsApi.createProduct(body)
 
     toast.dismiss()
 
-    if (!product?.id) {
+    if (!ok) {
       toast.error(`Houve um erro ao ${idProduct ? 'atualizar' : 'cadastrar'} o produto.`)
     } else {
       toast.success(`Produto ${idProduct ? 'atualizado' : 'cadastrado'} com sucesso!`)

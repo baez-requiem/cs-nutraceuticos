@@ -27,7 +27,7 @@ const useMedias = () => {
   const mediaMutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
-    const { status: hasDeleted } = await mediasApi.deleteMedia(id)
+    const hasDeleted = await mediasApi.deleteMedia(id)
 
     toast.dismiss()
 

@@ -17,7 +17,7 @@ interface useConfirmState {
 }
 
 const useProducts = () => {
-  const { data: products, isFetching, refetch } = useQuery(['products'], async () => {
+  const { data: products, refetch } = useQuery(['products'], async () => {
     const response = await productsApi.getAllProducts()
 
     return response
@@ -27,7 +27,7 @@ const useProducts = () => {
   const mutation = useMutation(async (id: string) => {
     toast.loading("Excluindo produto...")
 
-    const { status: hasDeleted } = await productsApi.deleteProduct(id)
+    const hasDeleted = await productsApi.deleteProduct(id)
 
     toast.dismiss()
 

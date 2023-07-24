@@ -1,6 +1,6 @@
 import { BsTrash } from "react-icons/bs"
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { Button, Confirm, Divider, Flex, IconButton, Paper, Private, Table, Text } from "src/components/ui"
+import { Badge, Button, Confirm, Divider, Flex, IconButton, Paper, Private, Table, TableActions } from "src/components/ui"
 import ModalUser from "./ModalUser"
 import { useUsers } from "./hooks/useUsers"
 import { formatUTCDate } from "src/utils/date.utils"
@@ -44,19 +44,20 @@ const Users = () => {
                 <>{formatUTCDate(value.toString() || '')}</>
               ) : <></>              
             },
+            { label: 'Status', value: 'status', render: value => (
+              <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
+            ) },
             {
               label: 'Ações',
               value: 'id',
               align: 'center',
-              render: value => (
-                <Flex justify="center" gap={10}>
-                  <IconButton color="blue_600" onClick={() => openModal(value.toString())}>
-                    <MdOutlineModeEditOutline color="white" size={20} />
-                  </IconButton>
-                  <IconButton color="red_600" onClick={() => openConfirm(value.toString(), 'fulano de tal')}>
-                    <BsTrash color="white" size={18} />
-                  </IconButton>
-                </Flex>
+              render: (value, user) => (
+                <TableActions
+                  actions={[
+                    { type: 'Edit', onClick: () => openModal(value.toString()) },
+                    { type: 'Delete', onClick: () => openConfirm(value.toString(), user?.name.toString()) },
+                  ]}
+                />
               ),
             },
           ]}

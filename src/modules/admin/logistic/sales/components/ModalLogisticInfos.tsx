@@ -71,8 +71,8 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
 
       <Divider />
 
-      {mapSaleProductsLogistic(data?.sale_products).map(sp => (
-        <Grid gap={10} template="2fr 1fr 1fr">
+      {mapSaleProductsLogistic(data?.sale_products || []).map(sp => (
+        <Grid gap={10} template="2fr 1fr 1fr" key={`sp-l-${sp.name}`}>
           <Text size="sm">{sp.name}</Text>
           <Text size="sm" align="right">{sp.quantity}x {floatToReal(sp.unit_value)}</Text>
           <Text size="sm" align="right">{floatToReal(sp.total)}</Text>
