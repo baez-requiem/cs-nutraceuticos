@@ -1,3 +1,4 @@
+import { useFormik } from "formik"
 import { useQuery } from "react-query"
 import { logisticApi } from "src/services/api"
 import { formatDate, formatDateTime } from "src/utils/date.utils"
@@ -11,7 +12,16 @@ const useSaleClosing = () => {
     { initialData: [], refetchOnWindowFocus: false }
   )
 
-  console.log(sales)
+  const formik = useFormik({
+    initialValues: {
+      init_date: '',
+      end_date: '',
+      delivery_type: '',
+      motoboy: '',
+      seller: ''
+    },
+    onSubmit: () => {}
+  })
 
   const tableData = sales.map(sale => {
 

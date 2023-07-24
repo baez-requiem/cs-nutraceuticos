@@ -13,6 +13,7 @@ export type SaleBodyType = {
 
   media_id: string
   payment_type_id: string
+  card_installments: number
 
   discounts: number
   

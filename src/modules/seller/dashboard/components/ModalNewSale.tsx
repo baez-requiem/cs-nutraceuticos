@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Button, Divider, Flex, Grid, IconButton, Input, Modal, Select, Text, Textarea } from "src/components/ui"
+import { Button, Divider, Fade, Flex, Grid, IconButton, Input, Modal, Select, Text, Textarea } from "src/components/ui"
 import { useModalNewSale } from "../hooks/useModalNewSale"
 import { StyledTable } from "../styles"
 import ProductItem from "src/modules/admin/stock/components/ProductItem"
@@ -29,7 +29,6 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
     formik: {
       values,
       handleChange,
-      submitForm,
       setFieldValue,
       handleSubmit
     },
@@ -99,7 +98,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             labelFixed={!!values.state}
             disabled
           />
-        
+
           <Input
             label="Cidade:"
             name="city"
@@ -108,7 +107,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             labelFixed={!!values.city}
             disabled
           />
-        
+
           <Input
             label="Bairro:"
             name="neighborhood"
@@ -117,7 +116,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             labelFixed={!!values.neighborhood}
             disabled
           />
-        
+
           <Input
             label="Endereço:"
             name="address"
@@ -125,7 +124,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             onChange={handleChange}
             labelFixed={!!values.address}
           />
-          
+
           <Input
             label="Complemento:"
             name="complement"
@@ -164,6 +163,18 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             onChange={handleChangeFormatReal(setFieldValue)}
           />
 
+          <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>
+            <Input
+              label="Parcelas"
+              name="card_installments"
+              type="number"
+              min={0}
+              max={10}
+              value={values.card_installments}
+              onChange={handleChange}
+              labelFixed={!!values.card_installments}
+            />
+          </Fade.FadeIn>
         </Grid>
 
         <Divider />
@@ -177,7 +188,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             value={selectValue}
             labelFixed={!!selectValue}
           />
-          
+
           <IconButton
             type="button"
             color="sky_600"
@@ -187,9 +198,9 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             <AiOutlinePlus size={20} color="white" />
           </IconButton>
         </Flex>
-        
+
         <Divider />
-      
+
         <StyledTable show={!!values.products.length}>
           <thead>
             <tr>
@@ -203,9 +214,9 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
           <tbody>
             {values.products.map((value, idx) => (
               <ProductItem
-                {...{...value, idx}}
+                {...{ ...value, idx }}
                 key={`product-${idx}`}
-                onRemove={() => {}}
+                onRemove={() => { }}
                 handleChange={handleChange}
               />
             ))}
@@ -219,9 +230,9 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             </tr>
           </tfoot>
         </StyledTable>
-        
+
         <Divider />
-        
+
         <Textarea
           label="Anotações"
           name="notes"

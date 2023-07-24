@@ -47,6 +47,7 @@ const useModalSale = (
       const formatedValues = {
         ...values,
         id: data.id,
+        card_installments: values.card_installments ? parseInt(values.card_installments): null,
         discounts: parseInt(values.discounts.toString() || '0'),
         products: values.products.map(p => ({
           id_product: p.id_product,
@@ -108,6 +109,7 @@ const useModalSale = (
     } else {
       formik.setValues({
         address: data.address,
+        card_installments: data.card_installments+'',
         cep: data.cep,
         city: data.city,
         complement: data.complement,

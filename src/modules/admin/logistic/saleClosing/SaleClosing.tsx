@@ -15,11 +15,27 @@ export const SaleClosing = () => {
           <Flex justify="end" gap={20}>
             <SideFilters>
               <Grid gap={10}>
-                <Input label="Data" type="date" />
-                <Input label="até" type="date" />
-                <Select label="Tipo de entrega" />
-                <Select label="Motoboy" />
-                <Select label="Vendedor" />
+                <Input
+                  label="Data"
+                  type="date"
+                />
+
+                <Input
+                  label="até"
+                  type="date"
+                />
+
+                <Select
+                  label="Tipo de entrega"
+                />
+
+                <Select
+                  label="Motoboy"
+                />
+
+                <Select
+                  label="Vendedor"
+                />
               </Grid>
             </SideFilters>
           </Flex>

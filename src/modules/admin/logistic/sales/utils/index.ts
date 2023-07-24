@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf"
-import { formatDate, formatDateTime, formatDateValue, formatDocDateTime } from "src/utils/date.utils"
+import { formatDate, formatDateTime, formatDocDateTime } from "src/utils/date.utils"
 import { floatToReal, formatCEP, formatPhone } from "src/utils/number.utils"
 
 export const mapSaleProductsLogistic = (
@@ -99,6 +99,13 @@ export const makeSalePDF = (sale: Sale) => {
   doc.text(`Tipo de entrega: ${sale.logistic_infos[0].delivery_type.name}`, 10, spaceY)
   if (sale.logistic_infos[0].delivery_type.id === 'motoboy') {
     doc.text(`Motoboy: ${sale.logistic_infos[0].motoboy.name}`, 260, spaceY)
+  }
+
+  spaceY += 15
+
+  doc.text(`Forma de pagamento: ${sale.payment_type.name}`, 10, spaceY)
+  if (sale.payment_type_id === 'credit_card') {
+    doc.text(`N° de parcelas: ${sale.card_installments}`, 260, spaceY)
   }
 
   spaceY += 15

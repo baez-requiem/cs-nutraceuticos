@@ -97,6 +97,7 @@ type Sale = {
   complement: string | null
   media_id: string
   payment_type_id: string
+  card_installments: number | null
   id_user: string
   id_sales_team: string | null
   discounts: number | null

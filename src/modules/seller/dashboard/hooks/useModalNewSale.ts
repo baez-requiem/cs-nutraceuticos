@@ -3,8 +3,7 @@ import { useFormik } from "formik"
 import { initialDataFormNewSale } from "../constants"
 import { consultCep } from "src/services/viacep"
 import { useMutation, useQuery } from "react-query"
-import { mediasApi, productsApi, salesApi, stockApi } from "src/services/api"
-import { ProductType } from "src/services/api/products/products.types"
+import { mediasApi, salesApi, stockApi } from "src/services/api"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
@@ -41,6 +40,7 @@ const useModalNewSale = (
       const formatedValues = {
         ...values,
         discounts: parseInt(values.discounts.toString() || '0'),
+        card_installments: values.card_installments ? parseInt(values.card_installments): null,
         products: values.products.map(p => ({
           id_product: p.id_product,
           quantity: parseInt(p.quantity.toString()),
@@ -80,7 +80,7 @@ const useModalNewSale = (
   const searchCEP = async () => {
     const cep = formik.values.cep || ''
 
-    if (cep.length != 8) { return }
+    if (cep.length != 9) { return }
 
     const data = await consultCep(cep)
   

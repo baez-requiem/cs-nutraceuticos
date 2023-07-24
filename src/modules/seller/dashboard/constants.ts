@@ -16,6 +16,8 @@ export const initialDataFormNewSale = {
   media_id: '',
   payment_type_id: '',
 
+  card_installments: '',
+
   rg: '',
   cpf: '',
   email: '',
