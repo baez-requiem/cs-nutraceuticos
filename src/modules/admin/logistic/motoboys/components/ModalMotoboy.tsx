@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Button, Divider, Flex, Grid, Input, Modal, Switch, Text, Textarea } from "src/components/ui"
 import { useModalMotoboy } from "../hooks/useModalMotoboy"
 import { handleChangeFormatPhone } from "src/utils/form.utils"
+import { MotoboyType } from "src/services/api/logistic/logistic.types"
 
 export interface ModalMotoboyProps {
   show: boolean

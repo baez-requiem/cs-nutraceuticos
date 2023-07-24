@@ -6,6 +6,7 @@ import ProductItem from "src/modules/admin/stock/components/ProductItem"
 import { AiOutlinePlus } from "react-icons/ai"
 import { handleChangeFormatCPF, handleChangeFormatPhone, handleChangeFormatReal } from "src/utils/form.utils"
 import DiscountText from "./DiscountText"
+import { Sale } from "src/services/api/logistic/logistic.types"
 
 export interface ModalSaleProps {
   show: boolean

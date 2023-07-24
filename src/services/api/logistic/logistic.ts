@@ -1,4 +1,5 @@
 import { authenticatedRequest, makeGETParams } from "../utils"
+import { CreateMotoboyBodyType, CreateNewLogisticInfoBodyType, DeliveryType, GetSalesParams, MotoboyType, Sale, SaleStatus, UpdateMotoboyBodyType } from "./logistic.types"
 
 const getSales = async (params?: GetSalesParams): Promise<Sale[]> => {
   try {

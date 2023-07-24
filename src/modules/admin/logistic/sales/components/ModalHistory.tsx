@@ -5,6 +5,7 @@ import { useModalHistory } from "../hooks/useModalHistory"
 import { floatToReal } from "src/utils/number.utils"
 import { formatDate, formatDateTime } from "src/utils/date.utils"
 import { matchColor } from "src/utils/theme"
+import { Sale } from "src/services/api/logistic/logistic.types"
 
 export interface ModalHistoryProps {
   show: boolean

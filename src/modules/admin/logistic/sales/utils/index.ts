@@ -1,4 +1,5 @@
 import { jsPDF } from "jspdf"
+import { Sale } from "src/services/api/logistic/logistic.types"
 import { formatDate, formatDateTime, formatDocDateTime } from "src/utils/date.utils"
 import { floatToReal, formatCEP, formatPhone } from "src/utils/number.utils"
 

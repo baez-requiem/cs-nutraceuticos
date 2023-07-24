@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { toast } from "react-toastify"
 import { floatToReal, realToFloat } from "src/utils/number.utils"
 import { formatDateValue } from "src/utils/date.utils"
+import { CreateNewLogisticInfoBodyType, Sale } from "src/services/api/logistic/logistic.types"
 
 interface useModalLogisticInfosProps {
   show: boolean

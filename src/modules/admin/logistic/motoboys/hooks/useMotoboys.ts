@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useMutation, useQuery } from "react-query"
 import { toast } from "react-toastify"
 import { logisticApi } from "src/services/api"
+import { MotoboyType } from "src/services/api/logistic/logistic.types"
 import { formatPhone } from "src/utils/number.utils"
 
 interface ModalSate {

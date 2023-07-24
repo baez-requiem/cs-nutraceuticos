@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import { useMutation, useQueryClient } from 'react-query'
 import { logisticApi } from 'src/services/api'
 import { toast } from 'react-toastify'
+import { MotoboyType } from 'src/services/api/logistic/logistic.types'
 
 const initialValues = {
   name: '',

@@ -8,6 +8,7 @@ import { initialDataSalesFilters } from "../constants"
 import { toast } from "react-toastify"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
 import { makeSalePDF } from "../utils"
+import { Sale } from "src/services/api/logistic/logistic.types"
 
 interface ModalState {
   show: 'sale' | 'logistic-infos' | 'history' | null

@@ -5,6 +5,7 @@ import { mapSaleProductsLogistic, totalSaleValue } from "../utils"
 import { floatToReal } from "src/utils/number.utils"
 import { useModalLogisticInfos } from "../hooks/useModalLogisticInfos"
 import { handleChangeFormatReal } from "src/utils/form.utils"
+import { Sale } from "src/services/api/logistic/logistic.types"
 
 export interface ModalLogisticInfosProps {
   show: boolean

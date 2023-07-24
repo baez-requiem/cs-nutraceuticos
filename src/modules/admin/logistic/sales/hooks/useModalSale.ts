@@ -7,6 +7,7 @@ import { mediasApi, salesApi, stockApi } from "src/services/api"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
+import { Sale } from "src/services/api/logistic/logistic.types"
 
 const useModalSale = (
   show: boolean,

@@ -1,4 +1,4 @@
-type Product = {
+export type Product = {
   id: string
   name: string
   description: string | null
@@ -10,7 +10,7 @@ type Product = {
   updated_at: string | null
 }
 
-type Media = {
+export type Media = {
   id: string
   name: string
   description: string | null
@@ -20,20 +20,20 @@ type Media = {
   updated_at: string | null
 }
 
-type PaymentType = {
+export type PaymentType = {
   id: string
   name: string
   notes: string | null
   created_at: string
 }
 
-type SaleStatus = {
+export type SaleStatus = {
   id: string
   color?: string
   status: string
 }
 
-type LogisticInfos = {
+export type LogisticInfos = {
   id: string
   id_sale_status: string
   delivery_value: number
@@ -49,7 +49,7 @@ type LogisticInfos = {
   user: User
 }
 
-type User = {
+export type User = {
   id: string
   name: string
   username: string
@@ -72,7 +72,7 @@ type User = {
   updated_at: string | null
 }
 
-type SaleProduct = {
+export type SaleProduct = {
   id: string
   id_product: string
   id_sale: string
@@ -82,7 +82,7 @@ type SaleProduct = {
   product: Product
 }
 
-type Sale = {
+export type Sale = {
   id: string
   name: string
   phone: string
@@ -112,14 +112,14 @@ type Sale = {
   logistic_infos: LogisticInfos[]
 }
 
-type DeliveryType = {
+export type DeliveryType = {
   id: string
   name: string
   notes: string | null
   created_at: string
 }
 
-type MotoboyType = {
+export type MotoboyType = {
   id: string
   name: string
   active: boolean
@@ -129,7 +129,7 @@ type MotoboyType = {
 }
 
 
-type CreateNewLogisticInfoBodyType = {
+export type CreateNewLogisticInfoBodyType = {
   id_sale: string
   id_delivery_type: string
   id_sale_status: string
@@ -139,7 +139,7 @@ type CreateNewLogisticInfoBodyType = {
   notes: string | null
 }
 
-type GetSalesParams = {
+export type GetSalesParams = {
   init_date?: string | null
   end_date?: string | null
   status?: string | null
@@ -148,13 +148,13 @@ type GetSalesParams = {
   client_phone?: string | null
 }
 
-type CreateMotoboyBodyType = {
+export type CreateMotoboyBodyType = {
   name: string
   phone: string
   active: boolean
   notes: string | null
 }
 
-type UpdateMotoboyBodyType = {
+export type UpdateMotoboyBodyType = {
   id: string
 } & CreateMotoboyBodyType
