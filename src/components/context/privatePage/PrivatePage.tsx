@@ -5,7 +5,7 @@ import { auth } from 'src/services/api'
 import useLogout from "src/hooks/useLogout"
 import { PageLoader } from "src/components/template"
 
-type MatchRoleType = 'Master' | 'Vendedor' | 'Admin'
+type MatchRoleType = 'master' | 'seller' | 'admin'
 
 interface PrivatePageProps {
   children: ReactNode

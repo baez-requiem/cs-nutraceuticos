@@ -4,10 +4,9 @@ import { getStorageAuth } from "src/utils/localstorage"
 import { auth } from 'src/services/api'
 import { FC, ReactNode, useEffect, useState } from "react"
 import useLogout from "src/hooks/useLogout"
-import Loader from "../loader/Loader"
 import { PageLoader } from "src/components/template"
 
-type MatchRoleType = 'Master' | 'Vendedor' | 'Admin'
+type MatchRoleType = 'master' | 'seller' | 'admin'
 
 interface PrivateComponentProps {
   children: ReactNode

@@ -10,7 +10,7 @@ const Dashboard = () => {
   const { showModal, setShowModal, data } = useDashboard()
 
   return (
-    <PrivatePage roles={['Vendedor']}>
+    <PrivatePage roles={['seller']}>
       <HeaderSeller title="Dashboard" />
 
       <Divider my={10} />

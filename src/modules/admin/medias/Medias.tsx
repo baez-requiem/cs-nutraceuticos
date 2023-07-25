@@ -32,7 +32,7 @@ const Medias = () => {
   } = useMedias()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Header title="Mídias" />
       <Divider my={10} />
 

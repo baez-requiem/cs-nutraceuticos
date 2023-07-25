@@ -30,7 +30,7 @@ export const Sales = () => {
   } = useSales()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Grid gap={20}>
         <Header title="Vendas" subtitle="Logística" />
 

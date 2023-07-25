@@ -17,7 +17,7 @@ export const SaleClosing = () => {
   } = useSaleClosing()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Grid gap={20}>
         <Header title="Fechamentos" subtitle="Logística" />
 

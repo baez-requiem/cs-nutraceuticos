@@ -13,7 +13,7 @@ const SalesHistory = () => {
   } = useSalesHistory()
 
   return (
-    <Private roles={['Vendedor']} logout>
+    <Private roles={['seller']} logout>
       <Text size="xl2" weight="600" color="gray_900">Histórico de vendas</Text>
       <Divider my={10} />
 
