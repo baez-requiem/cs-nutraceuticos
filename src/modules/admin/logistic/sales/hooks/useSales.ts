@@ -7,7 +7,7 @@ import { floatToReal } from "src/utils/number.utils"
 import { initialDataSalesFilters } from "../constants"
 import { toast } from "react-toastify"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
-import { makeSalePDF } from "../utils"
+import { hasShowPdfAction, makeSalePDF } from "../utils"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
 interface ModalState {
@@ -57,16 +57,22 @@ const useSales = () => {
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
-  const tableData = sales.map(({ id, user, sale_products, discounts, logistic_infos, created_at }) => ({
-    id,
-    user_name: user.name,
-    total_sales: sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
-    total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
-    total_amount: floatToReal(sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - discounts),
-    status: logistic_infos[0]?.sale_status.status,
-    color_status: logistic_infos[0]?.sale_status.color,
-    date: formatDateTime(new Date(created_at).toUTCString())
-  }))
+  const tableData = sales.map(sale => {
+
+    const { id, user, sale_products, discounts, logistic_infos, created_at } = sale
+
+    return ({
+      id,
+      user_name: user.name,
+      total_sales: sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
+      total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
+      total_amount: floatToReal(sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - discounts),
+      status: logistic_infos[0]?.sale_status.status,
+      color_status: logistic_infos[0]?.sale_status.color,
+      date: formatDateTime(new Date(created_at).toUTCString()),
+      showPdf: +hasShowPdfAction(sale)
+    })
+  })
 
   const openModalSale = (id: string) => () => setModal({
     show: 'sale',

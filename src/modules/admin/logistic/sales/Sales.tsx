@@ -96,12 +96,12 @@ export const Sales = () => {
               { label: 'Status', value: 'status', render: (value, data) => (
                 <Badge color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
               ) },
-              { label: 'Ações', align: 'center', value: 'id', render: value => (
+              { label: 'Ações', align: 'center', value: 'id', render: (value, data) => (
                 <TableActions actions={[
                   { type: 'Vizualizer', onClick: openModalSale(value.toString()) },
                   { type: 'Edit', onClick: openModalLogisticInfos(value.toString()) },
                   { type: 'History', onClick: openModalHistory(value.toString()) },
-                  { type: 'PDF', onClick: salePDF(value.toString()) },
+                  { type: 'PDF', onClick: salePDF(value.toString()), show: !!data.showPdf },
                 ]} />
               ) },
             ]}

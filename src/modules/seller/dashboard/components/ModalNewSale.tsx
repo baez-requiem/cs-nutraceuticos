@@ -26,8 +26,10 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
     selectProductsOpt,
     addProduct,
     total,
+    removeProduct,
     formik: {
       values,
+      errors,
       handleChange,
       setFieldValue,
       handleSubmit
@@ -50,12 +52,14 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             name="name"
             value={values.name}
             onChange={handleChange}
+            error={errors.name}
           />
 
           <Input
             label="Telefone:*"
             name="phone"
             value={values.phone}
+            error={errors.phone}
             onChange={handleChangeFormatPhone(setFieldValue)}
           />
 
@@ -216,7 +220,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
               <ProductItem
                 {...{ ...value, idx }}
                 key={`product-${idx}`}
-                onRemove={() => { }}
+                onRemove={() => removeProduct(value.id_product)}
                 handleChange={handleChange}
               />
             ))}

@@ -7,9 +7,11 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   labelFixed?: boolean
   block?: boolean
   size?: number
+  error?: string
 }
 
 const Input: FC<InputProps> = ({
+  error = '',
   label = '',
   color = '',
   block = false,
@@ -38,6 +40,7 @@ const Input: FC<InputProps> = ({
       </StyledLabel>
       <StyledInput
         hasUpLabel={labelFixed || useUpLabel}
+        hasError={!!error}
         size={size}
         ref={inputRef}
         color={color}

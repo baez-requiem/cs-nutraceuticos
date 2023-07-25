@@ -23,6 +23,20 @@ export const totalSaleValue = (sale: Sale, withDiscount?: boolean) => {
   return withDiscount ? (total - sale.discounts) : total
 }
 
+export const hasShowPdfAction = (sale: Sale) => {
+  let hasShow = !!(sale.address && sale.city)
+  
+  const li = sale.logistic_infos[0]
+  
+  !li.delivery_date && (hasShow = false);
+  !li.delivery_value && (hasShow = false);
+  !li.id_delivery_type && (hasShow = false);
+  
+  (li.id_delivery_type === 'motoboy' && !li.id_motoboy) && (hasShow = false);
+
+  return hasShow
+}
+
 export const makeSalePDF = (sale: Sale) => {
   const doc = new jsPDF('p', 'px', [720, 480])
 

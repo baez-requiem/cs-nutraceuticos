@@ -1,17 +1,20 @@
-import { Button, Divider, Flex, Paper, Private, Text } from "src/components/ui"
-import { DaySalesChart, ModalNewSale } from "./components"
+import { Button, Divider, Flex, Paper } from "src/components/ui"
+import { DaySalesChart, ModalNewSale, SalesSummary } from "./components"
 import { useDashboard } from "./hooks/useDashboard"
 import { CardsContainer } from "./styles"
-import SalesSummary from "./components/SalesSummary"
+import { PrivatePage } from "src/components/context"
+import { HeaderSeller } from "src/components/template"
 
 const Dashboard = () => {
 
   const { showModal, setShowModal, data } = useDashboard()
 
   return (
-    <Private roles={['Vendedor']} logout>
-      <Text size="xl2" weight="600" color="gray_900">Dashboard</Text>
+    <PrivatePage roles={['Vendedor']}>
+      <HeaderSeller title="Dashboard" />
+
       <Divider my={10} />
+      
       <CardsContainer>
         <Paper>
           <Flex gap={10} items="end" justify="end">
@@ -29,7 +32,7 @@ const Dashboard = () => {
       </CardsContainer>
 
       <ModalNewSale show={showModal} onClose={() => setShowModal(false)} />
-    </Private>
+    </PrivatePage>
   )
 }
 

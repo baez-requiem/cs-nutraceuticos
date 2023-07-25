@@ -7,6 +7,7 @@ import { mediasApi, salesApi, stockApi } from "src/services/api"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
+import { validateNewSale } from "../utils/validationUtils"
 
 const useModalNewSale = (
   show: boolean,
@@ -36,7 +37,11 @@ const useModalNewSale = (
 
   const formik = useFormik({
     initialValues: initialDataFormNewSale,
-    onSubmit: values => {
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: (values) => validateNewSale(values),
+    onSubmit: (values) => {
       const formatedValues = {
         ...values,
         discounts: parseInt(values.discounts.toString() || '0'),
@@ -69,6 +74,17 @@ const useModalNewSale = (
         amount: hasProduct.amount
       }
     ]
+
+    formik.setFieldValue('products', formProducts)
+
+    const slcValue = stockProducts.filter(p => !formProducts.find(fp => fp.id_product === p.id))[0]?.id || ''
+
+    setSelectValue(slcValue.toString())
+  }
+
+  const removeProduct = (id: string) => {
+
+    const formProducts = formik.values.products.filter(p => p.id_product !== id)
 
     formik.setFieldValue('products', formProducts)
 
@@ -137,6 +153,7 @@ const useModalNewSale = (
     selectPaymentTypesOpt,
     selectMediasOpt,
     selectProductsOpt,
+    removeProduct,
     total
   }
 }

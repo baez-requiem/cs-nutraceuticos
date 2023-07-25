@@ -11,22 +11,6 @@ const showMobileAdmin = keyframes`
   }
 `
 
-const showSubmenuAnim = keyframes`
-  from {
-    opacity: 0;
-    max-height: 0px;
-  }
-
-  66% {
-    max-height: 800px;
-  }
-
-  to {
-    max-height: 800px;
-    opacity: 1;
-  }
-`
-
 export const NavContainer = styled.nav<{ hasMenuHide?: boolean }>`
   color: #fff;
 
@@ -126,6 +110,7 @@ export const UserContent = styled.div<{ hasMenuHide?: boolean }>`
   span {
     display: inline-block;
     padding: 16px 20px;
+    text-transform: capitalize;
   }
 
 

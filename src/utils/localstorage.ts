@@ -5,6 +5,11 @@ type AuthType = {
     expiresIn: number
     userId: string
   }
+  user: {
+    id: string,
+    role: string,
+    name: string
+  }
 }
 
 export const getLocalStorageData = <T>(key: string): T | null => {
