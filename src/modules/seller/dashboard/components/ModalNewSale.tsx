@@ -163,7 +163,7 @@ const ModalNewSale: FC<ModalNewSaleProps> = ({
             onChange={handleChangeFormatReal(setFieldValue)}
           />
 
-          <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>
+          <Fade.FadeIn show={(values.payment_type_id === 'credit_card')}>
             <Input
               label="Parcelas"
               name="card_installments"

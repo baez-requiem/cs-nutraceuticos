@@ -6,7 +6,7 @@ import SalesSummary from "./components/SalesSummary"
 
 const Dashboard = () => {
 
-  const { showModal, setShowModal } = useDashboard()
+  const { showModal, setShowModal, data } = useDashboard()
 
   return (
     <Private roles={['Vendedor']} logout>
@@ -19,9 +19,13 @@ const Dashboard = () => {
           </Flex>
         </Paper>
 
-        <DaySalesChart />
+        <DaySalesChart data={data?.totalSalesPerDay} />
 
-        <SalesSummary />
+        <SalesSummary
+          totalSalesMonth={data?.totalSalesMonth}
+          totalSalesWeek={data?.totalSalesWeek}
+          totalSalesDay={data?.totalSalesDay}
+        />
       </CardsContainer>
 
       <ModalNewSale show={showModal} onClose={() => setShowModal(false)} />

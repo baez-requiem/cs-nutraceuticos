@@ -4,7 +4,17 @@ import { useSaleClosing } from "./hooks/useSaleClosing"
 
 export const SaleClosing = () => {
 
-  const { tableData } = useSaleClosing()
+  const {
+    tableData,
+    usersOpts,
+    deliveryTypesOpts,
+    motoboysOpts,
+    formik: {
+      values,
+      handleChange,
+      handleSubmit
+    }
+  } = useSaleClosing()
 
   return (
     <Private roles={['Admin']} logout>
@@ -13,28 +23,49 @@ export const SaleClosing = () => {
 
         <Paper>
           <Flex justify="end" gap={20}>
-            <SideFilters>
+            <SideFilters onFilter={handleSubmit}>
               <Grid gap={10}>
                 <Input
                   label="Data"
                   type="date"
+                  name="init_date"
+                  value={values.init_date}
+                  onChange={handleChange}
                 />
 
                 <Input
                   label="até"
                   type="date"
+                  name="end_date"
+                  value={values.end_date}
+                  onChange={handleChange}
                 />
 
                 <Select
                   label="Tipo de entrega"
+                  options={deliveryTypesOpts}
+                  name="delivery_type"
+                  value={values.delivery_type}
+                  onChange={handleChange}
+                  nullable
                 />
 
                 <Select
                   label="Motoboy"
+                  options={motoboysOpts}
+                  name="motoboy"
+                  value={values.motoboy}
+                  onChange={handleChange}
+                  nullable
                 />
 
                 <Select
                   label="Vendedor"
+                  options={usersOpts}
+                  name="seller"
+                  value={values.seller}
+                  onChange={handleChange}
+                  nullable
                 />
               </Grid>
             </SideFilters>

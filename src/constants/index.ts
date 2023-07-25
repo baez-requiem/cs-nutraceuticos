@@ -1,1 +1,1 @@
-export const API_URL = 'https://dev-cs-nutraceuticos-server.onrender.com'
+export const API_URL = 'http://localhost:3000'

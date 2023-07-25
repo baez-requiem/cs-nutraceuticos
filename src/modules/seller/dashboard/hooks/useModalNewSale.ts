@@ -31,7 +31,7 @@ const useModalNewSale = (
       ? toast.success(`Venda efetuada com sucesso!`)
       : toast.error(`Houve um erro ao efetuar a venda.`)
 
-    onClose()
+    sale?.id && onClose()
   })
 
   const formik = useFormik({
@@ -80,7 +80,7 @@ const useModalNewSale = (
   const searchCEP = async () => {
     const cep = formik.values.cep || ''
 
-    if (cep.length != 9) { return }
+    if (cep.length < 8) { return }
 
     const data = await consultCep(cep)
   

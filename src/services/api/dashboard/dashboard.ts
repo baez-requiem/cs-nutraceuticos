@@ -1,6 +1,6 @@
 import { authenticatedRequest } from "../utils"
 
-import { DayItemType, LastSaleType, SaleByType, StatisticsType } from './dashboard.types'
+import { DayItemType, LastSaleType, SaleByType, SellerDashboard, StatisticsType } from './dashboard.types'
 
 const getDailyStatistics = async (): Promise<StatisticsType|null> => {
   try {
@@ -162,6 +162,21 @@ const getMonthStatisticsResume = async (): Promise<DayItemType[]> => {
   }
 }
 
+const getSellerDashboard = async (): Promise<SellerDashboard|null> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/dashboard/seller-resume',
+      method: 'get'
+    })
+
+    const data: SellerDashboard = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
 
 export default {
   getDailyStatistics,
@@ -173,5 +188,6 @@ export default {
   getMonthSalesByMedia,
   getDailySalesBySalesTeam,
   getMonthSalesBySalesTeam,
-  getMonthStatisticsResume
+  getMonthStatisticsResume,
+  getSellerDashboard
 }
