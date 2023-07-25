@@ -47,7 +47,7 @@ const useModalUser = (
 
     toast.dismiss()
 
-    if (ok) {
+    if (!ok) {
       toast.error(`Houve um erro ao ${ok ? 'atualizar' : 'cadastrar'} o usuário.`)
     } else {
       toast.success(`Usuário ${ok ? 'atualizado' : 'cadastrado'} com sucesso!`)
