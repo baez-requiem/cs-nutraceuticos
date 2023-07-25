@@ -67,4 +67,4 @@ const Table: FC<TableProps> = ({
   )
 }
 
-export default Table
+export {Table}
