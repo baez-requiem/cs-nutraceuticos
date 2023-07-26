@@ -24,11 +24,11 @@ const useSaleClosing = () => {
   const { data: sales, refetch: refetchSales } = useQuery(
     'logistic/sales2e',
     async () => {
-      toast.loading('Carregando dados...')
+      const toastId = toast.loading('Carregando dados...')
 
       const data = await logisticApi.getSales(useFilters)
 
-      toast.dismiss()
+      toast.dismiss(toastId)
 
       return data
     },

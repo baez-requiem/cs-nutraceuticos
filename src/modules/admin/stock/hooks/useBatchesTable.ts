@@ -24,11 +24,11 @@ const useBatchesTable = () => {
   )
 
   const batchMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    const toastId = toast.loading("Excluindo produto...")
 
     const hasDeleted = await stockApi.deleteBatch(id)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir o lote.`)

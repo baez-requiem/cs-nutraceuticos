@@ -16,24 +16,33 @@ const Stock = () => {
 
   return (
     <Private roles={['admin']} logout>
-      <Grid gap={20}>
-        <Header title="Estoque" />
 
-        <Paper>
-          <Flex items="end" justify="space-between">
-            <Flex items="end" gap={10}>
-              <Button size="sm" color="green_600" onClick={() => openModal('newBatch')}>Novo lote</Button>
-              <Button size="sm" color="red_600" onClick={() => openModal('newMisplacement')}>Registrar extravio</Button>
-            </Flex>
+      <Header title="Estoque" />
+
+      <Divider my={10} />
+
+      <Paper>
+        <Flex items="end" justify="space-between">
+          <Flex items="end" gap={10}>
+            <Button size="sm" color="green_600" onClick={() => openModal('newBatch')}>Novo lote</Button>
+            <Button size="sm" color="red_600" onClick={() => openModal('newMisplacement')}>Registrar extravio</Button>
           </Flex>
-        </Paper>
+        </Flex>
+      </Paper>
 
-        <StockTable />
-        
-        <MisplacementsTable />
-        
-        <BatchesTable />
-      </Grid>
+      <Divider my={10} />
+
+      <StockTable />
+
+      <Divider my={10} />
+
+      <MisplacementsTable />
+
+      <Divider my={10} />
+
+      <BatchesTable />
+
+      <Divider my={10} />
 
       <ModalMisplacements
         show={useModal.opened == 'newMisplacement'}

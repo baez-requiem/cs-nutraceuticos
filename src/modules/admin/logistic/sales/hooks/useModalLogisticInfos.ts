@@ -25,11 +25,11 @@ const useModalLogisticInfos = ({ show, onClose, data }: useModalLogisticInfosPro
   const queryClient = useQueryClient()
 
   const createNewLogisticInfoMutation = useMutation(async (values: CreateNewLogisticInfoBodyType) => {
-    toast.loading(`Inserindo dados...`)
+    const toastId = toast.loading(`Inserindo dados...`)
 
     const response = await logisticApi.createNewLogisticInfo(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     response
       ? toast.success(`Sucesso!`)

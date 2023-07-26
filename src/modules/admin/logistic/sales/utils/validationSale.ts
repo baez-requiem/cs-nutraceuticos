@@ -10,7 +10,7 @@ const newSaleSchema = z.object({
   products: z.any().array().nonempty("Adicione produtos.")
 })
 
-export const validateNewSale = (values: typeof initialDataFormNewSale): {} => {
+export const validateSale = (values: typeof initialDataFormNewSale): {} => {
   const errors = {}
 
   const result = newSaleSchema.safeParse(values)
@@ -25,9 +25,10 @@ export const validateNewSale = (values: typeof initialDataFormNewSale): {} => {
   return errors
 }
 
-export const parseSaleSubmit = (values: typeof initialDataFormNewSale) => {
+export const parseSaleSubmit = (values: typeof initialDataFormNewSale, id: string) => {
   const parsedValues = {
     ...values,
+    id,
     card_installments: values.card_installments ? parseInt(values.card_installments): null,
     discounts: parseInt(values.discounts.toString() || '0'),
     products: values.products.map(p => ({

@@ -28,11 +28,11 @@ const useUsers = () => {
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
   const deleteUserMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    const toastId = toast.loading("Excluindo produto...")
 
     const hasDeleted = await usersApi.deleteUser(id)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir o usuário.`)

@@ -20,13 +20,13 @@ const useModalMedia = (
   const mutation = useMutation(async (values: typeof initialValues) => {
     const idMedia = data?.id
 
-    toast.loading(`${idMedia ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idMedia ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const ok = idMedia
       ? await mediasApi.updateMedia({ ...values, id: idMedia })
       : await mediasApi.createMedia(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idMedia ? 'atualizar' : 'cadastrar'} a mídia.`)

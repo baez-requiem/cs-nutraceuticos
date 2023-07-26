@@ -2,7 +2,7 @@ import styled, { css } from "styled-components"
 
 export const Container = styled.div<{ show?: boolean }>`
   transition: all .3s;
-  position: absolute;
+  position: fixed;
   right: -320px;
   top: 0px;
 

@@ -8,6 +8,7 @@ import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
 import { Sale } from "src/services/api/logistic/logistic.types"
+import { parseSaleSubmit, validateSale } from "../utils/validationSale"
 
 const useModalSale = (
   show: boolean,
@@ -25,11 +26,11 @@ const useModalSale = (
   } = useQueryData()
 
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
-    toast.loading(`Inserindo dados...`)
+    const toastId = toast.loading(`Inserindo dados...`)
 
     const sale = await salesApi.updateSale(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     sale?.id
       ? toast.success(`Venda efetuada com sucesso!`)
@@ -44,21 +45,11 @@ const useModalSale = (
 
   const formik = useFormik({
     initialValues: initialDataFormNewSale,
-    onSubmit: values => {
-      const formatedValues = {
-        ...values,
-        id: data.id,
-        card_installments: values.card_installments ? parseInt(values.card_installments): null,
-        discounts: parseInt(values.discounts.toString() || '0'),
-        products: values.products.map(p => ({
-          id_product: p.id_product,
-          quantity: parseInt(p.quantity.toString()),
-          sales_quantity: parseInt(p.sales_quantity.toString()),
-        }))
-      }
-
-      createNewSaleMutation.mutateAsync(formatedValues)
-    },
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: (values) => validateSale(values),
+    onSubmit: values => createNewSaleMutation.mutateAsync(parseSaleSubmit(values, data.id))
   })
 
   const handleSelect = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => setSelectValue(value)

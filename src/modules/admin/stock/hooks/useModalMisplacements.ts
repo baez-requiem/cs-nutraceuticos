@@ -32,11 +32,11 @@ const useModalMisplacements = (
   }, { initialData: [], refetchOnWindowFocus: false })
 
   const misplacementMutation = useMutation(async (body: CreateNewMisplacementBodyType) => {
-    toast.loading(`Inserindo dados...`)
+    const toastId = toast.loading(`Inserindo dados...`)
 
     const ok = await misplacementsApi.createNewMisplacement(body)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     ok
       ? toast.success(`Novo extravio cadastrado com sucesso!`)

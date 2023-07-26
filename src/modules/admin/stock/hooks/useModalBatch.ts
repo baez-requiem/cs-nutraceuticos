@@ -37,7 +37,7 @@ const useModalBatch = (
   }, { initialData: [], refetchOnWindowFocus: false })
 
   const stockMutation = useMutation(async (body: CreateNewBatchBodyType) => {
-    toast.loading(`Inserindo dados...`)
+    const toastId = toast.loading(`Inserindo dados...`)
 
     const dataId = data?.id
 
@@ -45,7 +45,7 @@ const useModalBatch = (
       ? await stockApi.updateBatch({...body, id: dataId})
       : await stockApi.createNewBatch(body)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     ok
       ? toast.success(`${dataId ? 'Lote atualizado' : 'Novo lote cadastrado'} com sucesso!`)

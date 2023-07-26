@@ -1,5 +1,5 @@
 import { Header } from "src/components/template"
-import { Badge, Button, Confirm, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
+import { Badge, Button, Confirm, Divider, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
 import { useMotoboys } from "./hooks/useMotoboys"
 import { ModalMotoboy } from "./components"
 
@@ -17,36 +17,43 @@ export const Motoboys = () => {
 
   return (
     <Private roles={['admin']} logout>
-      <Grid gap={20}>
-        <Header title="Motoboys" subtitle="Logística" />
 
-        <Paper>
-          <Button color="green_600" onClick={openModal()}>
-            Cadastrar motoboy
-          </Button>
-        </Paper>
+      <Header title="Motoboys" subtitle="Logística" />
 
-        <Paper>
-          <Table
-            columns={[
-              { label: 'Nome', value: 'name' },
-              { label: 'Telefone', value: 'phone' },
-              { label: 'Status', value: 'status', render: value => (
+      <Divider my={10} />
+
+      <Paper>
+        <Button color="green_600" onClick={openModal()}>
+          Cadastrar motoboy
+        </Button>
+      </Paper>
+
+      <Divider my={10} />
+
+      <Paper>
+        <Table
+          columns={[
+            { label: 'Nome', value: 'name' },
+            { label: 'Telefone', value: 'phone' },
+            {
+              label: 'Status', value: 'status', render: value => (
                 <Badge color={value ? 'green_600' : 'gray_500'}>{value ? 'Ativo' : 'desativado'}</Badge>
-              ) },
-              { label: 'Ações', value: 'id', align: 'center', render: value => (
+              )
+            },
+            {
+              label: 'Ações', value: 'id', align: 'center', render: value => (
                 <TableActions
                   actions={[
                     { type: 'Edit', onClick: openModal(value.toString()) },
                     { type: 'Delete', onClick: openConfirm(value.toString()) },
                   ]}
                 />
-              ) },
-            ]}
-            data={tableData}
-          />
-        </Paper>
-      </Grid>
+              )
+            },
+          ]}
+          data={tableData}
+        />
+      </Paper>
 
       <ModalMotoboy show={useModal.show} data={useModal.data} onClose={closeModal} />
 

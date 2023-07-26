@@ -23,13 +23,13 @@ const useModalMotoboy = (
   const mototobyMutation = useMutation(async (values: typeof initialValues) => {
     const idMotoboy = data?.id
 
-    toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const ok = idMotoboy
       ? await logisticApi.updateMotoboy({ ...values, id: idMotoboy })
       : await logisticApi.createMotoboy(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idMotoboy ? 'atualizar' : 'cadastrar'} o motoboy.`)

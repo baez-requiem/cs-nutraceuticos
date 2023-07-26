@@ -7,7 +7,7 @@ import { mediasApi, salesApi, stockApi } from "src/services/api"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
-import { validateNewSale } from "../utils/validationUtils"
+import { parseSaleSubmit, validateNewSale } from "../utils/validationUtils"
 
 const useModalNewSale = (
   show: boolean,
@@ -22,11 +22,11 @@ const useModalNewSale = (
   } = useQueryData()
 
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
-    toast.loading(`Inserindo dados...`)
+    const toastId = toast.loading(`Inserindo dados...`)
 
     const sale = await salesApi.createNewSale(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     sale?.id
       ? toast.success(`Venda efetuada com sucesso!`)
@@ -40,21 +40,8 @@ const useModalNewSale = (
     validateOnBlur: false,
     validateOnChange: false,
     validateOnMount: false,
-    validate: (values) => validateNewSale(values),
-    onSubmit: (values) => {
-      const formatedValues = {
-        ...values,
-        discounts: parseInt(values.discounts.toString() || '0'),
-        card_installments: values.card_installments ? parseInt(values.card_installments): null,
-        products: values.products.map(p => ({
-          id_product: p.id_product,
-          quantity: parseInt(p.quantity.toString()),
-          sales_quantity: parseInt(p.sales_quantity.toString()),
-        }))
-      }
-
-      createNewSaleMutation.mutateAsync(formatedValues)
-    },
+    validate: values => validateNewSale(values),
+    onSubmit: values => createNewSaleMutation.mutateAsync(parseSaleSubmit(values))
   })
 
   const handleSelect = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => setSelectValue(value)

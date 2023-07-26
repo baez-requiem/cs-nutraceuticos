@@ -18,13 +18,13 @@ const useModalSaleTeam = (
   const saleTeamMutation = useMutation(async (values: typeof initialValues) => {
     const idSalesTeam = data?.id
 
-    toast.loading(`${idSalesTeam ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idSalesTeam ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const ok = idSalesTeam
       ? await salesTeamApi.updateSaleTeam({ ...values, id: idSalesTeam })
       : await salesTeamApi.createSaleTeam(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idSalesTeam ? 'atualizar' : 'cadastrar'} a equipe.`)

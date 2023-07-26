@@ -16,7 +16,7 @@ import TableHeader from "./TableHeader"
 
 import { TableProps } from "./table.types"
 
-const Table: FC<TableProps> = ({
+const Table: FC<TableProps<{ [key: string]: string | number }>> = ({
   columns = [],
   data = [],
   extraDataRender,

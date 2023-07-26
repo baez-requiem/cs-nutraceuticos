@@ -10,8 +10,10 @@ const login = async ({ username, password }: LoginParams): Promise<LoginResponse
   } catch (error) {
     console.log(error)
 
+    const message = error?.response?.data?.message || 'There was a problem with the request'
+
     return {
-      error: { message: 'There was a problem with the request' }
+      error: { message }
     }
   }
 }

@@ -88,17 +88,20 @@ export const makeSalePDF = (sale: Sale) => {
 
   spaceY += 15
 
-  doc.text(`Desconto`, 10, spaceY)
-  doc.setTextColor('#991b1b')
-  doc.text(`- R$ ${floatToReal(sale.discounts)}`, 383.5, spaceY)
+  if (sale.discounts) {
+    doc.text(`Desconto`, 10, spaceY)
+    doc.setTextColor('#991b1b')
+    doc.text(`- R$ ${floatToReal(sale.discounts)}`, 383.5, spaceY)
+  
+    spaceY += 12.5
+  
+    doc.setLineWidth(0.1)
+    doc.setDrawColor('#c1c1c1')
+    doc.line(10, spaceY, 470, spaceY)
+  
+    spaceY += 15
+  }
 
-  spaceY += 12.5
-
-  doc.setLineWidth(0.1)
-  doc.setDrawColor('#c1c1c1')
-  doc.line(10, spaceY, 470, spaceY)
-
-  spaceY += 15
 
   doc.setTextColor('black')
   doc.text(`R$ ${floatToReal(totalAmount - sale.discounts)}`, 390, spaceY)
@@ -139,11 +142,14 @@ export const makeSalePDF = (sale: Sale) => {
   doc.text(`Endereço: ${sale.address}`, 10, spaceY)
   doc.text(`Complemento: ${sale.complement}`, 260, spaceY)
 
-  spaceY += 25
+  if (sale.logistic_infos[0].notes) {
+    spaceY += 25
 
-  doc.text('Anotações:', 10, spaceY)
-  spaceY += 15
-  doc.text(sale.logistic_infos[0].notes || 'Nenhuma anotação.', 10, spaceY)
+    doc.text('Anotações:', 10, spaceY)
+    spaceY += 15
+    doc.text(sale.logistic_infos[0].notes || 'Nenhuma anotação.', 10, spaceY)
+  }
+
 
   doc.save(`resumo-venda-${formatDocDateTime(sale.created_at)}.pdf`)
 }

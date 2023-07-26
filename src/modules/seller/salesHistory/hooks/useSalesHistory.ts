@@ -24,11 +24,11 @@ const useSalesHistory = () => {
   const { data: sales, refetch: refetchSales } = useQuery(
     ['logistic/sales', {...useFilters, seller: storageAuth.refreshToken.userId }],
     async () => {
-      toast.loading('Carregando dados...')
+      const toastId = toast.loading('Carregando dados...')
 
       const data = await logisticApi.getSales({...useFilters, seller: storageAuth.refreshToken.userId })
 
-      toast.dismiss()
+      toast.dismiss(toastId)
 
       return data
     },

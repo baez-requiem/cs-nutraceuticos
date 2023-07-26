@@ -8,9 +8,9 @@ export interface TableColumnProps {
   width?: number
 }
 
-export interface TableProps {
+export interface TableProps<T extends { [key: string]: string | number }> {
   columns: TableColumnProps[]
-  data: { [key: string]: string | number }[]
+  data: T[]
   extraDataRender?: ((data: { [key: string]: string | number }, index: number) => ReactElement)
   minWidth?: number
   title?: string

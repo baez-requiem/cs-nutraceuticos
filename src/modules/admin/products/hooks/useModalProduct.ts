@@ -23,7 +23,7 @@ const useModalProduct = (
   const mutation = useMutation(async (values: typeof initialValues) => {
     const idProduct = data?.id
 
-    toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const body = {
       ...values,
@@ -35,7 +35,7 @@ const useModalProduct = (
       ? await productsApi.updateProduct({ ...body, id: idProduct })
       : await productsApi.createProduct(body)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idProduct ? 'atualizar' : 'cadastrar'} o produto.`)

@@ -30,7 +30,7 @@ const useModalUser = (
   const userMutation = useMutation(async (values: typeof initialDataFormUser) => {
     const idUser = data?.id
 
-    toast.loading(`${idUser ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idUser ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const formatedData = {
       ...values,
@@ -45,7 +45,7 @@ const useModalUser = (
       ? await usersApi.updateUser({ ...formatedData, id: idUser })
       : await usersApi.createUser(formatedData)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${ok ? 'atualizar' : 'cadastrar'} o usuário.`)
