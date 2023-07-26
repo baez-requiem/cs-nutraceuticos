@@ -52,7 +52,7 @@ const SalesHistory = () => {
             { label: "Mídia", value: "media" },
             { label: "Qntd. Vendas", value: "sales_quantity" },
             { label: "Data", value: "date" },
-            { label: "Ações", value: "id" },
+            // { label: "Ações", value: "id" },
           ]}
           data={tableData}
         />

@@ -6,8 +6,8 @@ import { useEffect } from "react"
 import { useMutation, useQuery } from "react-query"
 import { toast } from "react-toastify"
 import { rolesApi, salesTeamApi, usersApi } from "src/services/api"
-import { formatCPF, formatPhone, onlyNumbers } from "src/utils/number.utils"
 import { parseUserForm } from "../utils"
+import { parseUserSubmit, validateUser } from "../utils/validation"
 
 const useModalUser = (
   show: boolean,
@@ -32,18 +32,11 @@ const useModalUser = (
 
     const toastId = toast.loading(`${idUser ? 'Atualizando' : 'Inserindo'} dados...`)
 
-    const formatedData = {
-      ...values,
-      initial_date: values.initial_date || null,
-      cpf: onlyNumbers(values.cpf),
-      rg: onlyNumbers(values.rg),
-      phone: onlyNumbers(values.phone),
-      cep: onlyNumbers(values.cep),
-    }
+    const parsedValues = parseUserSubmit(values)
 
     const ok = idUser
-      ? await usersApi.updateUser({ ...formatedData, id: idUser })
-      : await usersApi.createUser(formatedData)
+      ? await usersApi.updateUser({ ...parsedValues, id: idUser })
+      : await usersApi.createUser(parsedValues)
 
     toast.dismiss(toastId)
 
@@ -57,9 +50,11 @@ const useModalUser = (
 
   const formik = useFormik({
     initialValues: initialDataFormUser,
-    onSubmit(values) {
-      userMutation.mutateAsync(values)
-    },
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: values => validateUser(values, data?.id),
+    onSubmit: values => userMutation.mutateAsync(values)
   })
 
   const searchCEP = async () => {
