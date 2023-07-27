@@ -5,7 +5,7 @@ import { onlyNumbers } from "src/utils/number.utils"
 
 const usreSchema = z.object({
   name: z.string().nonempty("Nome não deve ser vazio."),
-  login: z.string().nonempty("Login não deve ser vazio."),
+  username: z.string().nonempty("Login não deve ser vazio."),
   phone: z.string().nonempty("Telefone não deve ser vazio."),
 })
 
