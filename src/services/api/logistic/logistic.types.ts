@@ -87,6 +87,7 @@ export type Sale = {
   number: number
   name: string
   phone: string
+  paid: boolean
   rg: string | null
   cpf: string | null
   email: string | null

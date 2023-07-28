@@ -58,6 +58,8 @@ export const makeSalePDF = (sale: Sale) => {
   spaceY += 25
   doc.text(`Cliente: ${sale.name}`, 10, spaceY)
   doc.text(`Telefone: ${formatPhone(sale.phone)}`, 260, spaceY)
+  spaceY += 25
+  doc.text(`Pago: ${sale.paid ? 'Sim' : 'Não'}`, 10, spaceY)
 
   spaceY += 30
 

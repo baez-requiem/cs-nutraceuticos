@@ -148,47 +148,6 @@ const ModalNewSale: FC<ModalSaleProps> = ({
         <Text weight="500">Dados da venda</Text>
         <Divider my={10} />
 
-        <Grid gap={10} template="1fr 1fr" xs="1fr">
-          <Select
-            label="Mídia"
-            options={selectMediasOpt}
-            name="media_id"
-            value={values.media_id}
-            onChange={handleChange}
-          />
-
-          <Select
-            label="Forma de pagamento"
-            options={selectPaymentTypesOpt}
-            name="payment_type_id"
-            value={values.payment_type_id}
-            onChange={handleChange}
-          />
-
-          <Input
-            label="Desconto"
-            name="discounts"
-            value={values.discounts}
-            onChange={handleChangeFormatReal(setFieldValue)}
-            labelFixed={!!values.discounts}
-          />
-
-          <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>
-            <Input
-              label="Parcelas"
-              name="card_installments"
-              type="number"
-              min={0}
-              max={10}
-              value={values.card_installments}
-              onChange={handleChange}
-              labelFixed={!!values.card_installments}
-            />
-          </Fade.FadeIn>
-        </Grid>
-
-        <Divider />
-
         <Flex gap={10} items="end">
           <Select
             block
@@ -240,6 +199,55 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             </tr>
           </tfoot>
         </StyledTable>
+
+        <Divider mb={20} line opacityLine={.25} />
+
+        <Grid gap={10} template="1fr 1fr" xs="1fr">
+          <Select
+            label="Mídia"
+            options={selectMediasOpt}
+            name="media_id"
+            value={values.media_id}
+            onChange={handleChange}
+          />
+
+          <Select
+            label="Forma de pagamento"
+            options={selectPaymentTypesOpt}
+            name="payment_type_id"
+            value={values.payment_type_id}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Desconto"
+            name="discounts"
+            value={values.discounts}
+            onChange={handleChangeFormatReal(setFieldValue)}
+            labelFixed={!!values.discounts}
+          />
+
+          <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>
+            <Input
+              label="Parcelas"
+              name="card_installments"
+              type="number"
+              min={0}
+              max={10}
+              value={values.card_installments}
+              onChange={handleChange}
+              labelFixed={!!values.card_installments}
+            />
+          </Fade.FadeIn>
+
+          <Select
+            label="Pago"
+            options={[{ label: "Sim", value: 1 }, { label: "Não", value: 0 }]}
+            name="paid"
+            value={values.paid}
+            onChange={handleChange}
+          />
+        </Grid>
 
         <Divider />
 

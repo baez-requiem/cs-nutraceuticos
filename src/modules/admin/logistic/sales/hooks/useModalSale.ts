@@ -101,6 +101,7 @@ const useModalSale = (
     } else {
       formik.setValues({
         address: data.address,
+        paid: +data.paid,
         card_installments: data.card_installments+'',
         cep: data.cep,
         city: data.city,

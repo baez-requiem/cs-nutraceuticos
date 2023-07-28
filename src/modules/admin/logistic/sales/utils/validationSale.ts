@@ -29,6 +29,7 @@ export const parseSaleSubmit = (values: typeof initialDataFormNewSale, id: strin
   const parsedValues = {
     ...values,
     id,
+    paid: !!parseInt(values.paid.toString()),
     card_installments: values.card_installments ? parseInt(values.card_installments): null,
     discounts: parseInt(values.discounts.toString() || '0'),
     products: values.products.map(p => ({

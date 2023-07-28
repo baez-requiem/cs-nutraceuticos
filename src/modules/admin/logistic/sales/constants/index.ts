@@ -18,6 +18,7 @@ export const initialDataFormNewSale = {
   payment_type_id: '',
 
   card_installments: '',
+  paid: 0,
 
   rg: '',
   cpf: '',

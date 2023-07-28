@@ -5,31 +5,20 @@ import { useMutation } from 'react-query'
 import { productsApi } from 'src/services/api'
 import { toast } from 'react-toastify'
 import { formatReal, realToFloat } from 'src/utils/number.utils'
-
-const initialValues = {
-  description: '',
-  active: false,
-  amount: '',
-  notes: '',
-  name: '',
-  supply_quantity_notice: ''
-}
+import { initialValuesFormProduct } from '../constants'
+import { parseProductSubmit, validateProduct } from '../utils/validations'
 
 const useModalProduct = (
   show: boolean,
   onClose: (arg0?: boolean) => void,
   data?: ProductType
 ) => {
-  const mutation = useMutation(async (values: typeof initialValues) => {
+  const mutation = useMutation(async (values: typeof initialValuesFormProduct) => {
     const idProduct = data?.id
 
     const toastId = toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
 
-    const body = {
-      ...values,
-      supply_quantity_notice: values.supply_quantity_notice ? parseInt(values.supply_quantity_notice) : null,
-      amount: realToFloat(values.amount)
-    }
+    const body = parseProductSubmit(values)
 
     const ok = idProduct
       ? await productsApi.updateProduct({ ...body, id: idProduct })
@@ -46,10 +35,12 @@ const useModalProduct = (
   })
   
   const formik = useFormik({
-    initialValues,
-    onSubmit(values) {
-      mutation.mutateAsync(values)
-    },
+    initialValues: initialValuesFormProduct,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: values => validateProduct(values, data?.id),
+    onSubmit: values => mutation.mutateAsync(values)
   })
 
   useEffect(() => {
