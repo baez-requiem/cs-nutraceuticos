@@ -59,10 +59,11 @@ const useSales = () => {
 
   const tableData = sales.map(sale => {
 
-    const { id, user, sale_products, discounts, logistic_infos, created_at } = sale
+    const { id, user, sale_products, discounts, logistic_infos, created_at, number } = sale
 
     return ({
       id,
+      number,
       user_name: user.name,
       total_sales: sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
       total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),

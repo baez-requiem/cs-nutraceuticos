@@ -27,7 +27,7 @@ const useModalProduct = (
 
     const body = {
       ...values,
-      supply_quantity_notice: parseInt(values.supply_quantity_notice),
+      supply_quantity_notice: values.supply_quantity_notice ? parseInt(values.supply_quantity_notice) : null,
       amount: realToFloat(values.amount)
     }
 

@@ -28,6 +28,7 @@ export const validateNewSale = (values: typeof initialDataFormNewSale): {} => {
 export const parseSaleSubmit = (values: typeof initialDataFormNewSale) => {
   const parsedValues = {
     ...values,
+    paid: !!values.paid,
     card_installments: values.card_installments ? parseInt(values.card_installments): null,
     discounts: parseInt(values.discounts.toString() || '0'),
     products: values.products.map(p => ({

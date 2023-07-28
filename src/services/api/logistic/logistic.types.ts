@@ -84,6 +84,7 @@ export type SaleProduct = {
 
 export type Sale = {
   id: string
+  number: number
   name: string
   phone: string
   rg: string | null
