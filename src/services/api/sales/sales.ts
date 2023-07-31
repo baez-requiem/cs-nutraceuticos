@@ -1,4 +1,4 @@
-import { authenticatedRequest } from "../utils"
+import { authenticatedRequest, isStatus200 } from "../utils"
 import { SaleBodyType, CreateNewSaleResponseType, PaymentType, SaleType } from "./sales.types"
 
 const getPaymentTypes = async (): Promise<PaymentType[]> => {
@@ -34,7 +34,7 @@ const createNewSale = async (body: SaleBodyType): Promise<CreateNewSaleResponseT
   }
 }
 
-const updateSale = async (body: SaleBodyType): Promise<CreateNewSaleResponseType|null> => {
+const updateSale = async (body: SaleBodyType): Promise<boolean> => {
   try {
     const response = await authenticatedRequest({
       url: '/sales',
@@ -42,9 +42,7 @@ const updateSale = async (body: SaleBodyType): Promise<CreateNewSaleResponseType
       data: body
     })
 
-    const data: CreateNewSaleResponseType = response.data
-
-    return data
+    return isStatus200(response)
   } catch (error) {
     console.log(error)
     return null

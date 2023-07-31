@@ -1,25 +1,32 @@
 import { useState, useEffect } from 'react'
 import { useFormik } from "formik"
 import { formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { logisticApi } from 'src/services/api'
 import { toast } from 'react-toastify'
 import { removeNullAndEmptyFields } from 'src/utils/objetct'
 import { getStorageAuth } from 'src/utils/localstorage'
 import { formatPhone } from 'src/utils/number.utils'
+import { Sale } from 'src/services/api/logistic/logistic.types'
 
 interface FiltersState {
   init_date?: string
   end_date?: string
 }
 
+interface ModalState {
+  show: 'sale' | 'sale-history' | null
+  data?: Sale
+}
+
 const useSalesHistory = () => {
-  const storageAuth = getStorageAuth()
-  
+  const [useModal, setModal] = useState<ModalState>({ show: null })
   const [useFilters, setFilters] = useState<FiltersState>({
     init_date: getStartMonthValue(new Date()),
     end_date: getEndMonthValue(new Date())
   })
+
+  const storageAuth = getStorageAuth()
 
   const { data: sales, refetch: refetchSales } = useQuery(
     ['logistic/sales', {...useFilters, seller: storageAuth.refreshToken.userId }],
@@ -47,18 +54,34 @@ const useSalesHistory = () => {
     onSubmit: (values) => setFilters(removeNullAndEmptyFields(values))
   })
 
+  const openModal = (modal: ModalState['show'], id: string) => () => {
+    const sale = sales.find(sale => sale.id === id)
+
+    setModal({ show: modal, data: sale })
+  }
+
+  const closeModal = () => {
+    (useModal.show === 'sale') && refetchSales()
+
+    setModal({ show: null })
+  }
+
   const tableData = sales.map(sale => ({
     id: sale.id,
     client_name: sale.name,
     client_phone: sale.phone ? formatPhone(sale.phone) : '',
     media: sale.media.name,
     sales_quantity: sale.sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
-    date: formatDateTime(sale.created_at)
+    date: formatDateTime(sale.created_at),
+    hasEditSale: +(sale.logistic_infos[0]?.id_sale_status === 'aguardando-aprovacao')
   }))
 
   return {
     formik,
-    tableData
+    tableData,
+    useModal,
+    openModal,
+    closeModal
   }
 }
 

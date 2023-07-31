@@ -1,10 +1,14 @@
-import { Button, Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, Text } from "src/components/ui"
+import { Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, TableActions, Text } from "src/components/ui"
 import { useSalesHistory } from "./hooks/useSalesHistory"
+import { SaleModal } from "src/components/modals"
 
 const SalesHistory = () => {
 
   const {
     tableData,
+    closeModal,
+    openModal,
+    useModal,
     formik: {
       values,
       handleSubmit,
@@ -52,13 +56,22 @@ const SalesHistory = () => {
             { label: "Mídia", value: "media" },
             { label: "Qntd. Vendas", value: "sales_quantity" },
             { label: "Data", value: "date" },
-            // { label: "Ações", value: "id" },
+            { label: "Ações", value: "id", align: 'center', render: (value, sale) => <TableActions
+              actions={[
+                { type: 'Vizualizer', onClick: () => {} },
+                { type: 'Edit', onClick: openModal('sale', value.toString()), show: !!sale.hasEditSale },
+              ]}
+            /> },
           ]}
           data={tableData}
         />
       </Paper>
 
-      <Divider my={10} />
+      <SaleModal
+        show={useModal.show === 'sale'}
+        onClose={closeModal}
+        data={useModal.data}
+      />
     </Private>
   )
 }

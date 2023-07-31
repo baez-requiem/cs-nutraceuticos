@@ -79,3 +79,7 @@ export const makeGETParams = (url: string = '', obj: { [key: string]: string | n
 
   return `${url}?${params.join('&')}`
 }
+
+export const isStatus = (res: AxiosResponse, status: number) => res.status === status
+export const isStatus200 = (res: AxiosResponse) => isStatus(res, 200)
+export const isStatus201 = (res: AxiosResponse) => isStatus(res, 201)

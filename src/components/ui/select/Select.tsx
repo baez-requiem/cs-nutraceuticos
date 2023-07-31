@@ -45,6 +45,7 @@ const Select: FC<SelectProps> = ({
         hasUpLabel={labelFixed || useUpLabel}
         onFocus={() => setUpLabel(true)}
         onBlur={verifyUpLabel}
+        defaultValue={''}
         {...props}
       >
         {nullable ? <option value=""></option> : null}
