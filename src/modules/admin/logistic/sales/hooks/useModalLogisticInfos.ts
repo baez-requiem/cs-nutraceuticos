@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import { floatToReal, realToFloat } from "src/utils/number.utils"
 import { formatDateValue } from "src/utils/date.utils"
 import { CreateNewLogisticInfoBodyType, Sale } from "src/services/api/logistic/logistic.types"
+import { parseLogisticInfosSubmit, validateLogisticInfos } from "../utils/validationLogisticInfos"
 
 interface useModalLogisticInfosProps {
   show: boolean
@@ -42,12 +43,12 @@ const useModalLogisticInfos = ({ show, onClose, data }: useModalLogisticInfosPro
 
   const formik = useFormik({
     initialValues: initialDataFormLogisticInfos,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: validateLogisticInfos,
     onSubmit: async values => {
-      createNewLogisticInfoMutation.mutateAsync({
-        ...values,
-        id_sale: data.id,
-        delivery_value: realToFloat(values.delivery_value)
-      })
+      createNewLogisticInfoMutation.mutateAsync(parseLogisticInfosSubmit(values, data.id) as CreateNewLogisticInfoBodyType)
     }
   })
 

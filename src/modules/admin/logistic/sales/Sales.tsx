@@ -94,7 +94,7 @@ export const Sales = () => {
       <Paper>
         <Table
           columns={[
-            { label: 'ID', value: 'number' },
+            { label: '#', value: 'number' },
             { label: 'Data', value: 'date' },
             { label: 'Vendedor', value: 'user_name' },
             { label: 'Qntd. vendas', value: 'total_sales' },

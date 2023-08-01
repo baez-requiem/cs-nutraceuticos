@@ -79,6 +79,7 @@ export const SaleClosing = () => {
       <Paper>
         <Table
           columns={[
+            { label: '#', value: 'number' },
             { label: 'Data', value: 'created_at' },
 
             { label: 'Cliente', value: 'client_name' },

@@ -43,7 +43,7 @@ export const makeSalePDF = (sale: Sale) => {
   let spaceY = 20
 
   doc.setFontSize(18)
-  doc.text('Resumo da venda', 10, spaceY)
+  doc.text(`Resumo da venda #${sale.number.toString().padStart(5, '0')}`, 10, spaceY)
 
   spaceY += 10
 

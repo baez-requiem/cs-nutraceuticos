@@ -58,6 +58,7 @@ const useSaleClosing = () => {
 
     return {
       id: sale.id,
+      number: sale.number,
       created_at: formatDateTime(new Date(sale.created_at).toUTCString()),
 
       client_name: sale.name,
