@@ -24,15 +24,15 @@ const useModalNewSale = (
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     const toastId = toast.loading(`Inserindo dados...`)
 
-    const sale = await salesApi.createNewSale(values)
+    const ok = await salesApi.createNewSale(values)
 
     toast.dismiss(toastId)
 
-    sale?.id
+    ok
       ? toast.success(`Venda efetuada com sucesso!`)
       : toast.error(`Houve um erro ao efetuar a venda.`)
 
-    sale?.id && onClose()
+    ok && onClose()
   })
 
   const formik = useFormik({
