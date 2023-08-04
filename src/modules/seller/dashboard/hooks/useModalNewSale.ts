@@ -158,7 +158,7 @@ const useQueryData = () => {
  
   const { data: medias } = useQuery(
     'medias',
-    mediasApi.getAllMedias,
+    () => mediasApi.getAllMedias(),
     {
       initialData: [],
       keepPreviousData: true,
