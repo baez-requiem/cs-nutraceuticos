@@ -51,7 +51,7 @@ const Select: FC<SelectProps> = ({
         {nullable ? <option value=""></option> : null}
         {options.length || props?.value
           ? options.map(opt => (
-            <option key={`${opt.value}-${opt.label}`} selected={opt.value == selectRef.current?.value} value={opt.value}>{opt.label}</option>
+            <option key={`${opt.value}-${opt.label}`} value={opt.value}>{opt.label}</option>
           ))
           : (!nullable ? <option value=""></option> : null)
         }

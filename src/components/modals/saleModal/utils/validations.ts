@@ -21,6 +21,18 @@ export const validateSale = (values: typeof initialDataFormSale): {} => {
       toast.error(err.message)
     })
   }
+  
+  if (values.payment_type_id === 'credit_card') {
+    if (!values.card_installments) {
+      errors['card_installments'] = 'Selecione um número de parcelas.'
+      toast.error('Selecione um número de parcelas.')
+    }
+
+    if (parseInt(values.card_installments) <= 0 || parseInt(values.card_installments) > 10) {
+      errors['card_installments'] = 'Selecione um número de parcelas entre 1 á 10.'
+      toast.error('Selecione um número de parcelas entre 1 á 10.')
+    }
+  }
 
   return errors
 }
@@ -30,7 +42,7 @@ export const parseSaleSubmit = (values: typeof initialDataFormSale, id: string) 
     ...values,
     id,
     paid: !!parseInt(values.paid.toString()),
-    card_installments: values.card_installments ? parseInt(values.card_installments): null,
+    card_installments: (values.card_installments && values.payment_type_id === 'credit_card') ? parseInt(values.card_installments): null,
     discounts: parseInt(values.discounts.toString() || '0'),
     products: values.products.map(p => ({
       id_product: p.id_product,

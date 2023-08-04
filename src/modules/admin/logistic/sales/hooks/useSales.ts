@@ -90,9 +90,13 @@ const useSales = () => {
     data: sales.find(sale => sale.id === id)
   })
 
-  const closeModal = () => setModal({
-    show: null
-  })
+  const closeModal = (by?: string) => {
+    by === 'sale' && refetchSales()
+    
+    setModal({
+      show: null
+    })
+  }
 
   const formik = useFormik({
     initialValues: initialDataSalesFilters,

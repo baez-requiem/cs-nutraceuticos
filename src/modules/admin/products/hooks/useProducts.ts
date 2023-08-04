@@ -18,7 +18,11 @@ interface useConfirmState {
 
 const useProducts = () => {
   const { data: products, refetch } = useQuery(['products'], async () => {
+    const toastId = toast.loading("Carregando produtos...")
+
     const response = await productsApi.getAllProducts()
+
+    toast.dismiss(toastId)
 
     return response
 
@@ -49,8 +53,7 @@ const useProducts = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = (hasRefetch?: boolean) => {
-    hasRefetch && refetch()
+  const closeModal = () => {
     setModal({ show: false })
   }
 

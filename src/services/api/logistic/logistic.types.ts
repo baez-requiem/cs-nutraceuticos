@@ -160,3 +160,7 @@ export type CreateMotoboyBodyType = {
 export type UpdateMotoboyBodyType = {
   id: string
 } & CreateMotoboyBodyType
+
+export type GetMotoboysParamsType = {
+  active?: boolean
+}

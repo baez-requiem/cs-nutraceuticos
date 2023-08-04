@@ -89,8 +89,8 @@ const useQueryData = () => {
   )
 
   const { data: motoboys } = useQuery(
-    '/logistic/motoboys',
-    logisticApi.getMotoboys,
+    ['logistic/motoboys', { active: true }],
+    async () => logisticApi.getMotoboys({ active: true }),
     { refetchOnWindowFocus: false, initialData: [] }
   )
 

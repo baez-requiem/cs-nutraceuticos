@@ -7,6 +7,7 @@ import { ModalHistory, ModalLogisticInfos, ModalSale } from "./components"
 import { matchColor } from "src/utils/theme"
 
 import { handleChangeFormatPhone } from "src/utils/form.utils"
+import { SaleModal } from "src/components/modals"
 
 
 export const Sales = () => {
@@ -120,13 +121,6 @@ export const Sales = () => {
         />
       </Paper>
 
-
-      <ModalSale
-        show={useModal.show == 'sale'}
-        data={useModal.data!}
-        onClose={closeModal}
-      />
-
       <ModalLogisticInfos
         show={useModal.show == 'logistic-infos'}
         data={useModal.data!}
@@ -137,6 +131,12 @@ export const Sales = () => {
         show={useModal.show == 'history'}
         data={useModal.data!}
         onClose={closeModal}
+      />
+
+      <SaleModal
+        show={useModal.show == 'sale'}
+        data={useModal.data!}
+        onClose={() =>closeModal('sale')}
       />
     </Private>
   )

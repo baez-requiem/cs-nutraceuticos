@@ -4,15 +4,18 @@ import { ProductType } from "src/services/api/products/products.types"
 import { useMutation } from 'react-query'
 import { productsApi } from 'src/services/api'
 import { toast } from 'react-toastify'
-import { formatReal, realToFloat } from 'src/utils/number.utils'
+import { floatToReal } from 'src/utils/number.utils'
 import { initialValuesFormProduct } from '../constants'
 import { parseProductSubmit, validateProduct } from '../utils/validations'
+import { useRefetchQueries } from 'src/hooks'
 
 const useModalProduct = (
   show: boolean,
-  onClose: (arg0?: boolean) => void,
+  onClose: () => void,
   data?: ProductType
 ) => {
+  const { refetchQueries } = useRefetchQueries()
+
   const mutation = useMutation(async (values: typeof initialValuesFormProduct) => {
     const idProduct = data?.id
 
@@ -30,7 +33,8 @@ const useModalProduct = (
       toast.error(`Houve um erro ao ${idProduct ? 'atualizar' : 'cadastrar'} o produto.`)
     } else {
       toast.success(`Produto ${idProduct ? 'atualizado' : 'cadastrado'} com sucesso!`)
-      onClose(true)
+      refetchQueries(['products'])
+      onClose()
     }
   })
   
@@ -51,7 +55,7 @@ const useModalProduct = (
         notes: data.notes || '',
         active: data.active,
         supply_quantity_notice: data.supply_quantity_notice?.toString() || '',
-        amount: formatReal(data.amount) ,
+        amount: floatToReal(data.amount) ,
       })
       : formik.resetForm()
   }, [show])

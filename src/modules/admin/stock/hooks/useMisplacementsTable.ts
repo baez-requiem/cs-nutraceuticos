@@ -9,8 +9,13 @@ const useMisplacementsTable = () => {
 
   const { data: misplacements } = useQuery(
     'misplacements',
-    misplacementsApi.getAllMisplacements,
-    { initialData: [] }
+    async () => {
+      const toastId = toast.loading('Carregando extravios...')
+      const response = await misplacementsApi.getAllMisplacements()
+      toast.dismiss(toastId)
+      return response
+    },
+    { initialData: [], refetchOnWindowFocus: false }
   )
 
   const deleteMisplacementMutation = useMutation(async (id: string) => {

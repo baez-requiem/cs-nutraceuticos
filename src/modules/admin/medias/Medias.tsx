@@ -1,14 +1,13 @@
 import {
+  Flex,
+  Paper,
+  Table,
+  Badge,
   Button,
   Divider,
-  Flex,
-  IconButton,
-  Paper,
   Private,
-  Text,
-  Table,
   Confirm,
-  Badge
+  IconButton,
 } from "src/components/ui"
 
 import ModalMedia from "./ModalMedia"
@@ -49,7 +48,6 @@ const Medias = () => {
           columns={[
             { label: 'Nome', value: 'name' },
             { label: 'Descrição', value: 'description' },
-            { label: 'Anotações', value: 'notes' },
             { label: 'Status', value: 'active', render: value => (
               <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
             ) },

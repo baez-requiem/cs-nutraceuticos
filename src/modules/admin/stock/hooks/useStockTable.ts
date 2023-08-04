@@ -1,11 +1,20 @@
 import { useQuery } from 'react-query'
+import { toast } from 'react-toastify'
 import { stockApi } from 'src/services/api'
 
 const useStockTable = () => {
   const { data: stockProducts } = useQuery(
     'stock-products',
-    async () => await stockApi.getStockProducts(),
-    { initialData: [], refetchInterval: 5000 }
+    async () => {
+      const toastId = toast.loading('Carregando estoque...')
+
+      const response = await stockApi.getStockProducts()
+      
+      toast.dismiss(toastId)
+      
+      return response
+    },
+    { initialData: [], refetchInterval: 5000, refetchOnWindowFocus: false }
   )
 
   const tableData = stockProducts.map(({ active, supply_quantity_notice = 0, ...data }) => {

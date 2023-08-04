@@ -19,8 +19,16 @@ const useBatchesTable = () => {
 
   const { data: batches } = useQuery(
     'batches',
-   stockApi.getBatches,
-    { initialData: [] }
+   async () => {
+    const toastId = toast.loading('Carregando lotes...')
+
+    const response = await stockApi.getBatches()
+
+    toast.dismiss(toastId)
+
+    return response
+   },
+    { initialData: [], refetchOnWindowFocus: false }
   )
 
   const batchMutation = useMutation(async (id: string) => {

@@ -21,7 +21,7 @@ const useMotoboys = () => {
   const [useModal, setModal] = useState<ModalSate>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
-  const { data: motoboys, refetch: refetchMotoboys } = useQuery('logistic/motoboys', logisticApi.getMotoboys, { initialData: [], refetchOnWindowFocus: false })
+  const { data: motoboys, refetch: refetchMotoboys } = useQuery('logistic/motoboys', async () => logisticApi.getMotoboys(), { initialData: [], refetchOnWindowFocus: false })
 
   const deleteMotoboyMutation = useMutation(async (id: string) => {
     const toastId = toast.loading("Excluindo produto...")

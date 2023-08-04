@@ -4,13 +4,8 @@ import { useMutation, useQueryClient } from 'react-query'
 import { logisticApi } from 'src/services/api'
 import { toast } from 'react-toastify'
 import { MotoboyType } from 'src/services/api/logistic/logistic.types'
-
-const initialValues = {
-  name: '',
-  phone: '',
-  notes: '',
-  active: false
-}
+import { initialValuesFormMotoboy } from '../constants'
+import { validateMotoboy } from '../utils/validations'
 
 const useModalMotoboy = (
   show: boolean,
@@ -20,7 +15,7 @@ const useModalMotoboy = (
 
   const queryClient = useQueryClient()
 
-  const mototobyMutation = useMutation(async (values: typeof initialValues) => {
+  const mototobyMutation = useMutation(async (values: typeof initialValuesFormMotoboy) => {
     const idMotoboy = data?.id
 
     const toastId = toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
@@ -41,12 +36,14 @@ const useModalMotoboy = (
       onClose()
     }
   })
-  
+
   const formik = useFormik({
-    initialValues,
-    onSubmit(values) {
-      mototobyMutation.mutateAsync(values)
-    },
+    initialValues: initialValuesFormMotoboy,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: values => validateMotoboy(values),
+    onSubmit: values => mototobyMutation.mutateAsync(values)
   })
 
   useEffect(() => {

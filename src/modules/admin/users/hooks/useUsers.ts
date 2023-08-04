@@ -22,8 +22,12 @@ const useUsers = () => {
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
   const { data: users, refetch } = useQuery(['users'], async () => {
+    const toastId = toast.loading('Carregando Usuários...')
+    
     const response = await usersApi.getAllUsers({})
-
+    
+    toast.dismiss(toastId)
+    
     return response
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
@@ -49,8 +53,7 @@ const useUsers = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = (hasRefetch?: boolean) => {
-    hasRefetch && refetch()
+  const closeModal = () => {
     setModal({ show: false })
   }
 

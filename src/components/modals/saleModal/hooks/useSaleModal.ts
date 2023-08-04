@@ -21,6 +21,7 @@ import {
 } from "src/utils/number.utils"
 
 import { parseSaleSubmit, validateSale } from "../utils/validations"
+import { useRefetchQueries } from "src/hooks"
 
 const useSaleModal = (
   show: boolean,
@@ -28,7 +29,7 @@ const useSaleModal = (
   onClose: () => void
 ) => {
   const [selectValue, setSelectValue] = useState<string>('')
-  
+
   const {
     medias,
     paymentTypes,
@@ -85,13 +86,23 @@ const useSaleModal = (
     setSelectValue(slcValue.toString())
   }
 
+  const removeProduct = (id: string) => {
+    const formProducts = formik.values.products.filter(p => p.id_product !== id)
+
+    formik.setFieldValue('products', formProducts)
+
+    const slcValue = stockProducts.filter(p => !formProducts.find(fp => fp.id_product === p.id))[0]?.id || ''
+
+    setSelectValue(slcValue.toString())
+  }
+
   const searchCEP = async () => {
     const cep = formik.values.cep || ''
 
     if (cep.length != 9) { return }
 
     const data = await consultCep(cep)
-  
+
     data?.uf && formik.setValues({
       ...formik.values,
       state: data.uf,
@@ -107,11 +118,11 @@ const useSaleModal = (
       formik.resetForm()
       return
     }
-    
+
     formik.setValues({
       address: data.address,
       paid: +data.paid,
-      card_installments: data.card_installments+'',
+      card_installments: (data.card_installments ?? '') + '',
       cep: formatCEP(data.cep),
       city: data.city,
       complement: data.complement,
@@ -126,7 +137,7 @@ const useSaleModal = (
       phone: formatPhone(data.phone),
       rg: data.rg,
       state: data.state,
-      products: data.sale_products.map(sp => ({ 
+      products: data.sale_products.map(sp => ({
         id_product: sp.id_product,
         quantity: sp.quantity,
         name: sp.product.name,
@@ -148,7 +159,7 @@ const useSaleModal = (
     label: pt.name,
     value: pt.id
   }))
-  
+
   const selectMediasOpt = medias.map(pt => ({
     label: pt.name,
     value: pt.id
@@ -160,6 +171,7 @@ const useSaleModal = (
 
   return {
     addProduct,
+    removeProduct,
     selectValue,
     handleSelect,
     formik,
@@ -179,17 +191,17 @@ const useQueryData = () => {
     {
       initialData: [],
       keepPreviousData: true,
-      refetchOnWindowFocus: false 
+      refetchOnWindowFocus: false
     }
   )
- 
+
   const { data: medias } = useQuery(
-    'medias',
-    mediasApi.getAllMedias,
+    ['medias', { active: true }],
+    async () => mediasApi.getAllMedias({ active: true }),
     {
       initialData: [],
       keepPreviousData: true,
-      refetchOnWindowFocus: false 
+      refetchOnWindowFocus: false
     }
   )
 

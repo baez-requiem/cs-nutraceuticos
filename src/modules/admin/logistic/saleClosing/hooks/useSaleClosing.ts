@@ -4,7 +4,7 @@ import { useQuery } from "react-query"
 import { toast } from "react-toastify"
 import { logisticApi, usersApi } from "src/services/api"
 import { formatDate, formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
-import { floatToReal } from "src/utils/number.utils"
+import { floatToReal, formatPhone } from "src/utils/number.utils"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
 
 interface FiltersState {
@@ -64,7 +64,7 @@ const useSaleClosing = () => {
       client_name: sale.name,
       client_city: sale.city,
       client_state: sale.state,
-      client_phone: sale.phone,
+      client_phone: sale.phone ? formatPhone(sale.phone) : '',
 
       delivery_date: formatDate(logisticInfos.delivery_date),
       delivery_type: logisticInfos.delivery_type?.name,
@@ -110,7 +110,7 @@ const useQueryData = () => {
 
   const { data: motoboys } = useQuery(
     'logistic/motoboys',
-    logisticApi.getMotoboys,
+    async () => logisticApi.getMotoboys(),
     { initialData: [], refetchOnWindowFocus: false }
   )
 

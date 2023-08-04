@@ -8,12 +8,15 @@ import { toast } from "react-toastify"
 import { rolesApi, salesTeamApi, usersApi } from "src/services/api"
 import { parseUserForm } from "../utils"
 import { parseUserSubmit, validateUser } from "../utils/validation"
+import { useRefetchQueries } from "src/hooks"
 
 const useModalUser = (
   show: boolean,
-  onClose: (arg0?: boolean) => void,
+  onClose: () => void,
   data?: UserType
 ) => {
+
+  const { refetchQueries } = useRefetchQueries()
 
   const { data: roles } = useQuery(
     ['roles'],
@@ -44,7 +47,8 @@ const useModalUser = (
       toast.error(`Houve um erro ao ${ok ? 'atualizar' : 'cadastrar'} o usuário.`)
     } else {
       toast.success(`Usuário ${ok ? 'atualizado' : 'cadastrado'} com sucesso!`)
-      onClose(true)
+      refetchQueries(['users'])
+      onClose()
     }
   })
 

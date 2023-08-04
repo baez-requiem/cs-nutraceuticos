@@ -8,7 +8,7 @@ import { handleChangeFormatReal } from "src/utils/form.utils"
 export interface ModalProductProps {
   show: boolean
   data?: ProductType
-  onClose: (arg0?: boolean) => void
+  onClose: () => void
 }
 
 const ModalProduct: FC<ModalProductProps> = ({
@@ -101,7 +101,7 @@ const ModalProduct: FC<ModalProductProps> = ({
       <Divider my={10} />
       
       <Flex items="end" justify="end" gap={10}>
-        <Button size="sm" color="gray_500" onClick={() => onClose()}>Cancelar</Button>
+        <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>
         <Button size="sm" color="green_600" onClick={submitForm}>Salvar</Button>
       </Flex>
     </Modal>

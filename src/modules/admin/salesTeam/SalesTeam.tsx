@@ -47,7 +47,6 @@ const SalesTeam = () => {
         <Table
           columns={[
             { label: 'Equipe', value: 'name' },
-            { label: 'Anotações', value: 'notes' },
             {
               label: 'Ações',
               value: 'id',

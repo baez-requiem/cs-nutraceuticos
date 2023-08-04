@@ -7,7 +7,7 @@ import { handleChangeFormatCEP, handleChangeFormatCPF, handleChangeFormatPhone }
 export interface ModalUserProps {
   show: boolean
   data?: UserType
-  onClose: (arg0?: boolean) => void
+  onClose: () => void
 }
 
 const ModalUser: FC<ModalUserProps> = ({

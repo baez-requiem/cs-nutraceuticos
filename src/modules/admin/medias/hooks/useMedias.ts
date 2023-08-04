@@ -17,8 +17,13 @@ interface useConfirmState {
 }
 
 const useMedias = () => {
-  const { data: medias, refetch } = useQuery(['products'], async () => {
+  const { data: medias, refetch } = useQuery(['medias'], async () => {
+
+    const toastId = toast.loading('Carregando mídias...')
+
     const response = await mediasApi.getAllMedias()
+
+    toast.dismiss(toastId)
 
     return response
 
@@ -49,8 +54,7 @@ const useMedias = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = (hasRefetch?: boolean) => {
-    hasRefetch && refetch()
+  const closeModal = () => {
     setModal({ show: false })
   }
 

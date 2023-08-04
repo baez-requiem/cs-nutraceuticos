@@ -49,6 +49,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
     selectMediasOpt,
     selectProductsOpt,
     addProduct,
+    removeProduct,
     total,
     formik: {
       values,
@@ -205,7 +206,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
               <ProductItem
                 {...{ ...value, idx }}
                 key={`product-${idx}`}
-                onRemove={() => { }}
+                onRemove={() => removeProduct(value.id_product)}
                 handleChange={handleChange}
               />
             ))}
@@ -277,6 +278,7 @@ const ModalNewSale: FC<ModalSaleProps> = ({
           value={values.notes}
           onChange={handleChange}
           labelFixed={!!values.notes}
+          rows={6}
         />
 
         <Divider my={10} line opacityLine={.15} />

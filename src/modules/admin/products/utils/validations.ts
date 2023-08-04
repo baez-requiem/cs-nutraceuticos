@@ -6,7 +6,6 @@ import { onlyNumbers, realToFloat } from "src/utils/number.utils"
 const productSchema = z.object({
   name: z.string().nonempty("Nome não deve ser vazio."),
   amount: z.string().nonempty("Valor não deve ser vazio."),
-  phone: z.string().nonempty("Telefone não deve ser vazio."),
 })
 
 export const validateProduct = (values: typeof initialValuesFormProduct, id?: string): {} => {
@@ -25,6 +24,8 @@ export const validateProduct = (values: typeof initialValuesFormProduct, id?: st
     errors['amount'] = 'Valor deve ser maior que 0.'
     toast.error('Valor deve ser maior que 0.')
   }
+
+  console.log(errors)
 
   return errors
 }
