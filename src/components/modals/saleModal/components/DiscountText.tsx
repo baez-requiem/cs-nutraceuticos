@@ -7,6 +7,7 @@ const StyledText = styled(Text)<{ hasDiscount: boolean }>`
   font-size: ${({ hasDiscount }) => hasDiscount ? '12' : '14'}px;
   color: ${({ hasDiscount }) => hasDiscount ? '#666' : 'inherit'};
   opacity: ${({ hasDiscount }) => hasDiscount ? 0.8 : 1};
+  text-align: right;
 `
 
 
@@ -16,7 +17,7 @@ const DiscountText = ({ total, discount }) => {
   const newValue = realToFloat(total || '0') - realToFloat(discount || '0')
 
   return (
-    <Flex gap={5} items="end" justify="center">
+    <Flex gap={5} items="end" justify="end">
       <StyledText hasDiscount={hasDiscount}>{total}</StyledText>
       {hasDiscount ? (
         <Text color="green_700">{floatToReal(newValue)}</Text>

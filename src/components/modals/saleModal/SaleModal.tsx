@@ -196,7 +196,6 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             <tr>
               <th>Produto</th>
               <th>Qntd.</th>
-              <th>Qntd. vendas</th>
               <th>Total</th>
               <th></th>
             </tr>
@@ -213,10 +212,10 @@ const ModalNewSale: FC<ModalSaleProps> = ({
           </tbody>
           <tfoot>
             <tr>
-              <th colSpan={3}></th>
-              <th>
-                <DiscountText total={total} discount={values.discounts} /> </th>
-              <th></th>
+              <th>Total:</th>
+              <th colSpan={3}>
+                <DiscountText total={total} discount={values.discounts} />
+              </th>
             </tr>
           </tfoot>
         </S.Table>
@@ -232,12 +231,14 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             onChange={handleChange}
           />
 
-          <Select
-            label="Forma de pagamento"
-            options={selectPaymentTypesOpt}
-            name="payment_type_id"
-            value={values.payment_type_id}
+          <Input
+            label="Qntd. vendas"
+            name="sales_quantity"
+            type="number"
+            value={values.sales_quantity}
             onChange={handleChange}
+            labelFixed={!!values.sales_quantity}
+            min={1}
           />
 
           <Input
@@ -246,6 +247,14 @@ const ModalNewSale: FC<ModalSaleProps> = ({
             value={values.discounts}
             onChange={handleChangeFormatReal(setFieldValue)}
             labelFixed={!!values.discounts}
+          />
+
+          <Select
+            label="Forma de pagamento"
+            options={selectPaymentTypesOpt}
+            name="payment_type_id"
+            value={values.payment_type_id}
+            onChange={handleChange}
           />
 
           <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>

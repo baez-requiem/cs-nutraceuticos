@@ -21,18 +21,18 @@ export const Table = styled.table<{ show?: boolean }>`
   }
 
   thead th:first-child {
-    width: 40%;
+    width: auto;
   }
 
-  thead th:is(:nth-child(2), :nth-child(3)) {
+  thead th:is(:nth-child(2)) {
     width: 80px;
   }
 
-  thead th:nth-child(4) {
+  thead th:nth-child(3) {
     text-align: center;
   }
 
-  thead th:nth-child(5) {
+  thead th:nth-child(4) {
     width: 40px;
   }
 
@@ -42,8 +42,11 @@ export const Table = styled.table<{ show?: boolean }>`
     height: 34px;
   }
 
-  tbody td:nth-child(4) {
+  tbody td:nth-child(3) {
     text-align: center;
+  }
+  tbody td:nth-child(4) {
+    width: 40px;
   }
 
   tbody td:last-child > button{
@@ -52,6 +55,10 @@ export const Table = styled.table<{ show?: boolean }>`
   
   tfoot th {
     padding: 10px 5px;
+
+    :first-child {
+      text-align: start;
+    }
   }
 `
 

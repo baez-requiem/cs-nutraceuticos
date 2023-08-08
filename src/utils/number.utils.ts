@@ -52,7 +52,7 @@ export function realToFloat(value: string|number): number {
 
 export function floatToReal(value: number): string {
   if (!value) {
-    return ''
+    return '0,00'
   }
 
   return value.toLocaleString('pt-br',{ currency: 'BRL', minimumFractionDigits: 2 })

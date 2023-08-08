@@ -1,7 +1,6 @@
 type FormProductType = {
   id_product: string
   quantity: number | string
-  sales_quantity: number | string
   name: string
   amount: number
 }
@@ -17,6 +16,7 @@ export const initialDataFormSale = {
 
   card_installments: '',
   paid: 0,
+  sales_quantity: 0,
 
   rg: '',
   cpf: '',

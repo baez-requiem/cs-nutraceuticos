@@ -3,7 +3,7 @@ import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
 import { Badge, Divider, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { ModalHistory, ModalLogisticInfos, ModalSale } from "./components"
+import { ModalHistory, ModalLogisticInfos } from "./components"
 import { matchColor } from "src/utils/theme"
 
 import { handleChangeFormatPhone } from "src/utils/form.utils"
@@ -43,7 +43,7 @@ export const Sales = () => {
             <Grid gap={10}>
               <Input
                 name="init_date"
-                label="Data"
+                label="Data da venda"
                 type="date"
                 onChange={handleChange}
                 value={values.init_date}

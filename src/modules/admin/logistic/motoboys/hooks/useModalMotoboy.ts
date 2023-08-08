@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { MotoboyType } from 'src/services/api/logistic/logistic.types'
 import { initialValuesFormMotoboy } from '../constants'
 import { validateMotoboy } from '../utils/validations'
+import { formatPhone } from 'src/utils/number.utils'
 
 const useModalMotoboy = (
   show: boolean,
@@ -51,7 +52,7 @@ const useModalMotoboy = (
       ? formik.setValues({
         name: data.name,
         notes: data.notes || '',
-        phone: data.phone || '',
+        phone: data.phone ? formatPhone(data.phone) : '',
         active: data.active
       })
       : formik.resetForm()

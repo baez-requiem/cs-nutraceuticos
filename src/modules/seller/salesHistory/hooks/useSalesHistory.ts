@@ -71,7 +71,7 @@ const useSalesHistory = () => {
     client_name: sale.name,
     client_phone: sale.phone ? formatPhone(sale.phone) : '',
     media: sale.media.name,
-    sales_quantity: sale.sale_products.reduce((pv, cv) => pv + cv.sales_quantity, 0),
+    sales_quantity: sale.sales_quantity,
     date: formatDateTime(sale.created_at),
     hasEditSale: +(sale.logistic_infos[0]?.id_sale_status === 'aguardando-aprovacao')
   }))

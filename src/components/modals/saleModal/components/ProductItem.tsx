@@ -13,7 +13,6 @@ export interface ProductItemProps {
   onRemove: () => void
   id_product: string
   quantity: number | string
-  sales_quantity: number | string
   idx: number
   name: string
   handleChange: FormikHandlers['handleChange']
@@ -25,7 +24,6 @@ const ProductItem: FC<ProductItemProps> = ({
   name,
   idx,
   quantity,
-  sales_quantity,
   handleChange,
   amount
 }) => (
@@ -45,18 +43,6 @@ const ProductItem: FC<ProductItemProps> = ({
           min={1}
           onChange={handleChange}
           placeholder="Ex: 10"
-        />
-      </div>
-    </td>
-    <td>
-      <div>
-        <S.Input
-          type="number"
-          min={1}
-          value={sales_quantity}
-          placeholder="Ex: 5"
-          onChange={handleChange}
-          name={`products.${idx}.sales_quantity`}
         />
       </div>
     </td>

@@ -57,7 +57,6 @@ const useModalNewSale = (
         id_product: hasProduct.id,
         name: hasProduct.name,
         quantity: 1,
-        sales_quantity: 1,
         amount: hasProduct.amount
       }
     ]

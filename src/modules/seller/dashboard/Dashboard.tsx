@@ -1,9 +1,10 @@
 import { Button, Divider, Flex, Paper } from "src/components/ui"
-import { DaySalesChart, ModalNewSale, SalesSummary } from "./components"
+import { DaySalesChart, SalesSummary } from "./components"
 import { useDashboard } from "./hooks/useDashboard"
 import { CardsContainer } from "./styles"
 import { PrivatePage } from "src/components/context"
 import { HeaderSeller } from "src/components/template"
+import { SaleModal } from "src/components/modals"
 
 const Dashboard = () => {
 
@@ -31,7 +32,10 @@ const Dashboard = () => {
         />
       </CardsContainer>
 
-      <ModalNewSale show={showModal} onClose={() => setShowModal(false)} />
+      <SaleModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </PrivatePage>
   )
 }

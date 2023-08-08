@@ -8,7 +8,6 @@ export const mapSaleProductsLogistic = (
 ) => sale_products.map(sp => ({
   name: sp.product.name,
   quantity: sp.quantity,
-  sales_quantity: sp.sales_quantity,
   unit_value: sp.product.amount,
   total: sp.quantity * sp.product.amount
 }))

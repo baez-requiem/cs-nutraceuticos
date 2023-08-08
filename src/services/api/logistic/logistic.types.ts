@@ -36,6 +36,7 @@ export type SaleStatus = {
 export type LogisticInfos = {
   id: string
   id_sale_status: string
+  tracking_code: string | null
   delivery_value: number
   id_delivery_type: string | null
   delivery_date: string | Date
@@ -77,7 +78,6 @@ export type SaleProduct = {
   id_product: string
   id_sale: string
   quantity: number
-  sales_quantity: number
   created_at: string
   product: Product
 }
@@ -85,6 +85,7 @@ export type SaleProduct = {
 export type Sale = {
   id: string
   number: number
+  sales_quantity: number
   name: string
   phone: string
   paid: boolean
@@ -139,6 +140,7 @@ export type CreateNewLogisticInfoBodyType = {
   delivery_date: string
   delivery_value: number
   notes: string | null
+  tracking_code: string | null
 }
 
 export type GetSalesParams = {

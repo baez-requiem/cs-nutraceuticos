@@ -174,6 +174,16 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
               labelFixed={!!values.id_motoboy}
             />
           </Fade.FadeIn>
+          
+          <Fade.FadeIn show={values.id_delivery_type == 'correios'}>
+            <Input
+              label="Código de rastreio:"
+              name="tracking_code"
+              value={values.tracking_code}
+              onChange={handleChange}
+              labelFixed={!!values.tracking_code}
+            />
+          </Fade.FadeIn>
 
           <Input
             label="Valor da entrega:"

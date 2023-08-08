@@ -6,6 +6,7 @@ import { logisticApi, usersApi } from "src/services/api"
 import { formatDate, formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal, formatPhone } from "src/utils/number.utils"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
+import { getTotalAmount, getTotalDeliveryValues, getTotalProducts, getTotalSales } from "../utils/mappers"
 
 interface FiltersState {
   init_date?: string
@@ -16,6 +17,7 @@ interface FiltersState {
 }
 
 const useSaleClosing = () => {
+  const [useCheckData, setCheckData] = useState<string[]>([])
   const [useFilters, setFilters] = useState<FiltersState>({
     init_date: getStartMonthValue(new Date()),
     end_date: getEndMonthValue(new Date())
@@ -66,6 +68,9 @@ const useSaleClosing = () => {
       client_state: sale.state,
       client_phone: sale.phone ? formatPhone(sale.phone) : '',
 
+      status: logisticInfos?.sale_status.status,
+      color_status: logisticInfos?.sale_status.color,
+
       delivery_date: formatDate(logisticInfos.delivery_date),
       delivery_type: logisticInfos.delivery_type?.name,
       delivery_value: floatToReal(logisticInfos.delivery_value),
@@ -92,12 +97,42 @@ const useSaleClosing = () => {
     value: deliveryType.id
   }))
 
+  const totalSales = getTotalSales(sales)
+  const totalAmount = getTotalAmount(sales)
+  const totalProducts = getTotalProducts(sales)
+  const totalDeliveryValue = getTotalDeliveryValues(sales)
+  
+  const checkSales = getTotalSales(sales.filter(({ id }) => useCheckData.includes(id) ))
+  const checkAmount = getTotalAmount(sales.filter(({ id }) => useCheckData.includes(id) ))
+  const checkProducts = getTotalProducts(sales.filter(({ id }) => useCheckData.includes(id) ))
+  const checkDeliveryValue = getTotalDeliveryValues(sales.filter(({ id }) => useCheckData.includes(id) ))
+
+  const toggleCheckData = (id: string) => () => {
+    const inCheckState = useCheckData.includes(id)
+
+    const newCheckData = inCheckState
+      ? useCheckData.filter(check => check !== id)
+      : [...useCheckData, id]
+
+    setCheckData(newCheckData)
+  }
+
   return {
     tableData,
     motoboysOpts,
     deliveryTypesOpts,
     usersOpts,
-    formik
+    formik,
+    totalSales,
+    totalAmount,
+    totalProducts,
+    totalDeliveryValue,
+    checkSales,
+    checkAmount,
+    checkProducts,
+    checkDeliveryValue,
+    toggleCheckData,
+    useCheckData
   }
 }
 

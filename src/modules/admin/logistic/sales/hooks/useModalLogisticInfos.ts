@@ -61,6 +61,7 @@ const useModalLogisticInfos = ({ show, onClose, data }: useModalLogisticInfosPro
         id_motoboy: data.logistic_infos[0].id_motoboy,
         id_sale_status: data.logistic_infos[0].id_sale_status,
         notes: data.logistic_infos[0].notes,
+        tracking_code: data.logistic_infos[0].tracking_code,
       })
     } else {
       formik.resetForm()

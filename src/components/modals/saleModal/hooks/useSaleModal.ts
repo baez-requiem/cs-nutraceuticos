@@ -21,7 +21,6 @@ import {
 } from "src/utils/number.utils"
 
 import { parseSaleSubmit, validateSale } from "../utils/validations"
-import { useRefetchQueries } from "src/hooks"
 
 const useSaleModal = (
   show: boolean,
@@ -38,16 +37,17 @@ const useSaleModal = (
 
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     const toastId = toast.loading(`Inserindo dados...`)
+    const isUpdate = !!data?.id
 
-    const ok = data?.id
+    const ok = isUpdate
       ? await salesApi.updateSale(values)
       : await salesApi.createNewSale(values)
 
     toast.dismiss(toastId)
 
     ok
-      ? toast.success(`Venda ${data?.id ? 'atualizada' : 'efetuada'} com sucesso!`)
-      : toast.error(`Houve um erro ao ${data?.id ? 'atualizar' : 'efetuadar'} a venda.`)
+      ? toast.success(`Venda ${isUpdate ? 'atualizada' : 'efetuada'} com sucesso!`)
+      : toast.error(`Houve um erro ao ${isUpdate ? 'atualizar' : 'efetuadar'} a venda.`)
 
     onClose()
   })
@@ -58,7 +58,7 @@ const useSaleModal = (
     validateOnChange: false,
     validateOnMount: false,
     validate: (values) => validateSale(values),
-    onSubmit: values => createNewSaleMutation.mutateAsync(parseSaleSubmit(values, data.id))
+    onSubmit: values => createNewSaleMutation.mutateAsync(parseSaleSubmit(values, data?.id))
   })
 
   const handleSelect = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => setSelectValue(value)
@@ -74,7 +74,6 @@ const useSaleModal = (
         id_product: hasProduct.id,
         name: hasProduct.name,
         quantity: 1,
-        sales_quantity: 1,
         amount: hasProduct.amount
       }
     ]
@@ -119,32 +118,37 @@ const useSaleModal = (
       return
     }
 
-    formik.setValues({
-      address: data.address,
-      paid: +data.paid,
-      card_installments: (data.card_installments ?? '') + '',
-      cep: formatCEP(data.cep),
-      city: data.city,
-      complement: data.complement,
-      cpf: formatCPF(data.cpf),
-      discounts: floatToReal(data.discounts),
-      email: data.email,
-      media_id: data.media_id,
-      name: data.name,
-      neighborhood: data.neighborhood,
-      notes: data.notes,
-      payment_type_id: data.payment_type_id,
-      phone: formatPhone(data.phone),
-      rg: data.rg,
-      state: data.state,
-      products: data.sale_products.map(sp => ({
-        id_product: sp.id_product,
-        quantity: sp.quantity,
-        name: sp.product.name,
-        amount: sp.product.amount,
-        sales_quantity: sp.sales_quantity
-      }))
-    })
+    if (data) {
+      formik.setValues({
+        address: data.address,
+        sales_quantity: data.sales_quantity,
+        paid: +data.paid,
+        card_installments: (data.card_installments ?? '') + '',
+        cep: formatCEP(data.cep),
+        city: data.city,
+        complement: data.complement,
+        cpf: formatCPF(data.cpf),
+        discounts: floatToReal(data.discounts),
+        email: data.email,
+        media_id: data.media_id,
+        name: data.name,
+        neighborhood: data.neighborhood,
+        notes: data.notes,
+        payment_type_id: data.payment_type_id,
+        phone: formatPhone(data.phone),
+        rg: data.rg,
+        state: data.state,
+        products: data.sale_products.map(sp => ({
+          id_product: sp.id_product,
+          quantity: sp.quantity,
+          name: sp.product.name,
+          amount: sp.product.amount,
+        }))
+      })
+    } else {
+      !!medias.length && formik.setFieldValue('media_id', medias[0].id)
+      !!paymentTypes.length && formik.setFieldValue('payment_type_id', paymentTypes[0].id)
+    }
 
     const slcValue = stockProducts.filter(p => !formik.values.products.find(fp => fp.id_product === p.id))[0]?.id || ''
 
