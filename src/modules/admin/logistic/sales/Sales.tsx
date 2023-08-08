@@ -1,13 +1,8 @@
-import { AiOutlineEye } from "react-icons/ai"
-import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
-import { Badge, Divider, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
+import { Divider, Flex, Paper, Private } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { ModalHistory, ModalLogisticInfos } from "./components"
-import { matchColor } from "src/utils/theme"
-
-import { handleChangeFormatPhone } from "src/utils/form.utils"
-import { SaleModal } from "src/components/modals"
+import { SaleFilters, SaleTable } from "./components"
+import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
 
 
 export const Sales = () => {
@@ -22,12 +17,7 @@ export const Sales = () => {
     useModal,
     closeModal,
     salePDF,
-    formik: {
-      values,
-      handleChange,
-      submitForm,
-      setFieldValue
-    }
+    formik
   } = useSales()
 
   return (
@@ -39,95 +29,33 @@ export const Sales = () => {
 
       <Paper>
         <Flex justify="end" gap={20}>
-          <SideFilters onFilter={submitForm}>
-            <Grid gap={10}>
-              <Input
-                name="init_date"
-                label="Data da venda"
-                type="date"
-                onChange={handleChange}
-                value={values.init_date}
-              />
-              <Input
-                name="end_date"
-                label="até"
-                type="date"
-                onChange={handleChange}
-                value={values.end_date}
-              />
-
-              <Select
-                label="Status"
-                name="status"
-                onChange={handleChange}
-                value={values.status}
-                options={statusOpts}
-                nullable
-              />
-              <Select
-                label="Vendedor"
-                name="seller"
-                onChange={handleChange}
-                value={values.seller}
-                options={usersOpts}
-                nullable
-              />
-
-              <Input
-                label="Nome do cliente"
-                name="client_name"
-                onChange={handleChange}
-                value={values.client_name}
-              />
-              <Input
-                label="Telefone"
-                name="client_phone"
-                onChange={handleChangeFormatPhone(setFieldValue)}
-                value={values.client_phone}
-              />
-            </Grid>
-          </SideFilters>
+          <SaleFilters
+            formik={formik}
+            statusOpts={statusOpts}
+            usersOpts={usersOpts}
+          />
         </Flex>
       </Paper>
 
       <Divider my={10} />
 
       <Paper>
-        <Table
-          columns={[
-            { label: '#', value: 'number' },
-            { label: 'Data', value: 'date' },
-            { label: 'Vendedor', value: 'user_name' },
-            { label: 'Qntd. vendas', value: 'total_sales' },
-            { label: 'Qntd. produtos', value: 'total_products' },
-            { label: 'Valor total', value: 'total_amount' },
-            {
-              label: 'Status', value: 'status', render: (value, data) => (
-                <Badge block color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
-              )
-            },
-            {
-              label: 'Ações', align: 'center', value: 'id', render: (value, data) => (
-                <TableActions actions={[
-                  { type: 'Vizualizer', onClick: openModalSale(value.toString()) },
-                  { type: 'Edit', onClick: openModalLogisticInfos(value.toString()) },
-                  { type: 'History', onClick: openModalHistory(value.toString()) },
-                  { type: 'PDF', onClick: salePDF(value.toString()), show: !!data.showPdf },
-                ]} />
-              )
-            },
-          ]}
+        <SaleTable
           data={tableData}
+          openModalSale={openModalSale}
+          openModalLogisticInfos={openModalLogisticInfos}
+          openModalHistory={openModalHistory}
+          salePDF={salePDF}
         />
       </Paper>
 
-      <ModalLogisticInfos
+      <LogisticInfosModal
         show={useModal.show == 'logistic-infos'}
         data={useModal.data!}
         onClose={closeModal}
       />
 
-      <ModalHistory
+      <LogisticInfosHistoryModal
         show={useModal.show == 'history'}
         data={useModal.data!}
         onClose={closeModal}

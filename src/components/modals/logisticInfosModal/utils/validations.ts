@@ -1,17 +1,17 @@
 import { z } from "zod"
-import { initialDataFormLogisticInfos } from "../constants"
+import { initialValuesFormLogisticInfos } from "../constants"
 import { toast } from "react-toastify"
 import { realToFloat } from "src/utils/number.utils"
 
-const newSaleSchema = z.object({
+const logisticInfosSchema = z.object({
   id_sale_status: z.string().nonempty("Selecione um status."),
   delivery_date: z.string().nonempty("Selecione a data de entrega."),
 })
 
-export const validateLogisticInfos = (values: typeof initialDataFormLogisticInfos): {} => {
+export const validateLogisticInfos = (values: typeof initialValuesFormLogisticInfos): {} => {
   const errors = {}
 
-  const result = newSaleSchema.safeParse(values)
+  const result = logisticInfosSchema.safeParse(values)
 
   if (!result.success && 'error' in result) {
     result.error.issues.forEach(err => {
@@ -28,7 +28,7 @@ export const validateLogisticInfos = (values: typeof initialDataFormLogisticInfo
   return errors
 }
 
-export const parseLogisticInfosSubmit = (values: typeof initialDataFormLogisticInfos, id_sale: string) => {
+export const parseLogisticInfosSubmit = (values: typeof initialValuesFormLogisticInfos, id_sale: string) => {
   const parsedValues: { [key: string]: string | number } = {
     ...values,
     id_sale,
@@ -37,6 +37,10 @@ export const parseLogisticInfosSubmit = (values: typeof initialDataFormLogisticI
 
   if (values.id_delivery_type !== 'motoboy') {
     parsedValues.id_motoboy = null
+  }
+  
+  if (values.id_delivery_type !== 'correios') {
+    parsedValues.tracking_code = null
   }
 
   return parsedValues

@@ -73,6 +73,8 @@ const useSalesHistory = () => {
     media: sale.media.name,
     sales_quantity: sale.sales_quantity,
     date: formatDateTime(sale.created_at),
+    status: sale.logistic_infos[0]?.sale_status.status,
+    color_status: sale.logistic_infos[0]?.sale_status.color,
     hasEditSale: +(sale.logistic_infos[0]?.id_sale_status === 'aguardando-aprovacao')
   }))
 

@@ -35,7 +35,7 @@ export interface ModalSaleProps {
   data?: Sale
 }
 
-const ModalNewSale: FC<ModalSaleProps> = ({
+const SaleModal: FC<ModalSaleProps> = ({
   onClose,
   show,
   data
@@ -294,11 +294,11 @@ const ModalNewSale: FC<ModalSaleProps> = ({
 
         <Flex items="end" justify="end" gap={10}>
           <Button size="sm" color="gray_500" type="button" onClick={onClose}>Cancelar</Button>
-          <Button size="sm" color="green_600" type="submit">Salvar</Button>
+          <Button size="sm" color="green_600" type="submit">{data?.id ? 'Salvar' : 'Registrar'}</Button>
         </Flex>
       </form>
     </Modal>
   )
 }
 
-export default ModalNewSale
+export { SaleModal }

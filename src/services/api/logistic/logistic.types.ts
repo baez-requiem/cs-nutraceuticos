@@ -150,6 +150,7 @@ export type GetSalesParams = {
   seller?: string | null
   client_name?: string | null
   client_phone?: string | null
+  number?: number | null
 }
 
 export type CreateMotoboyBodyType = {

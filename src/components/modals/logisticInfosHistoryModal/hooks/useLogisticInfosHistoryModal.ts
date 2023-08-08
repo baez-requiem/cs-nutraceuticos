@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 
-interface UseModalHistoryProps {
+interface useLogisticInfosHistoryModalProps {
   show: boolean
 }
 
-const useModalHistory = ({ show }: UseModalHistoryProps) => {
+const useLogisticInfosHistoryModal = ({ show }: useLogisticInfosHistoryModalProps) => {
 
   const [infosToShow, setInfosToShow] = useState<string[]>([])
 
@@ -26,4 +26,4 @@ const useModalHistory = ({ show }: UseModalHistoryProps) => {
   }
 }
 
-export { useModalHistory }
+export { useLogisticInfosHistoryModal }

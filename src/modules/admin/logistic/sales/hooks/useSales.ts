@@ -22,6 +22,7 @@ interface FiltersState {
   seller?: string
   client_name?: string
   client_phone?: string
+  number?: number
 }
 
 const useSales = () => {
@@ -36,7 +37,9 @@ const useSales = () => {
     async () => {
       const toastId = toast.loading('Carregando dados...')
 
-      const data = await logisticApi.getSales(useFilters)
+      const filters = { ...useFilters }
+
+      const data = await logisticApi.getSales(filters)
 
       toast.dismiss(toastId)
 

@@ -1,19 +1,19 @@
 import { FC } from "react"
 import { Button, Divider, Fade, Flex, Grid, Input, Modal, Select, Text, Textarea } from "src/components/ui"
 import { formatDateTime } from "src/utils/date.utils"
-import { mapSaleProductsLogistic, totalSaleValue } from "../utils"
+import { mapSaleProductsLogistic, totalSaleValue } from "./utils/mappers"
 import { floatToReal } from "src/utils/number.utils"
-import { useModalLogisticInfos } from "../hooks/useModalLogisticInfos"
+import { useLogisticInfosModal } from "./hooks/useLogisticInfosModal"
 import { handleChangeFormatReal } from "src/utils/form.utils"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
-export interface ModalLogisticInfosProps {
+export interface LogisticInfosModalProps {
   show: boolean
   onClose: () => void
   data?: Sale
 }
 
-const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
+const LogisticInfosModal: FC<LogisticInfosModalProps> = ({
   onClose,
   show,
   data
@@ -29,7 +29,7 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
       handleSubmit,
       setFieldValue
     }
-  } = useModalLogisticInfos({ show, onClose, data })
+  } = useLogisticInfosModal({ show, onClose, data })
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={700}>
@@ -214,4 +214,4 @@ const ModalLogisticInfos: FC<ModalLogisticInfosProps> = ({
     </Modal>
   )
 }
-export default ModalLogisticInfos
+export { LogisticInfosModal }

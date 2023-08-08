@@ -1,7 +1,9 @@
 import { Header } from "src/components/template"
-import { Badge, Checkbox, Divider, Flex, Grid, Input, Paper, Private, Select, SideFilters, Table, Text } from "src/components/ui"
+import { Badge, Checkbox, Divider, Flex, Grid, Input, Paper, Private, Select, SideFilters, Table, TableActions, Text } from "src/components/ui"
 import { useSaleClosing } from "./hooks/useSaleClosing"
 import { matchColor } from "src/utils/theme"
+import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
+import { MotoboysResume } from "./components"
 
 export const SaleClosing = () => {
 
@@ -20,6 +22,10 @@ export const SaleClosing = () => {
     checkSales,
     toggleCheckData,
     useCheckData,
+    closeModal,
+    openModal,
+    useModal,
+    sales,
     formik: {
       values,
       handleChange,
@@ -116,6 +122,15 @@ export const SaleClosing = () => {
 
             { label: 'Valor venda', value: 'total_amount' },
             { label: 'Vendedor', value: 'seller_name' },
+            {
+              label: 'Ações', align: 'center', value: 'id', render: value => (
+                <TableActions actions={[
+                  { type: 'Vizualizer', onClick: openModal('sale', value.toString()) },
+                  { type: 'Edit', onClick: openModal('logistic-infos', value.toString()) },
+                  { type: 'History', onClick: openModal('history', value.toString()) },
+                ]} />
+              )
+            },
           ]}
           data={tableData}
         />
@@ -146,6 +161,28 @@ export const SaleClosing = () => {
           <Badge block color="cyan_600">Total valor entrega: R$ {checkDeliveryValue}</Badge>
         </Flex>
       </Paper>
+
+      <Divider my={10} />
+
+      <MotoboysResume sales={sales} />
+
+      <LogisticInfosModal
+        show={useModal.show == 'logistic-infos'}
+        data={useModal.data!}
+        onClose={() => closeModal('sale')}
+      />
+
+      <LogisticInfosHistoryModal
+        show={useModal.show == 'history'}
+        data={useModal.data!}
+        onClose={closeModal}
+      />
+
+      <SaleModal
+        show={useModal.show == 'sale'}
+        data={useModal.data!}
+        onClose={() => closeModal('sale')}
+      />
     </Private>
   )
 }

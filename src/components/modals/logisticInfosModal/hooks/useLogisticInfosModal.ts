@@ -1,13 +1,13 @@
+import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { logisticApi } from "src/services/api"
-import { initialDataFormLogisticInfos } from "../constants"
-import { useEffect } from "react"
+import { initialValuesFormLogisticInfos } from "../constants"
 import { toast } from "react-toastify"
-import { floatToReal, realToFloat } from "src/utils/number.utils"
+import { floatToReal } from "src/utils/number.utils"
 import { formatDateValue } from "src/utils/date.utils"
 import { CreateNewLogisticInfoBodyType, Sale } from "src/services/api/logistic/logistic.types"
-import { parseLogisticInfosSubmit, validateLogisticInfos } from "../utils/validationLogisticInfos"
+import { parseLogisticInfosSubmit, validateLogisticInfos } from "../utils/validations"
 
 interface useModalLogisticInfosProps {
   show: boolean
@@ -15,7 +15,7 @@ interface useModalLogisticInfosProps {
   data: Sale
 }
 
-const useModalLogisticInfos = ({ show, onClose, data }: useModalLogisticInfosProps) => {
+const useLogisticInfosModal = ({ show, onClose, data }: useModalLogisticInfosProps) => {
 
   const {
     deliveryTypes,
@@ -42,7 +42,7 @@ const useModalLogisticInfos = ({ show, onClose, data }: useModalLogisticInfosPro
   })
 
   const formik = useFormik({
-    initialValues: initialDataFormLogisticInfos,
+    initialValues: initialValuesFormLogisticInfos,
     validateOnBlur: false,
     validateOnChange: false,
     validateOnMount: false,
@@ -102,4 +102,4 @@ const useQueryData = () => {
   }
 }
 
-export { useModalLogisticInfos }
+export { useLogisticInfosModal }

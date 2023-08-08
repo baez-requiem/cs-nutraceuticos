@@ -7,6 +7,12 @@ import { formatDate, formatDateTime, getEndMonthValue, getStartMonthValue } from
 import { floatToReal, formatPhone } from "src/utils/number.utils"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
 import { getTotalAmount, getTotalDeliveryValues, getTotalProducts, getTotalSales } from "../utils/mappers"
+import { Sale } from "src/services/api/logistic/logistic.types"
+
+interface ModalState {
+  show: 'sale' | 'logistic-infos' | 'history' | null
+  data?: Sale
+}
 
 interface FiltersState {
   init_date?: string
@@ -17,6 +23,7 @@ interface FiltersState {
 }
 
 const useSaleClosing = () => {
+  const [useModal, setModal] = useState<ModalState>({ show: null })
   const [useCheckData, setCheckData] = useState<string[]>([])
   const [useFilters, setFilters] = useState<FiltersState>({
     init_date: getStartMonthValue(new Date()),
@@ -117,6 +124,19 @@ const useSaleClosing = () => {
     setCheckData(newCheckData)
   }
 
+  const openModal = (modal: ModalState['show'], id: string) => () => setModal({
+    show: modal,
+    data: sales.find(sale => sale.id === id)
+  })
+
+  const closeModal = (by?: string) => {
+    by === 'sale' && refetchSales()
+    
+    setModal({
+      show: null
+    })
+  }
+
   return {
     tableData,
     motoboysOpts,
@@ -132,7 +152,11 @@ const useSaleClosing = () => {
     checkProducts,
     checkDeliveryValue,
     toggleCheckData,
-    useCheckData
+    useCheckData,
+    useModal,
+    openModal,
+    closeModal,
+    sales
   }
 }
 

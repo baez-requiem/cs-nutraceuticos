@@ -1,6 +1,7 @@
-import { Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, TableActions, Text } from "src/components/ui"
+import { Badge, Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, TableActions, Text } from "src/components/ui"
 import { useSalesHistory } from "./hooks/useSalesHistory"
 import { SaleModal } from "src/components/modals"
+import { matchColor } from "src/utils/theme"
 
 const SalesHistory = () => {
 
@@ -56,6 +57,11 @@ const SalesHistory = () => {
             { label: "Mídia", value: "media" },
             { label: "Qntd. Vendas", value: "sales_quantity" },
             { label: "Data", value: "date" },
+            {
+              label: 'Status', value: 'status', render: (value, obj) => (
+                <Badge block color={matchColor(obj.color_status?.toString()) || 'black'}>{value}</Badge>
+              )
+            },
             { label: "Ações", value: "id", align: 'center', render: (value, sale) => <TableActions
               actions={[
                 { type: 'Vizualizer', onClick: () => {} },

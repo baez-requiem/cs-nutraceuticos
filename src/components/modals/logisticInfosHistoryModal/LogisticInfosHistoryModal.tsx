@@ -1,25 +1,25 @@
 import { FC } from "react"
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai"
-import { Badge, Button, Divider, Fade, Flex, Grid, IconButton, Modal, Text } from "src/components/ui"
-import { useModalHistory } from "../hooks/useModalHistory"
+import { Badge, Divider, Fade, Grid, IconButton, Modal, Text } from "src/components/ui"
+import { useLogisticInfosHistoryModal } from "./hooks/useLogisticInfosHistoryModal"
 import { floatToReal } from "src/utils/number.utils"
 import { formatDate, formatDateTime } from "src/utils/date.utils"
 import { matchColor } from "src/utils/theme"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
-export interface ModalHistoryProps {
+export interface LogisticInfosHistoryModalProps {
   show: boolean
   onClose: () => void
   data?: Sale
 }
 
-const ModalHistory: FC<ModalHistoryProps> = ({
+const LogisticInfosHistoryModal: FC<LogisticInfosHistoryModalProps> = ({
   onClose,
   show,
   data
 }) => {
 
-  const { infosToShow, toggleShow } = useModalHistory({show})
+  const { infosToShow, toggleShow } = useLogisticInfosHistoryModal({ show })
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={700}>
@@ -68,6 +68,14 @@ const ModalHistory: FC<ModalHistoryProps> = ({
                 </div>
               ) : null}
 
+              {li.tracking_code ? (
+                <div>
+                  <Text weight="500">Código de rastreio</Text>
+                  <br />
+                  <Text>{li.tracking_code}</Text>
+                </div>
+              ) : null}
+
               <div>
                 <Text weight="500">Valor da entrega</Text>
                 <br />
@@ -97,4 +105,4 @@ const ModalHistory: FC<ModalHistoryProps> = ({
     </Modal>
   )
 }
-export default ModalHistory
+export { LogisticInfosHistoryModal }
