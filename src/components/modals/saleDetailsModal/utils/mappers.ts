@@ -22,6 +22,14 @@ export const getSaleDetails = (sale: Sale) => {
     total: sp.quantity * sp.unit_value
   })) || []
 
+  const infos = {
+    media: sale?.media.name || '',
+    sales_quantity: sale?.sales_quantity || '',
+    payment_type: sale?.payment_type.name || '',
+    paid: sale?.paid ? 'Sim' : 'Não',
+    card_installments: sale?.card_installments || '',
+  }
+
   const discounts = sale?.discounts || 0
   const totalInProducts = products.reduce((pv, cv) => pv + cv.total , 0)
   const totalSale = totalInProducts - discounts
@@ -31,6 +39,7 @@ export const getSaleDetails = (sale: Sale) => {
     discounts,
     totalSale,
     products,
-    totalInProducts
+    totalInProducts,
+    infos
   }
 }

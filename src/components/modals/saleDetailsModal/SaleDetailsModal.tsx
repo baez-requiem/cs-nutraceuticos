@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Divider, Grid, Modal, Text } from "src/components/ui"
+import { Button, Divider, Flex, Grid, Modal, Text } from "src/components/ui"
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { ProductField, TextField } from "./components"
 import { getSaleDetails } from "./utils/mappers"
@@ -13,7 +13,13 @@ export interface SaleDetailsModalProps {
 
 const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) => {
 
-  const { client, products, totalInProducts, discounts, totalSale } = getSaleDetails(data)
+  const {
+    client,
+    products,
+    discounts,
+    totalSale,
+    infos
+  } = getSaleDetails(data)
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -68,7 +74,15 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
 
       <Text weight="500">Dados da venda</Text>
       <Divider />
-
+      <Grid gap={10} template="1fr 1fr" sm="1fr">
+        <TextField label="Mídia:" value={infos.media} />
+        <TextField label="Vendas:" value={infos.sales_quantity} />
+        <TextField label="Forma de pagamento:" value={infos.payment_type} />
+        {infos.payment_type === "Cartão Crédito" && infos.card_installments && (
+          <TextField label="Forma de pagamento:" value={infos.payment_type} />
+        )}
+        <TextField label="Pago:" value={infos.paid} />
+      </Grid>
     </Modal>
   )
 }

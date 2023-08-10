@@ -60,12 +60,12 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
 
     const deliveryValue = salesByMotoboy
       .map(sale => sale.logistic_infos[0].delivery_value)
-      .reduce((pv, cv) => pv + cv , 0)
+      .reduce((pv, cv) => pv + cv, 0)
 
     const amountPayable = incomes
       .filter(income => income.id === 'cash')
       .map(income => realToFloat(income.total))
-      .reduce((pv, cv) => pv + cv , 0)
+      .reduce((pv, cv) => pv + cv, 0)
 
     const balance = deliveryValue - amountPayable
 
@@ -78,4 +78,36 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
   })
 
   return resume
+}
+
+export const getTotalsResume = (sales: Sale[] = []) => {
+  const paymentTypes = sales
+    .map(sale => sale.payment_type)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+
+  const products = sales
+    .map(sale => sale.sale_products.reduce((pv, cv) => pv + cv.quantity, 0))
+    .reduce((pv, cv) => pv + cv, 0)
+
+  const sales_quantity = sales.reduce((pv, cv) => pv + cv.sales_quantity, 0)
+
+  const incomes = paymentTypes.map(paymentType => {
+    const salesInPaymentType = sales.filter(sale => sale.payment_type_id === paymentType.id)
+
+    const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+
+    return {
+      name: paymentType.name,
+      total: total
+    }
+  })
+
+  const total_incomes = incomes.reduce((pv, cv) => pv + cv.total, 0)
+
+  return {
+    products,
+    sales_quantity,
+    total_incomes,
+    incomes
+  }
 }

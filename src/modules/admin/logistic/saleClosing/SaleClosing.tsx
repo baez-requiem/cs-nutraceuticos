@@ -3,7 +3,7 @@ import { Badge, Checkbox, Divider, Flex, Grid, Input, Paper, Private, Select, Si
 import { useSaleClosing } from "./hooks/useSaleClosing"
 import { matchColor } from "src/utils/theme"
 import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
-import { MotoboysResume } from "./components"
+import { MotoboysResume, TotalsResume } from "./components"
 
 export const SaleClosing = () => {
 
@@ -138,16 +138,7 @@ export const SaleClosing = () => {
       
       <Divider my={10} />
 
-      <Paper>
-        <Text weight="500">Resumo</Text>
-        <Divider my={10} />
-        <Flex gap={20} items="center">
-          <Badge block color="indigo_600">Total vendas: {totalSales}</Badge>
-          <Badge block color="indigo_600">Total produtos: {totalProducts}</Badge>
-          <Badge block color="indigo_600">Total receita: R$ {totalAmount}</Badge>
-          <Badge block color="indigo_600">Total valor entrega: R$ {totalDeliveryValue}</Badge>
-        </Flex>
-      </Paper>
+      <TotalsResume sales={sales} />
 
       <Divider my={10} />
 
