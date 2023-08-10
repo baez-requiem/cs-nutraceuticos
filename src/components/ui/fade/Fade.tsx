@@ -1,25 +1,38 @@
-import styled, { css, keyframes } from "styled-components"
+import { useEffect, useRef } from "react"
+import styled, { keyframes } from "styled-components"
 
 const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; max-height: 0px; }
+  50% { opacity: 0; max-height: 1000px; }
+  to { opacity: 1; max-height: 1000px; }
 `;
 
-const FadeIn = styled.div<{ show: boolean, duration?: number }>`
-  display: none;
+const FadeInWrapper = styled.div`
+  overflow: hidden;
   opacity: 0;
-  transition: opacity ${({ duration = 1000 }) => duration}ms;
+  max-height: 0px;
 
-  ${({ show, duration }) => show && css`
-    display: block;
+  transition: all 1s;
+  
+  &.open {
     opacity: 1;
-    animation: ${fadeIn} ${duration}ms ease-in-out forwards;
-  `}
+    max-height: 1000px;
+  }
 `
+
+const FadeIn = ({ children, show }) => {
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (wrapperRef) {
+      show
+        ? wrapperRef.current.classList.add('open')
+        : wrapperRef.current.classList.remove('open')
+    }
+  }, [show])
+
+  return <FadeInWrapper ref={wrapperRef}>{children}</FadeInWrapper>
+}
 
 export default {
   FadeIn

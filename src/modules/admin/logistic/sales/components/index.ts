@@ -1,2 +1,5 @@
 export { default as SaleFilters } from './SaleFilters'
 export { default as SaleTable } from './SaleTable'
+export * from './SellersResume'
+export * from './SalesTeamsResume'
+export * from './MediasResume'

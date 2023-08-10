@@ -8,10 +8,8 @@
 
 7 - Adicionar filtro por forma de pagamento, produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
 
-8 - vendedora poder ver o codigo de rastreio
-
-9 - pagina de venda
-9.2 resumo (qntd venda por vendedora(qntd venda, dinheiro cartao, bruto), vendas por equipe (qntd venda, dinheiro cartao, bruto), venda por midia, qntd de produto por midia)
+8 - historico de vendas
+8.3 exibir detalhes da venda
 
 10 - resumo cd no dashboard(aviso de reposicao)(alerta)
 
@@ -24,7 +22,10 @@ OK
 3 - Melhorar filtro de busca por cliente'
 5 - Se for sedex, adicionar um campo de rastreio de encomenda
 5.1 - Adiconar no historico
-8 - vendedora poder ver o status da venda
+8.1 - vendedora poder ver o status da venda
+8.2 - vendedora poder ver o codigo de rastreio
+9 - pagina de venda
 9.1 - filtro numero da venda
+9.2 resumo (qntd venda por vendedora(qntd venda, dinheiro cartao, bruto), vendas por equipe (qntd venda, dinheiro cartao, bruto), venda por midia, qntd de produto por midia)
 
 ----------------------------------------

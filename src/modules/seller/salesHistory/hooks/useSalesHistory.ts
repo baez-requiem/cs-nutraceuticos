@@ -15,7 +15,7 @@ interface FiltersState {
 }
 
 interface ModalState {
-  show: 'sale' | 'sale-history' | null
+  show: 'sale' | 'sale-details' | null
   data?: Sale
 }
 
@@ -67,6 +67,7 @@ const useSalesHistory = () => {
   }
 
   const tableData = sales.map(sale => ({
+    number: sale.number,
     id: sale.id,
     client_name: sale.name,
     client_phone: sale.phone ? formatPhone(sale.phone) : '',
@@ -75,6 +76,7 @@ const useSalesHistory = () => {
     date: formatDateTime(sale.created_at),
     status: sale.logistic_infos[0]?.sale_status.status,
     color_status: sale.logistic_infos[0]?.sale_status.color,
+    tracking_code: sale.logistic_infos[0]?.tracking_code,
     hasEditSale: +(sale.logistic_infos[0]?.id_sale_status === 'aguardando-aprovacao')
   }))
 

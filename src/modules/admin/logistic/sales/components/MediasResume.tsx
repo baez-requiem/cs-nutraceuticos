@@ -1,19 +1,19 @@
 import { FC } from "react"
 import { Divider, Flex, Grid, Paper, ResumeCard, Text } from "src/components/ui"
 import { Sale } from "src/services/api/logistic/logistic.types"
-import { getSellersResume } from "../utils/mappers"
+import { getMediasResume } from "../utils/mappers"
 import { floatToReal } from "src/utils/number.utils"
 
 interface SellersResumeProps {
   sales: Sale[]
 }
 
-const SellersResume: FC<SellersResumeProps> = ({ sales }) => {
+const MediasResume: FC<SellersResumeProps> = ({ sales }) => {
 
-  const resume = getSellersResume(sales)
+  const resume = getMediasResume(sales)
 
   return (
-    <ResumeCard title='Resumo por vendedor'>
+    <ResumeCard title='Resumo por mídia'>
       {resume.map(r => (
         <Paper width={300}>
           <Grid gap={10}>
@@ -58,4 +58,4 @@ const SellersResume: FC<SellersResumeProps> = ({ sales }) => {
   )
 }
 
-export { SellersResume }
+export { MediasResume }

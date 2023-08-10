@@ -1,7 +1,7 @@
 import { Header } from "src/components/template"
 import { Divider, Flex, Paper, Private } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { SaleFilters, SaleTable } from "./components"
+import { MediasResume, SaleFilters, SaleTable, SalesTeamsResume, SellersResume } from "./components"
 import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
 
 
@@ -17,6 +17,7 @@ export const Sales = () => {
     useModal,
     closeModal,
     salePDF,
+    sales,
     formik
   } = useSales()
 
@@ -48,6 +49,18 @@ export const Sales = () => {
           salePDF={salePDF}
         />
       </Paper>
+
+      <Divider my={10} />
+
+      <SellersResume sales={sales} />
+      
+      <Divider my={10} />
+
+      <SalesTeamsResume sales={sales} />
+      
+      <Divider my={10} />
+
+      <MediasResume sales={sales} />
 
       <LogisticInfosModal
         show={useModal.show == 'logistic-infos'}

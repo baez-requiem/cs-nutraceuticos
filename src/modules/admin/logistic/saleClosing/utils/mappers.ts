@@ -33,8 +33,6 @@ export const getTotalDeliveryValues = (sales: Sale[]) => {
 
 export const getMotoboysResume = (sales: Sale[] = []) => {
 
-  console.log(sales)
-
   const motoboys = sales
     .filter(sale => !!sale.logistic_infos[0].motoboy?.id)
     .map(sale => sale.logistic_infos[0].motoboy)

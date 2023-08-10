@@ -1,6 +1,6 @@
 import { Badge, Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, TableActions, Text } from "src/components/ui"
 import { useSalesHistory } from "./hooks/useSalesHistory"
-import { SaleModal } from "src/components/modals"
+import { SaleDetailsModal, SaleModal } from "src/components/modals"
 import { matchColor } from "src/utils/theme"
 
 const SalesHistory = () => {
@@ -52,11 +52,12 @@ const SalesHistory = () => {
       <Paper>
         <Table
           columns={[
+            { label: "#", value: "number" },
             { label: "Cliente", value: "client_name" },
             { label: "Telefone", value: "client_phone" },
             { label: "Mídia", value: "media" },
-            { label: "Qntd. Vendas", value: "sales_quantity" },
             { label: "Data", value: "date" },
+            { label: "Cód. rastreio", value: "tracking_code" },
             {
               label: 'Status', value: 'status', render: (value, obj) => (
                 <Badge block color={matchColor(obj.color_status?.toString()) || 'black'}>{value}</Badge>
@@ -64,7 +65,7 @@ const SalesHistory = () => {
             },
             { label: "Ações", value: "id", align: 'center', render: (value, sale) => <TableActions
               actions={[
-                { type: 'Vizualizer', onClick: () => {} },
+                { type: 'Vizualizer', onClick: openModal('sale-details', value.toString()) },
                 { type: 'Edit', onClick: openModal('sale', value.toString()), show: !!sale.hasEditSale },
               ]}
             /> },
@@ -75,6 +76,12 @@ const SalesHistory = () => {
 
       <SaleModal
         show={useModal.show === 'sale'}
+        onClose={closeModal}
+        data={useModal.data}
+      />
+
+      <SaleDetailsModal
+        show={useModal.show === 'sale-details'}
         onClose={closeModal}
         data={useModal.data}
       />

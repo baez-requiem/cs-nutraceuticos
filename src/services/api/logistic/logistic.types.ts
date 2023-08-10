@@ -1,3 +1,5 @@
+import { SalesTeamType } from "../salesTeam/salesTeam.types"
+
 export type Product = {
   id: string
   name: string
@@ -78,6 +80,7 @@ export type SaleProduct = {
   id_product: string
   id_sale: string
   quantity: number
+  unit_value: number
   created_at: string
   product: Product
 }
@@ -109,7 +112,7 @@ export type Sale = {
   updated_at: string | null
   media: Media
   payment_type: PaymentType
-  sales_team: string | null
+  sales_team: SalesTeamType | null
   user: User
   sale_products: SaleProduct[]
   logistic_infos: LogisticInfos[]

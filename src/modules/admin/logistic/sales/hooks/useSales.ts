@@ -138,7 +138,8 @@ const useSales = () => {
     openModalLogisticInfos,
     closeModal,
     formik,
-    salePDF
+    salePDF,
+    sales
   }
 }
 
