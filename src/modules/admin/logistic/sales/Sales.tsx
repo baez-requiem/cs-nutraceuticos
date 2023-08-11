@@ -1,9 +1,9 @@
 import { Header } from "src/components/template"
-import { Divider, Flex, Paper, Private } from "src/components/ui"
+import { Divider, Flex, Paper, Private, Buttons } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
 import { MediasResume, SaleFilters, SaleTable, SalesTeamsResume, SellersResume } from "./components"
 import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
-
+import { makeSalesCsv } from "./utils"
 
 export const Sales = () => {
 
@@ -30,7 +30,9 @@ export const Sales = () => {
       <Divider my={10} />
 
       <Paper>
-        <Flex justify="end" gap={20}>
+        <Flex justify="space-between" gap={20}>
+          <Buttons.Csv onClick={() => makeSalesCsv(sales, formik.values.products)} />
+
           <SaleFilters
             formik={formik}
             statusOpts={statusOpts}

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import IconButton from "../iconButton/IconButton"
+import { IconButton } from "../iconButton/IconButton"
 
 import { MdOutlineModeEditOutline } from "react-icons/md"
 import { BsBoxSeam, BsFiletypePdf, BsTrash } from "react-icons/bs"

@@ -2,8 +2,6 @@
 
 6 - Estoque de cds, pensar... (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
 
-7 - Adicionar filtro por forma de pagamento, produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
-
 10 - resumo cd no dashboard(aviso de reposicao)(alerta)
 
 ----------------------------------------
@@ -17,6 +15,7 @@ OK
 3 - Melhorar filtro de busca por cliente'
 5 - Se for sedex, adicionar um campo de rastreio de encomenda
 5.1 - Adiconar no historico
+7 - Adicionar filtro por forma de pagamento, produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
 8 - historico de vendas
 8.1 - vendedora poder ver o status da venda
 8.2 - vendedora poder ver o codigo de rastreio

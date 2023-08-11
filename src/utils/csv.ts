@@ -1,11 +1,15 @@
-export function jsonToCsv(jsonData: any[], includeHeader: boolean = true): string {
+export function jsonToCsv(jsonData: Record<string, any>[], headers: Record<string, any>): string {
   if (jsonData.length === 0) return ''
 
   const keys = Object.keys(jsonData[0])
   const csvRows = []
 
-  includeHeader && csvRows.push(keys.join(','));
+  const headersValues: string[] = []
 
+  Object.keys(headers).forEach(key => headersValues.push(headers[key]))
+
+  csvRows.push(headersValues.join(','))
+  
   for (const item of jsonData) {
     const values = keys.map(key => {
       const value = item[key]

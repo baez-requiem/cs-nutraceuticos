@@ -1,17 +1,18 @@
 import { jsPDF } from "jspdf"
 import { Sale } from "src/services/api/logistic/logistic.types"
+import { downloadCsv, jsonToCsv } from "src/utils/csv"
 import { formatDate, formatDateTime, formatDocDateTime } from "src/utils/date.utils"
 import { floatToReal, formatCEP, formatPhone } from "src/utils/number.utils"
 
 export const hasShowPdfAction = (sale: Sale) => {
   let hasShow = !!(sale.address && sale.city)
-  
+
   const li = sale.logistic_infos[0]
-  
+
   !li.delivery_date && (hasShow = false);
   !li.delivery_value && (hasShow = false);
   !li.id_delivery_type && (hasShow = false);
-  
+
   (li.id_delivery_type === 'motoboy' && !li.id_motoboy) && (hasShow = false);
 
   return hasShow
@@ -74,13 +75,13 @@ export const makeSalePDF = (sale: Sale) => {
     doc.text(`Desconto`, 10, spaceY)
     doc.setTextColor('#991b1b')
     doc.text(`- R$ ${floatToReal(sale.discounts)}`, 383.5, spaceY)
-  
+
     spaceY += 12.5
-  
+
     doc.setLineWidth(0.1)
     doc.setDrawColor('#c1c1c1')
     doc.line(10, spaceY, 470, spaceY)
-  
+
     spaceY += 15
   }
 
@@ -92,9 +93,9 @@ export const makeSalePDF = (sale: Sale) => {
 
   doc.setFontSize(16)
   doc.text('Dados da entrega', 10, spaceY)
-  
+
   spaceY += 25
-  
+
   doc.setFontSize(14)
   doc.text(`Tipo de entrega: ${sale.logistic_infos[0].delivery_type.name}`, 10, spaceY)
   if (sale.logistic_infos[0].delivery_type.id === 'motoboy') {
@@ -136,32 +137,89 @@ export const makeSalePDF = (sale: Sale) => {
   doc.save(`resumo-venda-${formatDocDateTime(sale.created_at)}.pdf`)
 }
 
-export const makeSalesCsv = (sales: Sale[]) => {
+export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
+
+  if (!sales.length) return
 
   const headers = {
-    number: 'Número',
-    created_at: 'Data',
+    number: '#',
+    created_at: 'Data da venda',
+    client_name: 'Cliente',
+    client_phone: 'Telefone',
+    client_city: 'Cidade',
+    payment_type: 'Forma de pagamento',
     seller: 'Vendedor',
     sales_quantity: 'Vendas',
-    total_products: 'Total prdodutos',
-    disconts: 'Descontos',
+    total_products: 'Total produtos',
+    disconts: 'Desconto',
     total_amount: 'Valor total'
   }
 
   const totalProductsQuantity = Math.max(...sales.map(sale => sale.sale_products.length))
 
   for (let i = 1; i <= totalProductsQuantity; i++) {
-    headers['product_1 '] = 'Produto ' + i 
+    headers[`product_${i}`] = `Produto ${i}`
+    headers[`product_${i}_quantity`] = `Produto ${i} Qntd.`
+    headers[`product_${i}_unit_value`] = `Produto ${i} Valor Und.`
   }
 
-  const data = sales.map(sale => {
+  const salesMap = sales.map(({ sale_products, ...sale }) => {
 
-    return {
+    const total_products = sale_products.reduce((pv, cv) => pv + cv.quantity, 0)
+    const total_amount = sale_products.reduce((pv, cv) => pv + (cv.quantity * cv.unit_value), 0) - sale.discounts
+
+    const data = {
       number: sale.number,
       created_at: formatDateTime(sale.created_at),
+      client_name: sale.name,
+      client_phone: sale.phone ? formatPhone(sale.phone) : '',
+      client_city: sale.city,
+      payment_type: sale.payment_type.name,
       seller: sale.user.name,
       sales_quantity: sale.sales_quantity,
-      
+      total_products,
+      discounts: floatToReal(sale.discounts),
+      total_amount: floatToReal(total_amount)
     }
+
+    if (firstProduct) {
+      const product = sale_products.find(sp => sp.id_product === firstProduct)
+
+      data[`product_1`] = product.product.name
+      data[`product_1_quantity`] = product.quantity
+      data[`product_1_unit_value`] = floatToReal(product.unit_value)
+
+      const restProducts = sale_products.filter(sp => sp.id_product !== firstProduct)
+
+      for (let i = 0; i < totalProductsQuantity; i++) {
+  
+        const sp = restProducts[i]
+  
+        if (sp) {
+          data[`product_${i + 2}`] = sp.product.name
+          data[`product_${i + 2}_quantity`] = sp.quantity
+          data[`product_${i + 2}_unit_value`] = floatToReal(sp.unit_value)
+        }
+      }
+    } else {
+      for (let i = 1; i <= totalProductsQuantity; i++) {
+  
+        const sp = sale_products[i - 1]
+  
+        if (sp) {
+          data[`product_${i}`] = sp.product.name
+          data[`product_${i}_quantity`] = sp.quantity
+          data[`product_${i}_unit_value`] = floatToReal(sp.unit_value)
+        }
+      }
+    }
+
+    return data
   })
+
+  const csv = jsonToCsv(salesMap, headers)
+
+  const fileName = `vendas_${new Date().getTime()}`
+
+  downloadCsv(csv, fileName)
 }
