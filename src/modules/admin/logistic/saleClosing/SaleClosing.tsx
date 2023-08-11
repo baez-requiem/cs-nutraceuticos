@@ -96,12 +96,12 @@ export const SaleClosing = () => {
       <Paper>
         <Table
           columns={[
-            { label: '', value: 'id', render: value => (
-              <Checkbox
-                onChange={toggleCheckData(value.toString())}
-                checked={useCheckData.includes(value.toString())}
-              />
-            ) },
+            // { label: '', value: 'id', render: value => (
+            //   <Checkbox
+            //     onChange={toggleCheckData(value.toString())}
+            //     checked={useCheckData.includes(value.toString())}
+            //   />
+            // ) },
             { label: '#', value: 'number' },
             { label: 'Data', value: 'created_at' },
 
@@ -139,19 +139,6 @@ export const SaleClosing = () => {
       <Divider my={10} />
 
       <TotalsResume sales={sales} />
-
-      <Divider my={10} />
-
-      <Paper>
-        <Text weight="500">Resumo - Vendas selecionadas</Text>
-        <Divider my={10} />
-        <Flex gap={20} items="center">
-          <Badge block color="cyan_600">Total vendas: {checkSales}</Badge>
-          <Badge block color="cyan_600">Total produtos: {checkProducts}</Badge>
-          <Badge block color="cyan_600">Total receita: R$ {checkAmount}</Badge>
-          <Badge block color="cyan_600">Total valor entrega: R$ {checkDeliveryValue}</Badge>
-        </Flex>
-      </Paper>
 
       <Divider my={10} />
 

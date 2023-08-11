@@ -10,15 +10,24 @@ interface TotalsResumeProps {
 
 const TotalsResume: FC<TotalsResumeProps> = ({ sales }) => {
 
-  const { incomes, products, sales_quantity, total_incomes } = getTotalsResume(sales)
+  const { incomes, total_incomes } = getTotalsResume(sales)
 
   return (
     <ResumeCard title='Totais'>
-      <Badge style={{ width: 200 }} block color="indigo_600">Vendas: {sales_quantity}</Badge>
-      <Badge style={{ width: 200 }} block color="indigo_600">Produtos: {products}</Badge>
-      <Badge style={{ width: 200 }} block color="indigo_600">Receita bruta: {floatToReal(total_incomes)}</Badge>
+      <Paper color='indigo_600'>
+        <Grid template='auto auto' gap={10}>
+          <Text whiteSpace='nowrap' color='white'>Receita bruta:</Text>
+          <Text color='white' align='right'>{floatToReal(total_incomes)}</Text>
+        </Grid>
+      </Paper>
+
       {incomes.map(income => (
-        <Badge style={{ width: 200 }} block color="indigo_600">Receita {income.name}: {floatToReal(income.total)}</Badge>
+        <Paper color='indigo_600'>
+          <Grid template='auto auto' gap={10}>
+            <Text whiteSpace='nowrap' color='white'>Receita {income.name}:</Text>
+            <Text color='white' align='right'>{floatToReal(income.total)}</Text>
+          </Grid>
+        </Paper>
       ))}
     </ResumeCard>
   )

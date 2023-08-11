@@ -49,7 +49,7 @@ const ResumeCard: FC<ResumeCardProps> = ({ title, children }) => {
         </IconButton>
       </Flex>
 
-      <Fade.FadeIn show={show}>
+      <Fade.FadeIn show={show} mh={500}>
         <Divider my={10} />
 
         <Content>

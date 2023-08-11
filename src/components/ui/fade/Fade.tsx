@@ -1,26 +1,20 @@
 import { useEffect, useRef } from "react"
 import styled, { keyframes } from "styled-components"
 
-const fadeIn = keyframes`
-  from { opacity: 0; max-height: 0px; }
-  50% { opacity: 0; max-height: 1000px; }
-  to { opacity: 1; max-height: 1000px; }
-`;
-
-const FadeInWrapper = styled.div`
+const FadeInWrapper = styled.div<{mh: number}>`
   overflow: hidden;
   opacity: 0;
   max-height: 0px;
 
-  transition: all 1s;
+  transition: all 1s linear;
   
   &.open {
     opacity: 1;
-    max-height: 1000px;
+    max-height: ${({ mh }) => mh}px;
   }
 `
 
-const FadeIn = ({ children, show }) => {
+const FadeIn = ({ children, show, mh = 1000 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -31,7 +25,7 @@ const FadeIn = ({ children, show }) => {
     }
   }, [show])
 
-  return <FadeInWrapper ref={wrapperRef}>{children}</FadeInWrapper>
+  return <FadeInWrapper ref={wrapperRef} mh={mh}>{children}</FadeInWrapper>
 }
 
 export default {

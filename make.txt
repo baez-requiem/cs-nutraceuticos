@@ -1,6 +1,3 @@
-2
-2.1 Adicionar resumo de valores (valor a pagar/receber do motoboy) || (bruto em cartão, bruto em dinheiro, pix, deposito, etc)
-
 4 - Adicionar mais opções de pagamento na parte de venda
 
 6 - Estoque de cds, pensar... (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
@@ -14,6 +11,8 @@
 OK
 
 1 - Quantidade de vendas ser um unico campo
+2 - fechamento
+2.1 Adicionar resumo de valores (valor a pagar/receber do motoboy) || (bruto em cartão, bruto em dinheiro, pix, deposito, etc)
 2.2 Adicionar ações do pagina de vendas no fechamento
 3 - Melhorar filtro de busca por cliente'
 5 - Se for sedex, adicionar um campo de rastreio de encomenda
