@@ -72,9 +72,20 @@ export const makeGETParams = (url: string = '', obj: { [key: string]: string | n
 
   for (const key in obj) {
     const value = obj[key]
-    const param = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
 
-    params.push(param)
+    if (Array.isArray(value) && value.length) {
+
+      value.forEach(arrValue => {
+        if (typeof arrValue === 'string' || typeof arrValue === 'number') {
+          const param = `${encodeURIComponent(key+'[]')}=${encodeURIComponent(arrValue)}`
+          params.push(param)
+        }
+      })
+    } else {
+      const param = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+  
+      params.push(param)
+    }
   }
 
   return `${url}?${params.join('&')}`

@@ -20,6 +20,16 @@ export function removeNullAndEmptyFields(obj: AnyObject): AnyObject {
 
     if (value !== null && value !== "" && !(value instanceof Object)) {
       result[key] = value
+    } else if (Array.isArray(value) && value.length) {
+      const newArr = []
+
+      value.forEach(arrValue => {
+        if (['number', 'string', 'boolean'].includes(typeof arrValue)) {
+          arrValue !== "" && newArr.push(arrValue)
+        }
+      })
+
+      newArr.length && (result[key] = newArr)
     } else if (value instanceof Object) {
       const cleanedValue = removeNullAndEmptyFields(value)
 

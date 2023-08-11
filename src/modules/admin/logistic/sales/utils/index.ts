@@ -135,3 +135,33 @@ export const makeSalePDF = (sale: Sale) => {
 
   doc.save(`resumo-venda-${formatDocDateTime(sale.created_at)}.pdf`)
 }
+
+export const makeSalesCsv = (sales: Sale[]) => {
+
+  const headers = {
+    number: 'Número',
+    created_at: 'Data',
+    seller: 'Vendedor',
+    sales_quantity: 'Vendas',
+    total_products: 'Total prdodutos',
+    disconts: 'Descontos',
+    total_amount: 'Valor total'
+  }
+
+  const totalProductsQuantity = Math.max(...sales.map(sale => sale.sale_products.length))
+
+  for (let i = 1; i <= totalProductsQuantity; i++) {
+    headers['product_1 '] = 'Produto ' + i 
+  }
+
+  const data = sales.map(sale => {
+
+    return {
+      number: sale.number,
+      created_at: formatDateTime(sale.created_at),
+      seller: sale.user.name,
+      sales_quantity: sale.sales_quantity,
+      
+    }
+  })
+}

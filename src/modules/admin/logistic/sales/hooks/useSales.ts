@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { logisticApi, usersApi } from "src/services/api"
+import { logisticApi, productsApi, usersApi } from "src/services/api"
 import { formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal } from "src/utils/number.utils"
 import { initialDataSalesFilters } from "../constants"
@@ -23,6 +23,7 @@ interface FiltersState {
   client_name?: string
   client_phone?: string
   number?: number
+  products?: string[]
 }
 
 const useSales = () => {
@@ -57,6 +58,12 @@ const useSales = () => {
   const { data: users } = useQuery(
     ['users', { user_role: 'seller' }],
     async () => usersApi.getAllUsers({ user_role: 'seller' }),
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
+  )
+
+  const { data: products } = useQuery(
+    'products',
+    productsApi.getAllProducts,
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
@@ -104,7 +111,7 @@ const useSales = () => {
   const formik = useFormik({
     initialValues: initialDataSalesFilters,
     onSubmit: values => {
-      setFilters(removeNullAndEmptyFields(values))
+      setFilters(removeNullAndEmptyFields({...values, products: [values.products]}))
     },
   })
 
@@ -120,6 +127,11 @@ const useSales = () => {
   const usersOpts = [
     { value: '', label: 'Todos' },
     ...users.map(user => ({ label: user.name, value: user.id }))
+  ]
+
+  const productsOpts = [
+    { value: '', label: 'Todos' },
+    ...products.map(product => ({ label: product.name, value: product.id }))
   ]
 
   const salePDF = (id: string) => () => {
@@ -139,7 +151,8 @@ const useSales = () => {
     closeModal,
     formik,
     salePDF,
-    sales
+    sales,
+    productsOpts
   }
 }
 

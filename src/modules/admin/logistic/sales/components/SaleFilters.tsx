@@ -8,9 +8,10 @@ interface SaleFiltersProps {
   formik: FormikProps<typeof initialDataSalesFilters>,
   statusOpts: { label: string, value: string|number }[]
   usersOpts: { label: string, value: string|number }[]
+  productsOpts: { label: string, value: string|number }[]
 }
 
-const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts }) => {
+const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts, productsOpts }) => {
 
   const {
     submitForm,
@@ -52,6 +53,16 @@ const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts }) =>
           options={statusOpts}
           nullable
         />
+        
+        <Select
+          label="Produto"
+          name="products"
+          onChange={handleChange}
+          value={values.products}
+          options={productsOpts}
+          nullable
+        />
+
         <Select
           label="Vendedor"
           name="seller"

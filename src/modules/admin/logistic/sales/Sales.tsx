@@ -18,7 +18,8 @@ export const Sales = () => {
     closeModal,
     salePDF,
     sales,
-    formik
+    formik,
+    productsOpts
   } = useSales()
 
   return (
@@ -34,6 +35,7 @@ export const Sales = () => {
             formik={formik}
             statusOpts={statusOpts}
             usersOpts={usersOpts}
+            productsOpts={productsOpts}
           />
         </Flex>
       </Paper>
