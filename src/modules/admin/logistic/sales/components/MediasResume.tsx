@@ -15,14 +15,14 @@ const MediasResume: FC<SellersResumeProps> = ({ sales }) => {
   return (
     <ResumeCard title='Resumo por mídia'>
       {resume.map(r => (
-        <Paper width={300}>
+        <Paper width={300} key={`media-resume-${r.name}`}>
           <Grid gap={10}>
             <Text weight="600">{r.name}</Text>
             <Divider line opacityLine={0.15} />
 
             <Text weight="500">Receita</Text>
             {r.incomes.map(income => (
-              <Flex justify='space-between' items='center'>
+              <Flex justify='space-between' items='center' key={`media-resume-${r.name}-income-${income.id}`}>
                 <Text>{income.name}:</Text>
                 <Text>{floatToReal(income.total)}</Text>
               </Flex>
@@ -42,7 +42,7 @@ const MediasResume: FC<SellersResumeProps> = ({ sales }) => {
 
             <Text weight="500">Produtos</Text>
             {r.products.map(product => (
-              <Flex justify='space-between' items='center'>
+              <Flex justify='space-between' items='center' key={`media-resume-${r.name}-product-${product.id}`}>
                 <Text>{product.name}:</Text>
                 <Text>{product.quantity}</Text>
               </Flex>

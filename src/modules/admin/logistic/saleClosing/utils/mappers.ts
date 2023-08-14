@@ -1,6 +1,12 @@
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { floatToReal, realToFloat } from "src/utils/number.utils"
 
+interface IncomeTotal {
+  id: string
+  name: string,
+  total: number
+}
+
 export const getTotalSales = (sales: Sale[]) => {
   const result = sales.reduce((pv, cv) => pv + cv.sales_quantity, 0) || 0
 
@@ -39,23 +45,31 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
     .filter((motoboy, index, array) => array.findIndex(t => t.id == motoboy.id) == index)
 
   const paymentTypes = sales
-    .map(sale => sale.payment_type)
-    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+    .flatMap(sale => sale.sale_payments)
+    .map(paymentType => paymentType.payment_type)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const resume = motoboys.map(motoboy => {
 
     const salesByMotoboy = sales.filter(sale => sale.logistic_infos[0].id_motoboy === motoboy.id)
 
-    const incomes = paymentTypes.map(paymentType => {
-      const salesInPaymentType = salesByMotoboy.filter(sale => sale.payment_type_id === paymentType.id)
+    const incomes: IncomeTotal[] = []
 
-      const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+    const paymentsBySeller = paymentTypes
+      .flatMap(paymentType => salesByMotoboy.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
+      .flatMap(sale => sale.sale_payments)
+      .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-      return {
-        id: paymentType.id,
-        name: paymentType.name,
-        total: floatToReal(total)
-      }
+    paymentsBySeller.forEach(payment => {
+      const inArr = incomes.find(it => it.id === payment.id_payment_type)
+
+      inArr
+        ? (inArr.total += payment.amount)
+        : incomes.push({
+          id: payment.id_payment_type,
+          name: payment.payment_type.name,
+          total: payment.amount
+        })
     })
 
     const deliveryValue = salesByMotoboy
@@ -82,8 +96,9 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
 
 export const getTotalsResume = (sales: Sale[] = []) => {
   const paymentTypes = sales
-    .map(sale => sale.payment_type)
-    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+    .flatMap(sale => sale.sale_payments)
+    .map(paymentType => paymentType.payment_type)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const products = sales
     .map(sale => sale.sale_products.reduce((pv, cv) => pv + cv.quantity, 0))
@@ -91,15 +106,23 @@ export const getTotalsResume = (sales: Sale[] = []) => {
 
   const sales_quantity = sales.reduce((pv, cv) => pv + cv.sales_quantity, 0)
 
-  const incomes = paymentTypes.map(paymentType => {
-    const salesInPaymentType = sales.filter(sale => sale.payment_type_id === paymentType.id)
+  const incomes: IncomeTotal[] = []
 
-    const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+  const allPayments = paymentTypes
+    .flatMap(paymentType => sales.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
+    .flatMap(sale => sale.sale_payments)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-    return {
-      name: paymentType.name,
-      total: total
-    }
+  allPayments.forEach(payment => {
+    const inArr = incomes.find(it => it.id === payment.id_payment_type)
+
+    inArr
+      ? (inArr.total += payment.amount)
+      : incomes.push({
+        id: payment.id_payment_type,
+        name: payment.payment_type.name,
+        total: payment.amount
+      })
   })
 
   const total_incomes = incomes.reduce((pv, cv) => pv + cv.total, 0)

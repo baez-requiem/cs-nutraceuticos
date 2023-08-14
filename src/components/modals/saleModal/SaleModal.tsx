@@ -28,6 +28,7 @@ import { useSaleModal } from "./hooks/useSaleModal"
 import { handleChangeFormatCPF, handleChangeFormatPhone, handleChangeFormatReal } from "src/utils/form.utils"
 
 import { Sale } from "src/services/api/logistic/logistic.types"
+import { PaymentMethods } from "./components/PaymentMethods"
 
 export interface ModalSaleProps {
   show: boolean
@@ -45,19 +46,20 @@ const SaleModal: FC<ModalSaleProps> = ({
     searchCEP,
     handleSelect,
     selectValue,
-    selectPaymentTypesOpt,
     selectMediasOpt,
     selectProductsOpt,
     addProduct,
     removeProduct,
     total,
-    formik: {
-      values,
-      handleChange,
-      setFieldValue,
-      handleSubmit
-    },
+    formik
   } = useSaleModal(show, data, onClose)
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleSubmit
+  } = formik
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={600}>
@@ -248,36 +250,11 @@ const SaleModal: FC<ModalSaleProps> = ({
             onChange={handleChangeFormatReal(setFieldValue)}
             labelFixed={!!values.discounts}
           />
-
-          <Select
-            label="Forma de pagamento"
-            options={selectPaymentTypesOpt}
-            name="payment_type_id"
-            value={values.payment_type_id}
-            onChange={handleChange}
-          />
-
-          <Fade.FadeIn show={(values.payment_type_id === 'credit_card' && !!total)}>
-            <Input
-              label="Parcelas"
-              name="card_installments"
-              type="number"
-              min={0}
-              max={10}
-              value={values.card_installments}
-              onChange={handleChange}
-              labelFixed={!!values.card_installments}
-            />
-          </Fade.FadeIn>
-
-          <Select
-            label="Pago"
-            options={[{ label: "Sim", value: 1 }, { label: "Não", value: 0 }]}
-            name="paid"
-            value={values.paid}
-            onChange={handleChange}
-          />
         </Grid>
+
+        <Divider />
+
+        <PaymentMethods formik={formik} />
 
         <Divider />
 

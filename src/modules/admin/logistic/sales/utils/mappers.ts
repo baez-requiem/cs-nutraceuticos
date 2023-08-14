@@ -1,13 +1,20 @@
 import { Sale } from "src/services/api/logistic/logistic.types"
 
+interface IncomeTotal {
+  id: string
+  name: string,
+  total: number
+}
+
 export const getSellersResume = (sales: Sale[] = []) => {
   const sellers = sales
     .map(sale => sale.user)
     .filter((seller, idx, arr) => arr.findIndex(t => t.id == seller.id) == idx)
 
   const paymentTypes = sales
-    .map(sale => sale.payment_type)
-    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+    .flatMap(sale => sale.sale_payments)
+    .map(paymentType => paymentType.payment_type)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const resume = sellers.map(seller => {
     const salesBySeller = sales.filter(sale => sale.id_user === seller.id)
@@ -30,16 +37,23 @@ export const getSellersResume = (sales: Sale[] = []) => {
       })
     })
 
-    const incomes = paymentTypes.map(paymentType => {
-      const salesInPaymentType = salesBySeller.filter(sale => sale.payment_type_id === paymentType.id)
+    const incomes: IncomeTotal[] = []
 
-      const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+    const paymentsBySeller = paymentTypes
+      .flatMap(paymentType => salesBySeller.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
+      .flatMap(sale => sale.sale_payments)
+      .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-      return {
-        id: paymentType.id,
-        name: paymentType.name,
-        total: total
-      }
+    paymentsBySeller.forEach(payment => {
+      const inArr = incomes.find(it => it.id === payment.id_payment_type)
+
+      inArr
+        ? (inArr.total += payment.amount)
+        : incomes.push({
+          id: payment.id_payment_type,
+          name: payment.payment_type.name,
+          total: payment.amount
+        })
     })
 
     const totalIncomes = incomes.reduce((pv, cv) => pv + cv.total, 0)
@@ -65,8 +79,9 @@ export const getSalesTeamsResume = (sales: Sale[] = []) => {
     .filter((salesTeam, idx, arr) => salesTeam?.id && (arr.findIndex(t => t?.id === salesTeam?.id) == idx))
 
   const paymentTypes = sales
-    .map(sale => sale.payment_type)
-    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+    .flatMap(sale => sale.sale_payments)
+    .map(paymentType => paymentType.payment_type)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const resume = salesTeams.map(salesTeam => {
     const salesBySalesTeam = sales.filter(sale => sale.id_sales_team === salesTeam.id)
@@ -90,16 +105,23 @@ export const getSalesTeamsResume = (sales: Sale[] = []) => {
       })
     })
 
-    const incomes = paymentTypes.map(paymentType => {
-      const salesInPaymentType = salesBySalesTeam.filter(sale => sale.payment_type_id === paymentType.id)
+    const incomes: IncomeTotal[] = []
 
-      const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+    const paymentsBySalesTeam = paymentTypes
+      .flatMap(paymentType => salesBySalesTeam.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
+      .flatMap(sale => sale.sale_payments)
+      .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-      return {
-        id: paymentType.id,
-        name: paymentType.name,
-        total: total
-      }
+    paymentsBySalesTeam.forEach(payment => {
+      const inArr = incomes.find(it => it.id === payment.id_payment_type)
+
+      inArr
+        ? (inArr.total += payment.amount)
+        : incomes.push({
+          id: payment.id_payment_type,
+          name: payment.payment_type.name,
+          total: payment.amount
+        })
     })
 
     const totalIncomes = incomes.reduce((pv, cv) => pv + cv.total, 0)
@@ -125,8 +147,8 @@ export const getMediasResume = (sales: Sale[] = []) => {
     .filter((media, idx, arr) => arr.findIndex(t => t?.id === media?.id) == idx)
 
   const paymentTypes = sales
-    .map(sale => sale.payment_type)
-    .filter((paymentType, index, array) => array.findIndex(t => t.id == paymentType.id) == index)
+    .flatMap(sale => sale.sale_payments)
+    .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const resume = medias.map(media => {
     const salesByMedia = sales.filter(sale => sale.media_id === media.id)
@@ -151,13 +173,13 @@ export const getMediasResume = (sales: Sale[] = []) => {
     })
 
     const incomes = paymentTypes.map(paymentType => {
-      const salesInPaymentType = salesByMedia.filter(sale => sale.payment_type_id === paymentType.id)
+      const salesInPaymentType = salesByMedia.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id))
 
       const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
 
       return {
         id: paymentType.id,
-        name: paymentType.name,
+        name: paymentType.payment_type.name,
         total: total
       }
     })

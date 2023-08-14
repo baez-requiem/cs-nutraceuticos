@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Button, Divider, Flex, Grid, Modal, Text } from "src/components/ui"
+import { Divider, Grid, Modal, Text } from "src/components/ui"
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { ProductField, TextField } from "./components"
 import { getSaleDetails } from "./utils/mappers"

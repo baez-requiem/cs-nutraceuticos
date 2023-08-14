@@ -4,6 +4,9 @@
 
 10 - resumo cd no dashboard(aviso de reposicao)(alerta)
 
+ver update sale
+revisar todas as infos de pagamento e csv e pdf
+
 ----------------------------------------
 
 OK

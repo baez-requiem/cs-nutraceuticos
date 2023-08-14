@@ -35,6 +35,20 @@ export type SaleStatus = {
   status: string
 }
 
+export type SalePayments = {
+  id: string
+  id_sale: string
+
+  id_payment_type: string
+  payment_type: PaymentType
+
+  paid: boolean
+  amount: number
+  card_installments: number | null
+
+  created_at: string
+}
+
 export type LogisticInfos = {
   id: string
   id_sale_status: string
@@ -88,10 +102,12 @@ export type SaleProduct = {
 export type Sale = {
   id: string
   number: number
-  sales_quantity: number
+  
+  id_user: string
+  user: User
+
   name: string
   phone: string
-  paid: boolean
   rg: string | null
   cpf: string | null
   email: string | null
@@ -101,21 +117,21 @@ export type Sale = {
   neighborhood: string | null
   address: string | null
   complement: string | null
+  
+  sales_quantity: number
   media_id: string
-  payment_type_id: string
-  card_installments: number | null
-  id_user: string
   id_sales_team: string | null
   discounts: number | null
   notes: string | null
-  created_at: string
-  updated_at: string | null
   media: Media
-  payment_type: PaymentType
+  
   sales_team: SalesTeamType | null
-  user: User
   sale_products: SaleProduct[]
   logistic_infos: LogisticInfos[]
+  sale_payments: SalePayments[]
+  
+  created_at: string
+  updated_at: string | null
 }
 
 export type DeliveryType = {

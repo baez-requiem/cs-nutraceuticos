@@ -10,7 +10,6 @@ const StyledText = styled(Text)<{ hasDiscount: boolean }>`
   text-align: right;
 `
 
-
 const DiscountText = ({ total, discount }) => {
 
   const hasDiscount = !!parseInt(onlyNumbers(discount))

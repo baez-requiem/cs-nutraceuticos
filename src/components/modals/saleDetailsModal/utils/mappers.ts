@@ -22,12 +22,17 @@ export const getSaleDetails = (sale: Sale) => {
     total: sp.quantity * sp.unit_value
   })) || []
 
+  const payment_types = sale.sale_payments.map(sp => ({
+    id: sp.id_payment_type,
+    amount: sp.amount,
+    name: sp.payment_type.name,
+    paid: sp.paid ? 'Pago' : 'Cobrar',
+    card_installments: sp.card_installments
+  }))
+
   const infos = {
     media: sale?.media.name || '',
     sales_quantity: sale?.sales_quantity || '',
-    payment_type: sale?.payment_type.name || '',
-    paid: sale?.paid ? 'Sim' : 'Não',
-    card_installments: sale?.card_installments || '',
   }
 
   const discounts = sale?.discounts || 0
@@ -40,6 +45,7 @@ export const getSaleDetails = (sale: Sale) => {
     totalSale,
     products,
     totalInProducts,
-    infos
+    infos,
+    payment_types
   }
 }

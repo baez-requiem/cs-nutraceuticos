@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 
 const FadeInWrapper = styled.div<{mh: number}>`
   overflow: hidden;
   opacity: 0;
   max-height: 0px;
 
-  transition: all 1s linear;
+  transition: all .5s linear;
   
   &.open {
     opacity: 1;
