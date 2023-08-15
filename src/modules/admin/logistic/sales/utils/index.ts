@@ -165,9 +165,9 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
   }
 
   const totalProductsQuantity = Math.max(...sales.map(sale => sale.sale_products.length))
-  const totalPaymentstsQuantity = Math.max(...sales.map(sale => sale.sale_payments.length))
+  const totalPaymentsQuantity = Math.max(...sales.map(sale => sale.sale_payments.length))
 
-  for (let i = 1; i <= totalProductsQuantity; i++) {
+  for (let i = 1; i <= totalPaymentsQuantity; i++) {
     headers[`payment_${i}`] = `Forma pagamento ${i}`
     headers[`payment_${i}_amount`] = `Valor pagamento ${i}`
   }
@@ -177,6 +177,8 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
     headers[`product_${i}_quantity`] = `Produto ${i} Qntd.`
     headers[`product_${i}_unit_value`] = `Produto ${i} Valor Und.`
   }
+
+  console.log(headers)
 
   const salesMap = sales.map(({ sale_products, ...sale }) => {
 
@@ -197,7 +199,7 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       total_amount: floatToReal(total_amount)
     }
 
-    for (let i = 0; i < totalPaymentstsQuantity; i++) {
+    for (let i = 0; i < totalPaymentsQuantity; i++) {
   
       const sp = sale.sale_payments[i]
 
@@ -219,28 +221,27 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       for (let i = 0; i < totalProductsQuantity; i++) {
   
         const sp = restProducts[i]
-  
-        if (sp) {
-          data[`product_${i + 2}`] = sp.product.name
-          data[`product_${i + 2}_quantity`] = sp.quantity
-          data[`product_${i + 2}_unit_value`] = floatToReal(sp.unit_value)
-        }
+        
+        data[`product_${i + 2}`] = sp ? sp.product.name : ''
+        data[`product_${i + 2}_quantity`] = sp ?  sp.quantity : ''
+        data[`product_${i + 2}_unit_value`] = sp ?  floatToReal(sp.unit_value) : ''
       }
     } else {
+
       for (let i = 1; i <= totalProductsQuantity; i++) {
   
         const sp = sale_products[i - 1]
   
-        if (sp) {
-          data[`product_${i}`] = sp.product.name
-          data[`product_${i}_quantity`] = sp.quantity
-          data[`product_${i}_unit_value`] = floatToReal(sp.unit_value)
-        }
+        data[`product_${i}`] = sp ? sp.product.name : ''
+        data[`product_${i}_quantity`] = sp ? sp.quantity : ''
+        data[`product_${i}_unit_value`] = sp ? floatToReal(sp.unit_value) : ''
       }
     }
 
     return data
   })
+
+  console.log(headers, salesMap, firstProduct, totalProductsQuantity)
 
   const csv = jsonToCsv(salesMap, headers)
 

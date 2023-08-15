@@ -9,6 +9,7 @@ const Paper = styled.div<{ color?: ColorsType, width?: number }>`
   background-color: ${({ theme, color = 'gray_50' }) => theme.colors[color]};
 
   width: ${({ width }) => width ? (width+'px') : 'auto'};
+  min-width: ${({ width }) => width ? (width+'px') : 'auto'};
 `
 
 export default Paper

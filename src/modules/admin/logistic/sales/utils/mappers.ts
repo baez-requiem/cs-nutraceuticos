@@ -148,6 +148,7 @@ export const getMediasResume = (sales: Sale[] = []) => {
 
   const paymentTypes = sales
     .flatMap(sale => sale.sale_payments)
+    .map(paymentType => paymentType.payment_type)
     .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
   const resume = medias.map(media => {
@@ -172,16 +173,23 @@ export const getMediasResume = (sales: Sale[] = []) => {
       })
     })
 
-    const incomes = paymentTypes.map(paymentType => {
-      const salesInPaymentType = salesByMedia.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id))
+    const incomes: IncomeTotal[] = []
 
-      const total = salesInPaymentType.reduce((pv, cv) => pv + cv.sale_products.reduce((pv2, cv2) => pv2 + (cv2.product.amount * cv2.quantity), 0) - cv.discounts, 0)
+    const paymentsByMedia = paymentTypes
+      .flatMap(paymentType => salesByMedia.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
+      .flatMap(sale => sale.sale_payments)
+      .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-      return {
-        id: paymentType.id,
-        name: paymentType.payment_type.name,
-        total: total
-      }
+    paymentsByMedia.forEach(payment => {
+      const inArr = incomes.find(it => it.id === payment.id_payment_type)
+
+      inArr
+        ? (inArr.total += payment.amount)
+        : incomes.push({
+          id: payment.id_payment_type,
+          name: payment.payment_type.name,
+          total: payment.amount
+        })
     })
 
     const totalIncomes = incomes.reduce((pv, cv) => pv + cv.total, 0)
