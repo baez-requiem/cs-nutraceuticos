@@ -40,9 +40,6 @@ export const makeSalePDF = (sale: Sale) => {
   doc.text(`Cliente: ${sale.name}`, 10, spaceY)
   doc.text(`Telefone: ${formatPhone(sale.phone)}`, 260, spaceY)
   spaceY += 25
-  doc.text(`Pago: ${sale.paid ? 'Sim' : 'Não'}`, 10, spaceY)
-
-  spaceY += 30
 
   doc.text('Produtos', 10, spaceY)
   doc.text('Qntd.', 130, spaceY)
@@ -85,11 +82,31 @@ export const makeSalePDF = (sale: Sale) => {
     spaceY += 15
   }
 
-
   doc.setTextColor('black')
   doc.text(`R$ ${floatToReal(totalAmount - sale.discounts)}`, 390, spaceY)
 
   spaceY += 25
+
+  doc.setFontSize(16)
+  doc.text(`Dados do pagamento`, 10, spaceY)
+  spaceY += 15
+  
+  doc.setFontSize(14)
+  doc.text('Método', 10, spaceY)
+  doc.text('Valor', 260, spaceY)
+  doc.text('Situação', 390, spaceY)
+
+  spaceY += 15
+  sale.sale_payments.forEach(sp => {
+    const creditCardTxt = sp.id_payment_type === 'credit_card' ? ` em ${sp.card_installments}x` : ''
+
+    doc.text(`${sp.payment_type.name}`, 10, spaceY)
+    doc.text(`${floatToReal(sp.amount)} ${creditCardTxt}`, 260, spaceY)
+    doc.text(`Situação: ${sp.paid ? 'Pago' : 'Cobrar'}`, 390, spaceY)
+    spaceY += 15
+  })
+
+  spaceY += 15
 
   doc.setFontSize(16)
   doc.text('Dados da entrega', 10, spaceY)
@@ -100,13 +117,6 @@ export const makeSalePDF = (sale: Sale) => {
   doc.text(`Tipo de entrega: ${sale.logistic_infos[0].delivery_type.name}`, 10, spaceY)
   if (sale.logistic_infos[0].delivery_type.id === 'motoboy') {
     doc.text(`Motoboy: ${sale.logistic_infos[0].motoboy.name}`, 260, spaceY)
-  }
-
-  spaceY += 15
-
-  doc.text(`Forma de pagamento: ${sale.payment_type.name}`, 10, spaceY)
-  if (sale.payment_type_id === 'credit_card') {
-    doc.text(`N° de parcelas: ${sale.card_installments}`, 260, spaceY)
   }
 
   spaceY += 15
@@ -147,7 +157,6 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
     client_name: 'Cliente',
     client_phone: 'Telefone',
     client_city: 'Cidade',
-    payment_type: 'Forma de pagamento',
     seller: 'Vendedor',
     sales_quantity: 'Vendas',
     total_products: 'Total produtos',
@@ -156,6 +165,12 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
   }
 
   const totalProductsQuantity = Math.max(...sales.map(sale => sale.sale_products.length))
+  const totalPaymentstsQuantity = Math.max(...sales.map(sale => sale.sale_payments.length))
+
+  for (let i = 1; i <= totalProductsQuantity; i++) {
+    headers[`payment_${i}`] = `Forma pagamento ${i}`
+    headers[`payment_${i}_amount`] = `Valor pagamento ${i}`
+  }
 
   for (let i = 1; i <= totalProductsQuantity; i++) {
     headers[`product_${i}`] = `Produto ${i}`
@@ -174,12 +189,22 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       client_name: sale.name,
       client_phone: sale.phone ? formatPhone(sale.phone) : '',
       client_city: sale.city,
-      payment_type: sale.payment_type.name,
+      // payment_type: sale.payment_type.name,
       seller: sale.user.name,
       sales_quantity: sale.sales_quantity,
       total_products,
       discounts: floatToReal(sale.discounts),
       total_amount: floatToReal(total_amount)
+    }
+
+    for (let i = 0; i < totalPaymentstsQuantity; i++) {
+  
+      const sp = sale.sale_payments[i]
+
+      if (sp) {
+        data[`payment_${i + 1}`] = sp.payment_type.name
+        data[`payment_${i + 1}_amount`] = floatToReal(sp.amount)
+      }
     }
 
     if (firstProduct) {

@@ -53,8 +53,6 @@ export const parseSaleFormSubmit = ({ payment_types, products, ...values }: type
     id_product: p.id_product,
     quantity: parseInt(p.quantity.toString()),
   }))
-  
-  console.log(payment_types)
 
   const mapPaymentTypes = payment_types.map(pt => ({
     id_payment_type: pt.id_payment_type,
