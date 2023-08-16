@@ -22,13 +22,13 @@ export const getSaleDetails = (sale: Sale) => {
     total: sp.quantity * sp.unit_value
   })) || []
 
-  const payment_types = sale.sale_payments.map(sp => ({
+  const payment_types = sale?.sale_payments.map(sp => ({
     id: sp.id_payment_type,
     amount: sp.amount,
     name: sp.payment_type.name,
     paid: sp.paid ? 'Pago' : 'Cobrar',
-    card_installments: sp.card_installments
-  }))
+    card_installments: sp.id_payment_type === 'credit_card' ? sp.card_installments : null
+  })) || []
 
   const infos = {
     media: sale?.media.name || '',

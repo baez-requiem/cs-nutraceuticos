@@ -6,6 +6,7 @@
 
 ver update sale
 revisar todas as infos de pagamento e csv e pdf
+revisar dashboard seller e headers e mobile
 
 ----------------------------------------
 

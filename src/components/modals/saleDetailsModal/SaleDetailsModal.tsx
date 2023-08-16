@@ -18,7 +18,8 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
     products,
     discounts,
     totalSale,
-    infos
+    infos,
+    payment_types
   } = getSaleDetails(data)
 
   return (
@@ -77,12 +78,22 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
       <Grid gap={10} template="1fr 1fr" sm="1fr">
         <TextField label="Mídia:" value={infos.media} />
         <TextField label="Vendas:" value={infos.sales_quantity} />
-        <TextField label="Forma de pagamento:" value={infos.payment_type} />
-        {infos.payment_type === "Cartão Crédito" && infos.card_installments && (
-          <TextField label="Forma de pagamento:" value={infos.payment_type} />
-        )}
-        <TextField label="Pago:" value={infos.paid} />
       </Grid>
+      <Divider my={10} />
+      <Grid gap={10} template="1fr 1fr 1fr 1fr" sm="1fr">
+        {payment_types.map((pt, idx) => (
+          <>
+            <TextField label={`Método ${idx+1}:`} value={pt.name} />
+            <TextField label={`Valor:`} value={floatToReal(pt.amount)} />
+            {pt.card_installments
+              ? <TextField label={`Parcelas:`} value={pt.card_installments} />
+              : <div></div>
+            }
+            <TextField label={`Situação:`} value={pt.paid} />
+          </>
+        ))}
+      </Grid>
+
     </Modal>
   )
 }
