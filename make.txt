@@ -1,12 +1,6 @@
-4 - Adicionar mais opções de pagamento na parte de venda
-
 6 - Estoque de cds, pensar... (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
 
 10 - resumo cd no dashboard(aviso de reposicao)(alerta)
-
-ver update sale
-revisar todas as infos de pagamento e csv e pdf
-revisar dashboard seller e headers e mobile
 
 ----------------------------------------
 
@@ -17,9 +11,10 @@ OK
 2.1 Adicionar resumo de valores (valor a pagar/receber do motoboy) || (bruto em cartão, bruto em dinheiro, pix, deposito, etc)
 2.2 Adicionar ações do pagina de vendas no fechamento
 3 - Melhorar filtro de busca por cliente'
+4 - Adicionar mais opções de pagamento na parte de venda
 5 - Se for sedex, adicionar um campo de rastreio de encomenda
 5.1 - Adiconar no historico
-7 - Adicionar filtro por forma de pagamento, produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
+7 - , produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
 8 - historico de vendas
 8.1 - vendedora poder ver o status da venda
 8.2 - vendedora poder ver o codigo de rastreio
@@ -29,3 +24,31 @@ OK
 9.2 resumo (qntd venda por vendedora(qntd venda, dinheiro cartao, bruto), vendas por equipe (qntd venda, dinheiro cartao, bruto), venda por midia, qntd de produto por midia)
 
 ----------------------------------------
+
+ver update sale
+revisar todas as infos de pagamento e csv e pdf
+revisar dashboard seller e headers e mobile
+rever dashboard do admin
+rever resumo fechamento as info de saldo do motoboy
+- Adicionar filtro por forma de pagamento no fechamento e Situação
+
+melhorar pdf entrega
+
+status 
+
+aguardando-aprovacao 1
+enviada 2
+entregue 3
+cancelada 5
+retorno 4
+
+RESUMO MOTOBOY
+- MOSTRAR PRODUTOS ENTREGUES
+
+
+CENTRO DE DISTRIBUIÇÕES
+
+- pedidos com motoboys são retirados dos cds deles 
+- de correios são do cd de porto alegre
+
+- poder fazer transferencia, extravio, cadastrar
