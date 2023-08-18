@@ -8,5 +8,6 @@ export const initialDataSalesFilters = {
   seller: '',
   client_name: '',
   client_phone: '',
+  payment_type: '',
   number: ''
 }

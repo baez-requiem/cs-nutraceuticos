@@ -1,12 +1,9 @@
-import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { logisticApi, productsApi, usersApi } from "src/services/api"
+import { logisticApi } from "src/services/api"
 import { formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal } from "src/utils/number.utils"
-import { initialDataSalesFilters } from "../constants"
 import { toast } from "react-toastify"
-import { removeNullAndEmptyFields } from "src/utils/objetct"
 import { hasShowPdfAction, makeSalePDF } from "../utils"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
@@ -48,24 +45,6 @@ const useSales = () => {
     },
     { initialData: [], refetchOnWindowFocus: false }
   )
-  
-  const { data: saleStatus } = useQuery(
-    ['logistic/sale-status'],
-    async () => logisticApi.getSaleStatus(),
-    { initialData: [], refetchOnWindowFocus: false }
-  )
-
-  const { data: users } = useQuery(
-    ['users', { user_role: 'seller' }],
-    async () => usersApi.getAllUsers({ user_role: 'seller' }),
-    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
-  )
-
-  const { data: products } = useQuery(
-    'products',
-    productsApi.getAllProducts,
-    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
-  )
 
   const tableData = sales.map(sale => {
 
@@ -103,36 +82,16 @@ const useSales = () => {
   const closeModal = (by?: string) => {
     by === 'sale' && refetchSales()
     
-    setModal({
-      show: null
-    })
+    setModal({ show: null })
   }
 
-  const formik = useFormik({
-    initialValues: initialDataSalesFilters,
-    onSubmit: values => {
-      setFilters(removeNullAndEmptyFields({...values, products: [values.products]}))
-    },
-  })
+  const onFilter = (filters: FiltersState) => {
+    setFilters(filters)
+  }
 
   useEffect(() => {
     refetchSales()
   }, [useFilters])
-
-  const statusOpts = [
-    { value: '', label: 'Todos' },
-    ...saleStatus.map(status => ({ label: status.status, value: status.id }))
-  ]
-
-  const usersOpts = [
-    { value: '', label: 'Todos' },
-    ...users.map(user => ({ label: user.name, value: user.id }))
-  ]
-
-  const productsOpts = [
-    { value: '', label: 'Todos' },
-    ...products.map(product => ({ label: product.name, value: product.id }))
-  ]
 
   const salePDF = (id: string) => () => {
     const sale = sales.find(sale => sale.id === id)
@@ -142,17 +101,15 @@ const useSales = () => {
 
   return {
     tableData,
-    statusOpts,
-    usersOpts,
     useModal,
     openModalSale,
     openModalHistory,
     openModalLogisticInfos,
     closeModal,
-    formik,
+    onFilter,
     salePDF,
     sales,
-    productsOpts
+    useFilters
   }
 }
 

@@ -9,8 +9,6 @@ export const Sales = () => {
 
   const {
     tableData,
-    statusOpts,
-    usersOpts,
     openModalSale,
     openModalLogisticInfos,
     openModalHistory,
@@ -18,9 +16,11 @@ export const Sales = () => {
     closeModal,
     salePDF,
     sales,
-    formik,
-    productsOpts
+    onFilter,
+    useFilters
   } = useSales()
+
+  console.count('hm')
 
   return (
     <Private roles={['admin']} logout>
@@ -31,13 +31,10 @@ export const Sales = () => {
 
       <Paper>
         <Flex justify="space-between" gap={20}>
-          <Buttons.Csv onClick={() => makeSalesCsv(sales, formik.values.products)} />
+          <Buttons.Csv onClick={() => makeSalesCsv(sales, useFilters?.products[0])} />
 
           <SaleFilters
-            formik={formik}
-            statusOpts={statusOpts}
-            usersOpts={usersOpts}
-            productsOpts={productsOpts}
+            onFilter={onFilter}
           />
         </Flex>
       </Paper>

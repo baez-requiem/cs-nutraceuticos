@@ -33,6 +33,7 @@ export type SaleStatus = {
   id: string
   color?: string
   status: string
+  order: number
 }
 
 export type SalePayments = {
@@ -170,6 +171,7 @@ export type GetSalesParams = {
   client_name?: string | null
   client_phone?: string | null
   number?: number | null
+  payment_type?: string | null
 }
 
 export type CreateMotoboyBodyType = {

@@ -1,17 +1,32 @@
 import { FC } from 'react'
 import { Grid, Input, Select, SideFilters } from "src/components/ui"
 import { handleChangeFormatPhone } from "src/utils/form.utils"
-import { FormikProps } from 'formik'
-import { initialDataSalesFilters } from '../constants'
+import { useSaleFilters } from '../hooks/useSaleFilters'
 
 interface SaleFiltersProps {
-  formik: FormikProps<typeof initialDataSalesFilters>,
-  statusOpts: { label: string, value: string|number }[]
-  usersOpts: { label: string, value: string|number }[]
-  productsOpts: { label: string, value: string|number }[]
+  onFilter: (
+    arg0: {
+        init_date?: string
+        end_date?: string
+        status?: string
+        seller?: string
+        client_name?: string
+        client_phone?: string
+        number?: number
+        products?: string[]
+    }
+) => void
 }
 
-const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts, productsOpts }) => {
+const SaleFilters: FC<SaleFiltersProps> = ({ onFilter }) => {
+
+  const {
+    statusOpts,
+    paymentTypesOpts,
+    productsOpts,
+    usersOpts,
+    formik
+  } = useSaleFilters({ onFilter })
 
   const {
     submitForm,
@@ -51,9 +66,8 @@ const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts, prod
           onChange={handleChange}
           value={values.status}
           options={statusOpts}
-          nullable
         />
-        
+
         <Select
           label="Produto"
           name="products"
@@ -78,11 +92,20 @@ const SaleFilters: FC<SaleFiltersProps> = ({ formik, statusOpts, usersOpts, prod
           onChange={handleChange}
           value={values.client_name}
         />
+
         <Input
           label="Telefone"
           name="client_phone"
           onChange={handleChangeFormatPhone(setFieldValue)}
           value={values.client_phone}
+        />
+
+        <Select
+          label="Método de pagamento"
+          name="payment_type"
+          onChange={handleChange}
+          value={values.payment_type}
+          options={paymentTypesOpts}
         />
       </Grid>
     </SideFilters>

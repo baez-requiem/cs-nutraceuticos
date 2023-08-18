@@ -1,9 +1,3 @@
-6 - Estoque de cds, pensar... (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
-
-10 - resumo cd no dashboard(aviso de reposicao)(alerta)
-
-----------------------------------------
-
 OK
 
 1 - Quantidade de vendas ser um unico campo
@@ -23,27 +17,26 @@ OK
 9.1 - filtro numero da venda
 9.2 resumo (qntd venda por vendedora(qntd venda, dinheiro cartao, bruto), vendas por equipe (qntd venda, dinheiro cartao, bruto), venda por midia, qntd de produto por midia)
 
-----------------------------------------
-
-ver update sale
-revisar todas as infos de pagamento e csv e pdf
-revisar dashboard seller e headers e mobile
 rever dashboard do admin
+ver update sale
 rever resumo fechamento as info de saldo do motoboy
-- Adicionar filtro por forma de pagamento no fechamento e Situação
-
-melhorar pdf entrega
-
-status 
-
-aguardando-aprovacao 1
-enviada 2
-entregue 3
-cancelada 5
-retorno 4
+- Adicionar filtro por forma de pagamento no fechamento
 
 RESUMO MOTOBOY
 - MOSTRAR PRODUTOS ENTREGUES
+
+----------------------------------------
+
+AJUSTES
+
+revisar todas as infos de pagamento e csv e pdf
+revisar dashboard seller e headers e mobile
+
+melhorar pdf entrega
+
+----------------------------------------
+
+DESENVOLVER
 
 
 CENTRO DE DISTRIBUIÇÕES
@@ -52,3 +45,7 @@ CENTRO DE DISTRIBUIÇÕES
 - de correios são do cd de porto alegre
 
 - poder fazer transferencia, extravio, cadastrar
+
+- (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
+
+- resumo cd no dashboard(aviso de reposicao)(alerta)

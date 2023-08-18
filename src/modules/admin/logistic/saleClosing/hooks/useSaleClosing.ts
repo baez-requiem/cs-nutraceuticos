@@ -2,12 +2,12 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import { toast } from "react-toastify"
-import { logisticApi, usersApi } from "src/services/api"
+import { logisticApi, salesApi, usersApi } from "src/services/api"
 import { formatDate, formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal, formatPhone } from "src/utils/number.utils"
 import { removeNullAndEmptyFields } from "src/utils/objetct"
-import { getTotalAmount, getTotalDeliveryValues, getTotalProducts, getTotalSales } from "../utils/mappers"
 import { Sale } from "src/services/api/logistic/logistic.types"
+import { makeSelectOpts } from "src/utils/form.utils"
 
 interface ModalState {
   show: 'sale' | 'logistic-infos' | 'history' | null
@@ -20,11 +20,11 @@ interface FiltersState {
   seller?: string
   delivery_type?: string
   motoboy?: string
+  payment_type?: string
 }
 
 const useSaleClosing = () => {
   const [useModal, setModal] = useState<ModalState>({ show: null })
-  const [useCheckData, setCheckData] = useState<string[]>([])
   const [useFilters, setFilters] = useState<FiltersState>({
     init_date: getStartMonthValue(new Date()),
     end_date: getEndMonthValue(new Date())
@@ -44,7 +44,7 @@ const useSaleClosing = () => {
     { initialData: [], refetchOnWindowFocus: false }
   )
 
-  const { deliveryTypes, motoboys, users } = useQueryData()
+  const { deliveryTypes, motoboys, users, paymentTypes } = useQueryData()
 
   useEffect(() => {
     refetchSales()
@@ -56,7 +56,8 @@ const useSaleClosing = () => {
       end_date: getEndMonthValue(new Date()),
       delivery_type: '',
       motoboy: '',
-      seller: ''
+      seller: '',
+      payment_type: ''
     },
     onSubmit: (values) => setFilters(removeNullAndEmptyFields(values))
   })
@@ -89,40 +90,10 @@ const useSaleClosing = () => {
     }
   })
 
-  const motoboysOpts = motoboys.map(motoboy => ({
-    label: motoboy.name,
-    value: motoboy.id
-  }))
-
-  const usersOpts = users.map(user => ({
-    label: user.name,
-    value: user.id
-  }))
-
-  const deliveryTypesOpts = deliveryTypes.map(deliveryType => ({
-    label: deliveryType.name,
-    value: deliveryType.id
-  }))
-
-  const totalSales = getTotalSales(sales)
-  const totalAmount = getTotalAmount(sales)
-  const totalProducts = getTotalProducts(sales)
-  const totalDeliveryValue = getTotalDeliveryValues(sales)
-  
-  const checkSales = getTotalSales(sales.filter(({ id }) => useCheckData.includes(id) ))
-  const checkAmount = getTotalAmount(sales.filter(({ id }) => useCheckData.includes(id) ))
-  const checkProducts = getTotalProducts(sales.filter(({ id }) => useCheckData.includes(id) ))
-  const checkDeliveryValue = getTotalDeliveryValues(sales.filter(({ id }) => useCheckData.includes(id) ))
-
-  const toggleCheckData = (id: string) => () => {
-    const inCheckState = useCheckData.includes(id)
-
-    const newCheckData = inCheckState
-      ? useCheckData.filter(check => check !== id)
-      : [...useCheckData, id]
-
-    setCheckData(newCheckData)
-  }
+  const usersOpts = makeSelectOpts(users, 'name', 'id', 'Todos')
+  const deliveryTypesOpts = makeSelectOpts(deliveryTypes, 'name', 'id', 'Todos')
+  const motoboysOpts = makeSelectOpts(motoboys, 'name', 'id', 'Todos')
+  const paymentTypesOpts = makeSelectOpts(paymentTypes, 'name', 'id', 'Todos')
 
   const openModal = (modal: ModalState['show'], id: string) => () => setModal({
     show: modal,
@@ -142,17 +113,8 @@ const useSaleClosing = () => {
     motoboysOpts,
     deliveryTypesOpts,
     usersOpts,
+    paymentTypesOpts,
     formik,
-    totalSales,
-    totalAmount,
-    totalProducts,
-    totalDeliveryValue,
-    checkSales,
-    checkAmount,
-    checkProducts,
-    checkDeliveryValue,
-    toggleCheckData,
-    useCheckData,
     useModal,
     openModal,
     closeModal,
@@ -179,10 +141,17 @@ const useQueryData = () => {
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
+  const { data: paymentTypes } = useQuery(
+    'sales/payment-types',
+    salesApi.getPaymentTypes,
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
+)
+
   return {
     deliveryTypes,
     motoboys,
-    users
+    users,
+    paymentTypes
   }
 }
 

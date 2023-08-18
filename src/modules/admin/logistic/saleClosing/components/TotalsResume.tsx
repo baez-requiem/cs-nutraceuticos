@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Badge, Divider, Flex, Grid, Paper, ResumeCard, Text } from "src/components/ui"
+import { Grid, Paper, ResumeCard, Text } from "src/components/ui"
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { getTotalsResume } from "../utils/mappers"
 import { floatToReal } from 'src/utils/number.utils'
@@ -22,7 +22,7 @@ const TotalsResume: FC<TotalsResumeProps> = ({ sales }) => {
       </Paper>
 
       {incomes.map(income => (
-        <Paper color='indigo_600'>
+        <Paper color='indigo_600' key={`resume-totals-${income.id}`}>
           <Grid template='auto auto' gap={10}>
             <Text whiteSpace='nowrap' color='white'>Receita {income.name}:</Text>
             <Text color='white' align='right'>{floatToReal(income.total)}</Text>

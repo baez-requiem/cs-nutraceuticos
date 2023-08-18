@@ -55,12 +55,12 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
 
     const incomes: IncomeTotal[] = []
 
-    const paymentsBySeller = paymentTypes
+    const paymentsByMotoboy = paymentTypes
       .flatMap(paymentType => salesByMotoboy.filter(sale => sale.sale_payments.some(p => p.id_payment_type === paymentType.id)))
       .flatMap(sale => sale.sale_payments)
       .filter((paymentType, index, array) => array.findIndex(t => t.id === paymentType.id) === index)
 
-    paymentsBySeller.forEach(payment => {
+    paymentsByMotoboy.forEach(payment => {
       const inArr = incomes.find(it => it.id === payment.id_payment_type)
 
       inArr
@@ -78,16 +78,33 @@ export const getMotoboysResume = (sales: Sale[] = []) => {
 
     const amountPayable = incomes
       .filter(income => income.id === 'cash')
-      .map(income => realToFloat(income.total))
+      .map(income => income.total)
       .reduce((pv, cv) => pv + cv, 0)
 
     const balance = deliveryValue - amountPayable
+
+    const products: { id: string, quantity: number, name: string }[] = []
+    
+    salesByMotoboy
+      .flatMap(sale => sale.sale_products)
+      .forEach(product => {
+        const inArr = products.find(p => p.id === product.id)
+
+        inArr
+          ? (inArr.quantity += product.quantity)
+          : products.push({
+            id: product.id_product,
+            name: product.product.name,
+            quantity: product.quantity
+          })
+      })
 
     return {
       name: motoboy.name,
       incomes,
       balance,
-      deliveryValue
+      deliveryValue,
+      products
     }
   })
 

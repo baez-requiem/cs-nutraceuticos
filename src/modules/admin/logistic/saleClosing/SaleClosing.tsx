@@ -12,16 +12,7 @@ export const SaleClosing = () => {
     usersOpts,
     deliveryTypesOpts,
     motoboysOpts,
-    totalAmount,
-    totalDeliveryValue,
-    totalProducts,
-    totalSales,
-    checkAmount,
-    checkDeliveryValue,
-    checkProducts,
-    checkSales,
-    toggleCheckData,
-    useCheckData,
+    paymentTypesOpts,
     closeModal,
     openModal,
     useModal,
@@ -66,7 +57,14 @@ export const SaleClosing = () => {
                 name="delivery_type"
                 value={values.delivery_type}
                 onChange={handleChange}
-                nullable
+              />
+              
+              <Select
+                label="Método de pagamento"
+                options={paymentTypesOpts}
+                name="payment_type"
+                value={values.payment_type}
+                onChange={handleChange}
               />
 
               <Select
@@ -75,7 +73,6 @@ export const SaleClosing = () => {
                 name="motoboy"
                 value={values.motoboy}
                 onChange={handleChange}
-                nullable
               />
 
               <Select
@@ -84,7 +81,6 @@ export const SaleClosing = () => {
                 name="seller"
                 value={values.seller}
                 onChange={handleChange}
-                nullable
               />
             </Grid>
           </SideFilters>
