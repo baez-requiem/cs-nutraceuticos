@@ -31,7 +31,7 @@ export const Sales = () => {
 
       <Paper>
         <Flex justify="space-between" gap={20}>
-          <Buttons.Csv onClick={() => makeSalesCsv(sales, useFilters?.products[0])} />
+          <Buttons.Csv onClick={() => makeSalesCsv(sales, useFilters?.products?.[0])} />
 
           <SaleFilters
             onFilter={onFilter}

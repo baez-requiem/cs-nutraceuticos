@@ -21,18 +21,19 @@ rever dashboard do admin
 ver update sale
 rever resumo fechamento as info de saldo do motoboy
 - Adicionar filtro por forma de pagamento no fechamento
-
+revisar todas as infos de pagamento e csv e pdf
 RESUMO MOTOBOY
 - MOSTRAR PRODUTOS ENTREGUES
+melhorar pdf entrega
+
 
 ----------------------------------------
 
 AJUSTES
 
-revisar todas as infos de pagamento e csv e pdf
+
 revisar dashboard seller e headers e mobile
 
-melhorar pdf entrega
 
 ----------------------------------------
 

@@ -102,7 +102,7 @@ export const makeSalePDF = (sale: Sale) => {
 
     doc.text(`${sp.payment_type.name}`, 10, spaceY)
     doc.text(`${floatToReal(sp.amount)} ${creditCardTxt}`, 260, spaceY)
-    doc.text(`Situação: ${sp.paid ? 'Pago' : 'Cobrar'}`, 390, spaceY)
+    doc.text(`${sp.paid ? 'Pago' : 'Cobrar'}`, 390, spaceY)
     spaceY += 15
   })
 
@@ -138,9 +138,11 @@ export const makeSalePDF = (sale: Sale) => {
   if (sale.logistic_infos[0].notes) {
     spaceY += 25
 
+    doc.setFontSize(16)
     doc.text('Anotações:', 10, spaceY)
     spaceY += 15
-    doc.text(sale.logistic_infos[0].notes || 'Nenhuma anotação.', 10, spaceY)
+    doc.setFontSize(14)
+    doc.text(sale.logistic_infos[0].notes || 'Nenhuma anotação.', 10, spaceY, { maxWidth: 460 })
   }
 
 
@@ -191,7 +193,6 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       client_name: sale.name,
       client_phone: sale.phone ? formatPhone(sale.phone) : '',
       client_city: sale.city,
-      // payment_type: sale.payment_type.name,
       seller: sale.user.name,
       sales_quantity: sale.sales_quantity,
       total_products,
@@ -204,7 +205,10 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       const sp = sale.sale_payments[i]
 
       if (sp) {
-        data[`payment_${i + 1}`] = sp.payment_type.name
+
+        const creditCardTxt = sp.id_payment_type === 'credit_card' ? ` em ${sp.card_installments}x` : ''
+
+        data[`payment_${i + 1}`] = (sp.payment_type.name + creditCardTxt)
         data[`payment_${i + 1}_amount`] = floatToReal(sp.amount)
       }
     }
@@ -240,8 +244,6 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
 
     return data
   })
-
-  console.log(headers, salesMap, firstProduct, totalProductsQuantity)
 
   const csv = jsonToCsv(salesMap, headers)
 
