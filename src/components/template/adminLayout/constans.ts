@@ -37,6 +37,11 @@ export const menuItems = [
     Icon: BsBox({ size: 22 })
   },
   {
+    label: 'Centros de distribuição',
+    to: '/admin/distribution-centers',
+    Icon: BsBox({ size: 22 })
+  },
+  {
     label: 'Logística',
     Icon: FaTruckLoading({ size: 22 }),
     children: [
