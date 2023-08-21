@@ -16,7 +16,7 @@ export const initialDataFormEntryModal = {
   products,
 }
 
-export const initialDataFormDistributionCenterModal = {
-  distribution_center:  '',
+export const initialDataFormSupplyQuantityNoticeModal = {
+  id_distribution_center:  '',
   supply_quantity_notice
 }

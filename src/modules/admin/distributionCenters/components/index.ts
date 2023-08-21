@@ -1,3 +1,3 @@
 export * from './CentersList'
 export * from './EntryModal'
-export * from './DistributionCenterModal'
+export * from './SupplyQuantityNoticeModal'

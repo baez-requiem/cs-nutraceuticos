@@ -50,3 +50,7 @@ CENTRO DE DISTRIBUIÇÕES
 - (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
 
 - resumo cd no dashboard(aviso de reposicao)(alerta)
+
+----------------------------------------
+
+Após algumas meses, vai ser necessário criar um banco de cache para o estoque

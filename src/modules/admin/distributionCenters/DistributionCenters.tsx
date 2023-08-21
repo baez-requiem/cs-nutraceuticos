@@ -1,14 +1,15 @@
 import { PrivatePage } from "src/components/context"
 import { Header } from "src/components/template"
 import { Button, Divider, Flex, Paper } from "src/components/ui"
-import { CentersList, DistributionCenterModal, EntryModal } from "./components"
+import { CentersList, EntryModal, SupplyQuantityNoticeModal } from "./components"
 import { useDistributionCenters } from "./hooks/useDistributionCenters"
 
 const DistributionCenters = () => {
 
   const {
     modalProps,
-    openModal
+    openModal,
+    distributionCentersStock
   } = useDistributionCenters()
 
   return (
@@ -23,10 +24,10 @@ const DistributionCenters = () => {
         </Flex>
       </Paper>
       <Divider my={10} />
-      <CentersList />
+      <CentersList data={distributionCentersStock} openModal={openModal} />
 
       <EntryModal {...modalProps('entry')} />
-      <DistributionCenterModal {...modalProps('dc')} />
+      <SupplyQuantityNoticeModal {...modalProps('supply')} />
     </PrivatePage>
   )
 }
