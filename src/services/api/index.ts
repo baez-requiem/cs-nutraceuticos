@@ -1,7 +1,6 @@
 export { default as auth             } from './auth/login'
 export { default as usersApi         } from './users/users'
 export { default as rolesApi         } from './roles/roles'
-export { default as stockApi         } from './stock/stock'
 export { default as salesApi         } from './sales/sales'
 export { default as mediasApi        } from './medias/medias'
 export { default as productsApi      } from './products/products'

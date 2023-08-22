@@ -1,30 +1,25 @@
 import { useEffect } from "react"
 import { useFormik } from "formik"
 import { useMutation, useQuery } from "react-query"
-import { distributionCentersApi, productsApi } from "src/services/api"
+import { distributionCentersApi } from "src/services/api"
 import { makeSelectOpts } from "src/utils/form.utils"
-import { initialDataFormEntryModal } from "../constants"
+import { initialDataFormLeaveModal } from "../constants"
 import { toast } from "react-toastify"
-import { CreateMovementType } from "src/services/api/distributionCenters/distributionCenters.types"
+import { CreateMovementType, DistributionCenterStockType } from "src/services/api/distributionCenters/distributionCenters.types"
 import { useRefetchQueries } from "src/hooks"
-import { parseEntryFormSubmit } from "../utils/mappers"
+import { parseLeaveFormSubmit } from "../utils/mappers"
 
-interface UseEntryModalProps {
+interface UseLeaveModalProps {
   show: boolean
   onClose: () => void
+  data?: DistributionCenterStockType
 }
 
-const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
+const useLeaveModal = ({ show, onClose, data }: UseLeaveModalProps) => {
 
   const { data: distributionCenters } = useQuery(
     'distribution-centers',
     distributionCentersApi.getAll,
-    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
-  )
-
-  const { data: products } = useQuery(
-    ['products', { active: true }],
-    () => productsApi.getAllProducts({ active: true }),
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
@@ -47,14 +42,25 @@ const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
   })
 
   const formik = useFormik({
-    initialValues: initialDataFormEntryModal,
-    onSubmit: values => movementMutation.mutateAsync(parseEntryFormSubmit(values))
+    initialValues: initialDataFormLeaveModal,
+    onSubmit: values => movementMutation.mutateAsync(parseLeaveFormSubmit(values))
   })
 
   const distributionCentersOpts = makeSelectOpts(distributionCenters, 'name', 'id', 'Selecione...')
-  const productsOpts = makeSelectOpts(products.filter(p => !formik.values.products.find(fp => fp.id_product === p.id)), 'name', 'id', 'Selecione...')
+
+  const productsOpts = () => {
+    if (!data) return []
+
+    const opts = data.stock.filter(s => s.quantity > 0 && !formik.values.products.find(fp => fp.id_product === s.id))
+
+    return makeSelectOpts(opts, 'name', 'id', 'Selecione...')
+  }
 
   const addProduct = () => {
+    if (!data) return;
+
+    const products = data.stock.filter(s => s.quantity > 0)
+
     const product = products.find(p => p.id === formik.values.product)
     const inForm = formik.values.products.find(fp => fp.id_product === formik.values.product)
 
@@ -89,4 +95,4 @@ const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
   }
 }
 
-export { useEntryModal }
+export { useLeaveModal }

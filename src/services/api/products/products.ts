@@ -1,16 +1,17 @@
-import { authenticatedRequest } from "../utils"
+import { authenticatedRequest, makeGETParams } from "../utils"
 
 import {
   CreateProductBody,
+  GetProductsParamsType,
   ProductType,
   UpdateProductBody
 } from "./products.types"
 
-const getAllProducts = async (): Promise<ProductType[]> => {
+const getAllProducts = async (params: GetProductsParamsType): Promise<ProductType[]> => {
 
   try {
     const response = await authenticatedRequest({
-      url: '/products',
+      url: makeGETParams('/products', params),
       method: 'get'
     })
 

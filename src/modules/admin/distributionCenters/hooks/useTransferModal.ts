@@ -3,28 +3,23 @@ import { useFormik } from "formik"
 import { useMutation, useQuery } from "react-query"
 import { distributionCentersApi, productsApi } from "src/services/api"
 import { makeSelectOpts } from "src/utils/form.utils"
-import { initialDataFormEntryModal } from "../constants"
+import { initialDataFormTransferModal } from "../constants"
 import { toast } from "react-toastify"
-import { CreateMovementType } from "src/services/api/distributionCenters/distributionCenters.types"
+import { CreateMovementType, DistributionCenterStockType } from "src/services/api/distributionCenters/distributionCenters.types"
 import { useRefetchQueries } from "src/hooks"
-import { parseEntryFormSubmit } from "../utils/mappers"
+import { parseTransferFormSubmit } from "../utils/mappers"
 
-interface UseEntryModalProps {
+interface UseTransferModalProps {
   show: boolean
   onClose: () => void
+  data: DistributionCenterStockType[]
 }
 
-const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
+const useTransferModal = ({ show, onClose, data }: UseTransferModalProps) => {
 
   const { data: distributionCenters } = useQuery(
     'distribution-centers',
     distributionCentersApi.getAll,
-    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
-  )
-
-  const { data: products } = useQuery(
-    ['products', { active: true }],
-    () => productsApi.getAllProducts({ active: true }),
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
@@ -38,7 +33,7 @@ const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
     toast.dismiss(toastId)
 
     ok
-      ? toast.success(`Entrada registrada com sucesso!`)
+      ? toast.success(`Transferência registrada com sucesso!`)
       : toast.error(`Houve um erro ao registrar os dados.`)
 
     ok && refetchQueries(['distribution-centers/stock'])
@@ -47,22 +42,29 @@ const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
   })
 
   const formik = useFormik({
-    initialValues: initialDataFormEntryModal,
-    onSubmit: values => movementMutation.mutateAsync(parseEntryFormSubmit(values))
+    initialValues: initialDataFormTransferModal,
+    onSubmit: values => movementMutation.mutateAsync(parseTransferFormSubmit(values))
   })
 
   const distributionCentersOpts = makeSelectOpts(distributionCenters, 'name', 'id', 'Selecione...')
-  const productsOpts = makeSelectOpts(products.filter(p => !formik.values.products.find(fp => fp.id_product === p.id)), 'name', 'id', 'Selecione...')
 
   const addProduct = () => {
-    const product = products.find(p => p.id === formik.values.product)
+
+    const { id_distribution_center_from, product } = formik.values
+
+    if (!id_distribution_center_from || !product) return
+    
+    const stockProduct = data.find(dc => dc.id === id_distribution_center_from)?.stock.find(s => s.id === product)
+    
+    if (!stockProduct) return
+    
     const inForm = formik.values.products.find(fp => fp.id_product === formik.values.product)
 
-    if (!product || inForm) return
+    if (inForm) return
 
     const newProducts = [
       ...formik.values.products,
-      { id_product: product.id, quantity: 0, name: product.name }
+      { id_product: stockProduct.id, quantity: 0, name: stockProduct.name, max: stockProduct.quantity }
     ]
 
     formik.setFieldValue('products', newProducts)
@@ -80,13 +82,27 @@ const useEntryModal = ({ show, onClose }: UseEntryModalProps) => {
 
   }, [show])
 
+  const productsOpts = () => {
+    const hasDCfrom = formik.values.id_distribution_center_from
+
+    if (!hasDCfrom) return []
+    
+    const DCExists = data.find(dc => dc.id === hasDCfrom)
+    
+    if (!DCExists) return []
+
+    const opts = DCExists.stock.filter(s => s.quantity > 0 && !formik.values.products.find(fp => fp.id_product === s.id))
+
+    return makeSelectOpts(opts, 'name', 'id', 'Selecione...')
+  }
+
   return {
     distributionCentersOpts,
-    productsOpts,
     addProduct,
     removeProduct,
-    formik
+    formik,
+    productsOpts
   }
 }
 
-export { useEntryModal }
+export { useTransferModal }

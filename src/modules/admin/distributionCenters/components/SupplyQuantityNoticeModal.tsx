@@ -36,45 +36,45 @@ const SupplyQuantityNoticeModal: FC<SupplyQuantityNoticeModalProps> = ({
 
       <Grid gap={10}>
         {values.supply_quantity_notice.map((sqn, idx) => (
-           <Grid template='1fr 100px auto' gap={10} items="end" key={`sqn-${sqn.id_product}`}>
-           <Input
-             block
-             readOnly
-             disabled={!sqn.active}
-             label='Produto'
-             value={sqn.name}
-           />
+          <Grid template='1fr 100px auto' gap={10} items="end" key={`sqn-${sqn.id_product}`}>
+            <Input
+              block
+              readOnly
+              disabled={!sqn.active}
+              label='Produto'
+              value={sqn.name}
+            />
 
-           <Input
-             block
-             type='number'
-             label='Qntd. min.'
-             min={0}
-             name={`supply_quantity_notice.${idx}.quantity`}
-             disabled={!sqn.active}
-             labelFixed={sqn.active}
-             onChange={handleChange}
-             value={sqn.active ? sqn.quantity : ''}
-           />
+            <Input
+              block
+              type='number'
+              label='Qntd. min.'
+              min={0}
+              name={`supply_quantity_notice.${idx}.quantity`}
+              disabled={!sqn.active}
+              labelFixed={sqn.active}
+              onChange={handleChange}
+              value={sqn.active ? sqn.quantity : ''}
+            />
 
-           <Flex style={{ paddingTop: 22 }}>
-             <Switch
-               name={`supply_quantity_notice.${idx}.active`}
-               onChange={handleSwitchChange}
-               checked={sqn.active}
-               value={idx}
-             />
-           </Flex>
-         </Grid>
+            <Flex style={{ paddingTop: 22 }}>
+              <Switch
+                name={`supply_quantity_notice.${idx}.active`}
+                onChange={handleSwitchChange}
+                checked={sqn.active}
+                value={idx}
+              />
+            </Flex>
+          </Grid>
         ))}
       </Grid>
 
       <Divider my={10} />
 
       <Flex items="end" justify="end" gap={10}>
-          <Button size="sm" color="gray_500" type="button" onClick={onClose}>Cancelar</Button>
-          <Button size="sm" color="green_600" type="submit" onClick={submitForm}>Salvar</Button>
-        </Flex>
+        <Button size="sm" color="gray_500" type="button" onClick={onClose}>Cancelar</Button>
+        <Button size="sm" color="green_600" type="submit" onClick={submitForm}>Salvar</Button>
+      </Flex>
     </Modal>
   )
 }

@@ -1,5 +1,5 @@
-import { authenticatedRequest, isStatus200 } from "../utils"
-import { DistributionCenterStockType, UpdateDistributionCenterBodyType } from "./distributionCenters.types"
+import { authenticatedRequest, isStatus200, isStatus201 } from "../utils"
+import { CreateMovementType, DistributionCenterStockType, UpdateDistributionCenterBodyType } from "./distributionCenters.types"
 
 const getAll = async () => {
   try {
@@ -48,8 +48,24 @@ const updateDistributionCenter = async (body: UpdateDistributionCenterBodyType):
   }
 }
 
+const newMovement = async(body: CreateMovementType): Promise<boolean> => {
+  try {
+    const response = await authenticatedRequest({
+      url: '/distribution-centers/movement',
+      method: 'post',
+      data: body
+    })
+
+    return isStatus201(response)
+  } catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export default {
   getAll,
   getAllStock,
+  newMovement,
   updateDistributionCenter
 }

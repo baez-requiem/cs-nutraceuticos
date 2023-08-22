@@ -3,11 +3,11 @@ import { ChangeEvent, useState, useEffect } from "react"
 import { useFormik } from "formik"
 import { initialDataFormSale } from "../constants"
 
-import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useMutation, useQuery } from "react-query"
 
 import { consultCep } from "src/services/viacep"
 
-import { mediasApi, salesApi, stockApi } from "src/services/api"
+import { mediasApi, productsApi, salesApi } from "src/services/api"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
@@ -164,8 +164,8 @@ const useQueryData = () => {
   )
 
   const { data: stockProducts } = useQuery(
-    ['stock-products', { active: true, in_stock: true }],
-    async () => stockApi.getStockProducts({ active: true, in_stock: true }),
+    ['stock-products', { active: true }],
+    async () => productsApi.getAllProducts({ active: true }),
     {
       initialData: [],
       keepPreviousData: true,

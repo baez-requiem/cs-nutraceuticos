@@ -1,11 +1,12 @@
 import { AiOutlineAlert } from "react-icons/ai"
+import { IoMdTrash } from "react-icons/io"
 import { Badge, Divider, Flex, Grid, IconButton, Paper, Text } from "src/components/ui"
 import { DistributionCenterStockType } from "src/services/api/distributionCenters/distributionCenters.types"
 import { ColorsType } from "src/theme/theme.default"
 
 interface CentersListProps {
   data: DistributionCenterStockType[]
-  openModal: (show: 'supply', data?: DistributionCenterStockType) => () => void
+  openModal: (show: 'supply' | 'leave', data?: DistributionCenterStockType) => () => void
 }
 
 const CentersList = ({ data, openModal }: CentersListProps) => {
@@ -27,9 +28,16 @@ const CentersList = ({ data, openModal }: CentersListProps) => {
               <Flex gap={20} justify="space-between" items="center">
                 <Text size="lg" weight="500">{dc.name}</Text>
 
-                <IconButton circle color="amber_500" title="Alertas de reposição" onClick={openModal('supply', dc)}>
-                  <AiOutlineAlert size={20} color="white"  title="Alertas de reposição" />
-                </IconButton>
+                <Flex gap={10} justify="end" items="center">
+                  <IconButton circle color="amber_500" title="Alertas de reposição" onClick={openModal('supply', dc)}>
+                    <AiOutlineAlert size={20} color="white"  title="Alertas de reposição" />
+                  </IconButton>
+
+                  <IconButton circle color="red_600" title="Registrar saída" onClick={openModal('leave', dc)}>
+                    <IoMdTrash size={20} color="white"  title="Registrar saída" />
+                  </IconButton>
+                </Flex>
+
               </Flex>
 
               <Divider line opacityLine={0.15} />

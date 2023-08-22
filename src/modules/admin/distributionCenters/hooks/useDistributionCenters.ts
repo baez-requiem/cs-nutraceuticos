@@ -4,7 +4,7 @@ import { distributionCentersApi } from 'src/services/api'
 import { DistributionCenterStockType } from 'src/services/api/distributionCenters/distributionCenters.types'
 
 interface ModalState {
-  show: 'entry' | 'dc'  | 'supply' | null
+  show: 'entry' | 'transfer' | 'supply' | 'leave' | null
   data?: DistributionCenterStockType
 }
 

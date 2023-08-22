@@ -22,3 +22,7 @@ export type CreateProductBody = {
 export type UpdateProductBody = {
   id: string
 } & CreateProductBody
+
+export type GetProductsParamsType = {
+  active?: boolean
+}

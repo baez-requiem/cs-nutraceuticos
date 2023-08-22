@@ -1,15 +1,18 @@
 import { FC } from 'react'
 import { Button, Buttons, Divider, Flex, Grid, Input, Modal, Select, Text } from "src/components/ui"
-import { useEntryModal } from '../hooks/useEntryModal'
+import { useLeaveModal } from '../hooks/useLeaveModal'
+import { DistributionCenterStockType } from 'src/services/api/distributionCenters/distributionCenters.types'
 
-interface EntryModalProps {
+interface LeaveModalProps {
   show: boolean
   onClose: () => void
+  data?: DistributionCenterStockType
 }
 
-const EntryModal: FC<EntryModalProps> = ({
+const LeaveModal: FC<LeaveModalProps> = ({
   onClose,
-  show
+  show,
+  data
 }) => {
 
   const {
@@ -22,11 +25,11 @@ const EntryModal: FC<EntryModalProps> = ({
       handleChange,
       submitForm
     }
-  } = useEntryModal({ show, onClose })
+  } = useLeaveModal({ show, onClose, data })
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={500}>
-      <Text size="xl" weight="600">Registrar entrada</Text>
+      <Text size="xl" weight="600">Registrar saída</Text>
 
       <Divider my={10} />
 
@@ -42,7 +45,7 @@ const EntryModal: FC<EntryModalProps> = ({
         <Flex gap={10} items='end'>
           <Select
             label='Selecione um produto...'
-            options={productsOpts}
+            options={productsOpts()}
             name='product'
             value={values.product}
             onChange={handleChange}
@@ -85,4 +88,4 @@ const EntryModal: FC<EntryModalProps> = ({
   )
 }
 
-export { EntryModal }
+export { LeaveModal }
