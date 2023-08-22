@@ -26,7 +26,7 @@ const SupplyQuantityNoticeModal: FC<SupplyQuantityNoticeModalProps> = ({
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={500}>
-      <Text size="xl" weight="600">Avisos de reabastecimento</Text>
+      <Text size="xl" weight="600">Alertas de reposição</Text>
 
       <Divider my={10} />
 
