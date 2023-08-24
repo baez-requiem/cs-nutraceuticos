@@ -7,7 +7,7 @@ import {
   UpdateProductBody
 } from "./products.types"
 
-const getAllProducts = async (params: GetProductsParamsType): Promise<ProductType[]> => {
+const getAllProducts = async (params: GetProductsParamsType = {}): Promise<ProductType[]> => {
 
   try {
     const response = await authenticatedRequest({

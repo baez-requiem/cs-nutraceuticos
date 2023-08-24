@@ -26,10 +26,7 @@ RESUMO MOTOBOY
 - MOSTRAR PRODUTOS ENTREGUES
 melhorar pdf entrega
 
-----------------------------------------
-
-DESENVOLVER
-
+tanto os status da venda aguardando aprovacao e retorno n irao somar na saida de estoque
 
 CENTRO DE DISTRIBUIÇÕES
 
@@ -40,10 +37,13 @@ CENTRO DE DISTRIBUIÇÕES
 
 - (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque) ok
 
+----------------------------------------
+
+DESENVOLVER
+
 - resumo cd no dashboard(aviso de reposicao)(alerta)
 
 ----------------------------------------
 
 Após algumas meses, vai ser necessário criar um banco de cache para o estoque
 
-tanto os status da venda aguardando aprovacao e retorno n irao somar na saida de estoque

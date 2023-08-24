@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { initialValuesFormProduct } from "../constants"
 import { toast } from "react-toastify"
-import { onlyNumbers, realToFloat } from "src/utils/number.utils"
+import { realToFloat } from "src/utils/number.utils"
 
 const productSchema = z.object({
   name: z.string().nonempty("Nome não deve ser vazio."),
@@ -33,7 +33,6 @@ export const validateProduct = (values: typeof initialValuesFormProduct, id?: st
 export const parseProductSubmit = (values: typeof initialValuesFormProduct) => {
   const parsedValues = {
     ...values,
-    supply_quantity_notice: values.supply_quantity_notice ? parseInt(values.supply_quantity_notice) : null,
     amount: realToFloat(values.amount)
   }
 

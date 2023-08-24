@@ -13,9 +13,7 @@ import { Sale } from "src/services/api/logistic/logistic.types"
 
 import { toast } from "react-toastify"
 
-import {
-  floatToReal,
-} from "src/utils/number.utils"
+import { floatToReal } from "src/utils/number.utils"
 
 import { validateSale } from "../utils/validations"
 import { parseSaleFormSubmit, parseSaleFormValues } from "../utils/mappers"
@@ -27,10 +25,7 @@ const useSaleModal = (
 ) => {
   const [selectValue, setSelectValue] = useState<string>('')
 
-  const {
-    medias,
-    stockProducts
-  } = useQueryData()
+  const { medias, stockProducts } = useQueryData()
 
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     const toastId = toast.loading(`Inserindo dados...`)
@@ -95,7 +90,7 @@ const useSaleModal = (
   const searchCEP = async () => {
     const cep = formik.values.cep || ''
 
-    if (cep.length != 9) { return }
+    if (cep.length < 8) return;
 
     const data = await consultCep(cep)
 
@@ -156,21 +151,13 @@ const useQueryData = () => {
   const { data: medias } = useQuery(
     ['medias', { active: true }],
     async () => mediasApi.getAllMedias({ active: true }),
-    {
-      initialData: [],
-      keepPreviousData: true,
-      refetchOnWindowFocus: false
-    }
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
   const { data: stockProducts } = useQuery(
     ['stock-products', { active: true }],
     async () => productsApi.getAllProducts({ active: true }),
-    {
-      initialData: [],
-      keepPreviousData: true,
-      refetchOnWindowFocus: false
-    }
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
   return {

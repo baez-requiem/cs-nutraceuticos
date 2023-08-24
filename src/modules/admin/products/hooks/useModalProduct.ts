@@ -54,7 +54,6 @@ const useModalProduct = (
         description: data.description || '',
         notes: data.notes || '',
         active: data.active,
-        supply_quantity_notice: data.supply_quantity_notice?.toString() || '',
         amount: floatToReal(data.amount) ,
       })
       : formik.resetForm()

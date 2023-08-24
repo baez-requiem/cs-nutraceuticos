@@ -43,7 +43,7 @@ const useSaleFilters = ({ onFilter }: UseSaleFiltersProps) => {
 
     const { data: products } = useQuery(
         'products',
-        productsApi.getAllProducts,
+        async () => productsApi.getAllProducts(),
         { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
     )
 

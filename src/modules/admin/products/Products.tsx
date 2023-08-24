@@ -55,7 +55,6 @@ const Products = () => {
               </Flex>
             ) },
             { label: 'Descrição', value: 'description' },
-            { label: 'Qntd. aviso abastecimento:', value: 'supply_quantity_notice' },
             { label: 'Status', value: 'active', render: value => (
               <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
             ) },

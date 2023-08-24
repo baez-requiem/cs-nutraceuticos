@@ -4,5 +4,4 @@ export const initialValuesFormProduct = {
   amount: '',
   notes: '',
   name: '',
-  supply_quantity_notice: ''
 }
