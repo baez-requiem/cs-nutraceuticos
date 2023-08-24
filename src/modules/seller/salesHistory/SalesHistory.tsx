@@ -2,6 +2,7 @@ import { Badge, Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, 
 import { useSalesHistory } from "./hooks/useSalesHistory"
 import { SaleDetailsModal, SaleModal } from "src/components/modals"
 import { matchColor } from "src/utils/theme"
+import { HeaderSeller } from "src/components/template"
 
 const SalesHistory = () => {
 
@@ -19,7 +20,7 @@ const SalesHistory = () => {
 
   return (
     <Private roles={['seller']} logout>
-      <Text size="xl2" weight="600" color="gray_900">Histórico de vendas</Text>
+      <HeaderSeller title="Histórico de vendas" />
       <Divider my={10} />
 
       <Paper>

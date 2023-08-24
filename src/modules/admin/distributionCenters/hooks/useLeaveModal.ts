@@ -33,7 +33,7 @@ const useLeaveModal = ({ show, onClose, data }: UseLeaveModalProps) => {
     toast.dismiss(toastId)
 
     ok
-      ? toast.success(`Entrada registrada com sucesso!`)
+      ? toast.success(`Extravio registrado com sucesso!`)
       : toast.error(`Houve um erro ao registrar os dados.`)
 
     ok && refetchQueries(['distribution-centers/stock'])
@@ -68,7 +68,7 @@ const useLeaveModal = ({ show, onClose, data }: UseLeaveModalProps) => {
 
     const newProducts = [
       ...formik.values.products,
-      { id_product: product.id, quantity: 0, name: product.name }
+      { id_product: product.id, quantity: '', name: product.name, max: product.quantity }
     ]
 
     formik.setFieldValue('products', newProducts)
@@ -82,7 +82,9 @@ const useLeaveModal = ({ show, onClose, data }: UseLeaveModalProps) => {
   }
 
   useEffect(() => {
-    !show && formik.resetForm()
+    data
+      ? formik.setFieldValue('distribution_center', data.id)
+      : formik.resetForm()
 
   }, [show])
 

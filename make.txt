@@ -26,15 +26,6 @@ RESUMO MOTOBOY
 - MOSTRAR PRODUTOS ENTREGUES
 melhorar pdf entrega
 
-
-----------------------------------------
-
-AJUSTES
-
-
-revisar dashboard seller e headers e mobile
-
-
 ----------------------------------------
 
 DESENVOLVER
@@ -42,12 +33,12 @@ DESENVOLVER
 
 CENTRO DE DISTRIBUIÇÕES
 
-- pedidos com motoboys são retirados dos cds deles 
-- de correios são do cd de porto alegre
+- pedidos com motoboys são retirados dos cds deles ok
+- de correios são do cd de porto alegre ok
 
-- poder fazer transferencia, extravio, cadastrar
+- poder fazer transferencia, extravio, cadastrar ok
 
-- (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque)
+- (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque) ok
 
 - resumo cd no dashboard(aviso de reposicao)(alerta)
 

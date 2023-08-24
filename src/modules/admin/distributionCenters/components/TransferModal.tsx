@@ -24,7 +24,6 @@ const TransferModal: FC<TransferModalProps> = ({
     formik: {
       values,
       handleChange,
-      submitForm,
       handleSubmit
     }
   } = useTransferModal({ show, onClose, data })

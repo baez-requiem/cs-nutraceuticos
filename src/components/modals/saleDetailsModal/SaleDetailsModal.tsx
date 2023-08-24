@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, Fragment } from "react"
 import { Divider, Grid, Modal, Text } from "src/components/ui"
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { ProductField, TextField } from "./components"
@@ -82,7 +82,7 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
       <Divider my={10} />
       <Grid gap={10} template="1fr 1fr 1fr 1fr" sm="1fr">
         {payment_types.map((pt, idx) => (
-          <>
+          <Fragment key={`sale-details-${data?.id}-payment-type-${pt.id}`}>
             <TextField label={`Método ${idx+1}:`} value={pt.name} />
             <TextField label={`Valor:`} value={floatToReal(pt.amount)} />
             {pt.card_installments
@@ -90,7 +90,7 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
               : <div></div>
             }
             <TextField label={`Situação:`} value={pt.paid} />
-          </>
+          </Fragment>
         ))}
       </Grid>
 

@@ -2,6 +2,7 @@ import { z } from "zod"
 import { initialValuesFormLogisticInfos } from "../constants"
 import { toast } from "react-toastify"
 import { realToFloat } from "src/utils/number.utils"
+import { CreateNewLogisticInfoBodyType } from "src/services/api/logistic/logistic.types"
 
 const logisticInfosSchema = z.object({
   id_sale_status: z.string().nonempty("Selecione um status."),
@@ -28,7 +29,7 @@ export const validateLogisticInfos = (values: typeof initialValuesFormLogisticIn
   return errors
 }
 
-export const parseLogisticInfosSubmit = (values: typeof initialValuesFormLogisticInfos, id_sale: string) => {
+export const parseLogisticInfosSubmit = (values: typeof initialValuesFormLogisticInfos, id_sale: string): CreateNewLogisticInfoBodyType => {
   const parsedValues: { [key: string]: string | number } = {
     ...values,
     id_sale,
@@ -43,5 +44,5 @@ export const parseLogisticInfosSubmit = (values: typeof initialValuesFormLogisti
     parsedValues.tracking_code = null
   }
 
-  return parsedValues
+  return parsedValues as CreateNewLogisticInfoBodyType
 }

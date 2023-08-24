@@ -20,7 +20,6 @@ const DistributionCenters = () => {
         <Flex gap={10}>
           <Button color="green_600" size="sm" onClick={openModal('entry')}>Registrar entrada</Button>
           <Button color="blue_600" size="sm" onClick={openModal('transfer')}>Registrar transferência</Button>
-          <Button color="amber_600" size="sm">Registrar extravio</Button>
         </Flex>
       </Paper>
       <Divider my={10} />

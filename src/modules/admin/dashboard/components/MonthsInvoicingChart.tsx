@@ -24,7 +24,7 @@ const MonthsInvoicingChart = () => {
   const primaryAxis = useMemo((): AxisOptions<DayItemType> => ({
     getValue: datum => datum.day,
     formatters: {
-      scale: value => `${value?.toString().padStart(2, '0')}/${mounth}`,
+      scale: value => `${value?.toString().padStart(2, '0')}`,
     },
     hardMin: 1,
     tickCount: monthStatisticsResume.length,

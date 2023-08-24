@@ -25,7 +25,7 @@ export const initialDataFormEntryModal = {
 export const initialDataFormLeaveModal = {
   product:  '',
   distribution_center:  '',
-  products,
+  products: transfer_products,
 }
 
 export const initialDataFormSupplyQuantityNoticeModal = {

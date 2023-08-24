@@ -47,9 +47,7 @@ const useLogisticInfosModal = ({ show, onClose, data }: useModalLogisticInfosPro
     validateOnChange: false,
     validateOnMount: false,
     validate: validateLogisticInfos,
-    onSubmit: async values => {
-      createNewLogisticInfoMutation.mutateAsync(parseLogisticInfosSubmit(values, data.id) as CreateNewLogisticInfoBodyType)
-    }
+    onSubmit: values => createNewLogisticInfoMutation.mutateAsync(parseLogisticInfosSubmit(values, data.id))
   })
 
   useEffect(() => {

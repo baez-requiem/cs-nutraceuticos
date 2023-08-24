@@ -1,5 +1,5 @@
-import { AiOutlineAlert } from "react-icons/ai"
-import { IoMdTrash } from "react-icons/io"
+import { AiOutlineAlert, AiOutlineHistory } from "react-icons/ai"
+import { BiMinus } from "react-icons/bi"
 import { Badge, Divider, Flex, Grid, IconButton, Paper, Text } from "src/components/ui"
 import { DistributionCenterStockType } from "src/services/api/distributionCenters/distributionCenters.types"
 import { ColorsType } from "src/theme/theme.default"
@@ -20,29 +20,41 @@ const CentersList = ({ data, openModal }: CentersListProps) => {
   }
 
   return (
-    <Paper>
-      <Flex gap={20} style={{ overflowX: 'auto' }}>
+    <Paper style={{ padding: 15 }}>
+      <Flex gap={20} style={{ overflowX: 'auto', padding: 5 }}>
         {data.map(dc => (
           <Paper width={300} key={`dc-cl-${dc.id}`}>
             <Grid gap={10}>
               <Flex gap={20} justify="space-between" items="center">
-                <Text size="lg" weight="500">{dc.name}</Text>
+                <Text
+                  size="lg"
+                  weight="500"
+                  whiteSpace="nowrap"
+                  style={{ maxWidth: 164, overflowX: 'hidden', textOverflow: 'ellipsis' }}
+                  title={dc.name}
+                >
+                  {dc.name}
+                </Text>
 
-                <Flex gap={10} justify="end" items="center">
-                  <IconButton circle color="amber_500" title="Alertas de reposição" onClick={openModal('supply', dc)}>
-                    <AiOutlineAlert size={20} color="white"  title="Alertas de reposição" />
+                <Flex gap={5} justify="end" items="center" style={{ width: 'auto' }}>
+                  <IconButton circle size={22} color="amber_500" title="Alertas de reposição" onClick={openModal('supply', dc)}>
+                    <AiOutlineAlert size={15} color="white"  title="Alertas de reposição" />
                   </IconButton>
 
-                  <IconButton circle color="red_600" title="Registrar saída" onClick={openModal('leave', dc)}>
-                    <IoMdTrash size={20} color="white"  title="Registrar saída" />
+                  <IconButton circle size={22} color="red_600" title="Registrar extravio" onClick={openModal('leave', dc)}>
+                    <BiMinus size={20} color="white"  title="Registrar extravio" />
                   </IconButton>
+                  
+                  {/* <IconButton circle size={22} color="blue_600" title="Histórico" onClick={openModal('leave', dc)}>
+                    <AiOutlineHistory size={14} color="white"  title="Histórico" />
+                  </IconButton> */}
                 </Flex>
 
               </Flex>
 
               <Divider line opacityLine={0.15} />
 
-              {dc.stock.map(s => (
+              {dc.stock.sort((a, b) => a.name.localeCompare(b.name)).map(s => (
                 <Badge color={badgeColor(s)} key={`dc-cl-${dc.id}-p-${s.id}`}>
                   <Flex gap={20} justify="space-between">
                     <Text size="sm" color="white" weight="500">{s.name}</Text>

@@ -20,8 +20,6 @@ export const Sales = () => {
     useFilters
   } = useSales()
 
-  console.count('hm')
-
   return (
     <Private roles={['admin']} logout>
 

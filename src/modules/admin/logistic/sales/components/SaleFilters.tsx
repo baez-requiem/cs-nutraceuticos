@@ -6,16 +6,16 @@ import { useSaleFilters } from '../hooks/useSaleFilters'
 interface SaleFiltersProps {
   onFilter: (
     arg0: {
-        init_date?: string
-        end_date?: string
-        status?: string
-        seller?: string
-        client_name?: string
-        client_phone?: string
-        number?: number
-        products?: string[]
+      init_date?: string
+      end_date?: string
+      status?: string
+      seller?: string
+      client_name?: string
+      client_phone?: string
+      number?: number
+      products?: string[]
     }
-) => void
+  ) => void
 }
 
 const SaleFilters: FC<SaleFiltersProps> = ({ onFilter }) => {
@@ -32,11 +32,12 @@ const SaleFilters: FC<SaleFiltersProps> = ({ onFilter }) => {
     submitForm,
     handleChange,
     values,
-    setFieldValue
+    setFieldValue,
+    resetForm
   } = formik
 
   return (
-    <SideFilters onFilter={submitForm}>
+    <SideFilters onFilter={submitForm} onReset={resetForm}>
       <Grid gap={10}>
         <Input
           name="number"
@@ -74,7 +75,6 @@ const SaleFilters: FC<SaleFiltersProps> = ({ onFilter }) => {
           onChange={handleChange}
           value={values.products}
           options={productsOpts}
-          nullable
         />
 
         <Select
@@ -83,7 +83,6 @@ const SaleFilters: FC<SaleFiltersProps> = ({ onFilter }) => {
           onChange={handleChange}
           value={values.seller}
           options={usersOpts}
-          nullable
         />
 
         <Input

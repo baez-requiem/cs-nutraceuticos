@@ -163,26 +163,27 @@ const LogisticInfosModal: FC<LogisticInfosModalProps> = ({
             labelFixed={!!values.delivery_date}
           />
 
-          <Fade.FadeIn show={values.id_delivery_type == 'motoboy'}>
-            <Select
-              nullable
-              label="Motoboy:"
-              name="id_motoboy"
-              options={motoboys.map(motoboy => ({ label: motoboy.name, value: motoboy.id }))}
-              value={values.id_motoboy}
-              onChange={handleChange}
-              labelFixed={!!values.id_motoboy}
-            />
-          </Fade.FadeIn>
-          
-          <Fade.FadeIn show={values.id_delivery_type == 'correios'}>
-            <Input
-              label="Código de rastreio:"
-              name="tracking_code"
-              value={values.tracking_code}
-              onChange={handleChange}
-              labelFixed={!!values.tracking_code}
-            />
+          <Fade.FadeIn show={!!values.id_delivery_type}>
+            {values.id_delivery_type === 'motoboy' && (
+              <Select
+                nullable
+                label="Motoboy:"
+                name="id_motoboy"
+                options={motoboys.map(motoboy => ({ label: motoboy.name, value: motoboy.id }))}
+                value={values.id_motoboy}
+                onChange={handleChange}
+                labelFixed={!!values.id_motoboy}
+              />
+            )}
+            {values.id_delivery_type === 'correios' && (
+              <Input
+                label="Código de rastreio:"
+                name="tracking_code"
+                value={values.tracking_code}
+                onChange={handleChange}
+                labelFixed={!!values.tracking_code}
+              />
+            )}
           </Fade.FadeIn>
 
           <Input

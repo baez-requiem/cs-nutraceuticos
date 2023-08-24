@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Flex, IconButton, Text } from "src/components/ui"
-import { BellButton, Container, MenuButton } from './styles'
+import { Container } from './styles'
 import { Notifications } from './components'
 import { FiMenu } from 'react-icons/fi'
 import { useHeader } from './hooks/useHeader'
@@ -34,7 +34,7 @@ const Header: FC<HeaderProps> = ({
         )}
 
         <Flex items="center" justify="end" gap={10}>
-          <Notifications />
+          {/* <Notifications /> */}
 
           {isMobile ? (
             <IconButton color='blue_500' circle onClick={openMenu}>
