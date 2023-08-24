@@ -14,7 +14,7 @@ const useDistributionCenters = () => {
   const { data: distributionCentersStock } = useQuery(
     'distribution-centers/stock',
     distributionCentersApi.getAllStock,
-    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
+    { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false, refetchInterval: 10000 }
   )
 
   const openModal = (show: ModalState['show'], data?: ModalState['data']) => () => setModal({ show, data })

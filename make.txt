@@ -45,3 +45,5 @@ CENTRO DE DISTRIBUIÇÕES
 ----------------------------------------
 
 Após algumas meses, vai ser necessário criar um banco de cache para o estoque
+
+tanto os status da venda aguardando aprovacao e retorno n irao somar na saida de estoque
