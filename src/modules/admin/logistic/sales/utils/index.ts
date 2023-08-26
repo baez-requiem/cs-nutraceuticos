@@ -90,7 +90,7 @@ export const makeSalePDF = (sale: Sale) => {
   doc.setFontSize(16)
   doc.text(`Dados do pagamento`, 10, spaceY)
   spaceY += 15
-  
+
   doc.setFontSize(14)
   doc.text('Método', 10, spaceY)
   doc.text('Valor', 260, spaceY)
@@ -180,8 +180,6 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
     headers[`product_${i}_unit_value`] = `Produto ${i} Valor Und.`
   }
 
-  console.log(headers)
-
   const salesMap = sales.map(({ sale_products, ...sale }) => {
 
     const total_products = sale_products.reduce((pv, cv) => pv + cv.quantity, 0)
@@ -201,16 +199,14 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
     }
 
     for (let i = 0; i < totalPaymentsQuantity; i++) {
-  
+
       const sp = sale.sale_payments[i]
 
-      if (sp) {
+      const creditCardTxt = (sp && sp.id_payment_type === 'credit_card') ? ` em ${sp.card_installments}x` : ''
 
-        const creditCardTxt = sp.id_payment_type === 'credit_card' ? ` em ${sp.card_installments}x` : ''
+      data[`payment_${i + 1}`] = sp ? (sp.payment_type.name + creditCardTxt) : ''
+      data[`payment_${i + 1}_amount`] = sp ? floatToReal(sp.amount) : ''
 
-        data[`payment_${i + 1}`] = (sp.payment_type.name + creditCardTxt)
-        data[`payment_${i + 1}_amount`] = floatToReal(sp.amount)
-      }
     }
 
     if (firstProduct) {
@@ -223,19 +219,19 @@ export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {
       const restProducts = sale_products.filter(sp => sp.id_product !== firstProduct)
 
       for (let i = 0; i < totalProductsQuantity; i++) {
-  
+
         const sp = restProducts[i]
-        
+
         data[`product_${i + 2}`] = sp ? sp.product.name : ''
-        data[`product_${i + 2}_quantity`] = sp ?  sp.quantity : ''
-        data[`product_${i + 2}_unit_value`] = sp ?  floatToReal(sp.unit_value) : ''
+        data[`product_${i + 2}_quantity`] = sp ? sp.quantity : ''
+        data[`product_${i + 2}_unit_value`] = sp ? floatToReal(sp.unit_value) : ''
       }
     } else {
 
       for (let i = 1; i <= totalProductsQuantity; i++) {
-  
+
         const sp = sale_products[i - 1]
-  
+
         data[`product_${i}`] = sp ? sp.product.name : ''
         data[`product_${i}_quantity`] = sp ? sp.quantity : ''
         data[`product_${i}_unit_value`] = sp ? floatToReal(sp.unit_value) : ''

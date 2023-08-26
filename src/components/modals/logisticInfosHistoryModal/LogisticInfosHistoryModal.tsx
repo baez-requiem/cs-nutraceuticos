@@ -23,7 +23,7 @@ const LogisticInfosHistoryModal: FC<LogisticInfosHistoryModalProps> = ({
 
   return (
     <Modal show={show} onClose={onClose} maxWidth={700}>
-      <Text size="xl" weight="600">Histórico - Logística da venda</Text>
+      <Text size="xl" weight="600">Histórico logística</Text>
 
       <Divider my={10} />
 
@@ -62,7 +62,7 @@ const LogisticInfosHistoryModal: FC<LogisticInfosHistoryModalProps> = ({
 
               {li.motoboy?.id ? (
                 <div>
-                  <Text weight="500">Motooby</Text>
+                  <Text weight="500">Motoboy</Text>
                   <br />
                   <Text>{li.motoboy.name}</Text>
                 </div>

@@ -25,8 +25,6 @@ export const validateProduct = (values: typeof initialValuesFormProduct, id?: st
     toast.error('Valor deve ser maior que 0.')
   }
 
-  console.log(errors)
-
   return errors
 }
 

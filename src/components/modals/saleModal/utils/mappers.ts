@@ -63,16 +63,14 @@ export const parseSaleFormSubmit = ({ payment_types, products, ...values }: type
 
   const sale = {
     ...values,
-    discounts: parseInt(values.discounts.toString() || '0'),
+    discounts: realToFloat(values.discounts.toString() || '0'),
     products: mapProducts,
     payment_types: mapPaymentTypes
   }
-
+  
   if (id) {
     sale['id'] = id
   }
-
-  
 
   return sale
 }

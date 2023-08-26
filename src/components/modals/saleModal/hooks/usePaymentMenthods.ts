@@ -32,7 +32,7 @@ const usePaymentMenthods = (
   const updateFirstPaymentMethod = () => {
     const formPaymentMethods = formik.values.payment_types
 
-    if (!formPaymentMethods.length || formPaymentMethods.length > 1) return
+    if (!formPaymentMethods.length || formPaymentMethods.length > 1) return;
 
     fillRemainingValue(formPaymentMethods[0].id_payment_type)()
   }
@@ -77,7 +77,7 @@ const usePaymentMenthods = (
     const totalInOthersPaymentMethods = othersPaymentMethods.reduce((pv, cv) => pv + realToFloat(cv.amount || '0,00'), 0)
 
     const totalWithDiscounts = formik.values.products
-      .reduce((pv, cv) => pv + (parseInt(cv.quantity.toString()) * cv.amount), 0) - parseInt(formik.values.discounts || '0')
+      .reduce((pv, cv) => pv + (parseInt(cv.quantity.toString()) * cv.amount), 0) - realToFloat(formik.values.discounts || '0')
 
     const totalToFill = totalWithDiscounts - totalInOthersPaymentMethods
 

@@ -14,13 +14,7 @@ type FormPaymentType = {
 }
 
 const products: FormProductType[] = []
-const payment_types: FormPaymentType[] = [{
-  id_payment_type: 'pix',
-  name: 'pix',
-  amount: '0,00',
-  card_installments: '1',
-  paid: '1'
-}]
+const payment_types: FormPaymentType[] = []
 
 export const initialDataFormSale = {
   name:  '',
