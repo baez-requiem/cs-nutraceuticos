@@ -13,7 +13,7 @@ export interface ModalProps {
 
 const Modal: FC<ModalProps> = ({ children, onClose, show, maxWidth }) => {
 
-  const { hasShow } = useModal(show)
+  const { hasShow } = useModal(show, onClose)
 
   return hasShow ? createPortal(
     <Overlay show={show}>

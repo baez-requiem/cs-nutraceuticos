@@ -1,71 +1,162 @@
 import { Header } from "src/components/template"
-import { Flex, Grid, Input, Paper, Private, Select, SideFilters, Table } from "src/components/ui"
+import { Badge, Checkbox, Divider, Flex, Grid, Input, Paper, Private, Select, SideFilters, Table, TableActions, Text } from "src/components/ui"
 import { useSaleClosing } from "./hooks/useSaleClosing"
+import { matchColor } from "src/utils/theme"
+import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
+import { MotoboysResume, TotalsResume } from "./components"
 
 export const SaleClosing = () => {
 
-  const { tableData } = useSaleClosing()
+  const {
+    tableData,
+    usersOpts,
+    deliveryTypesOpts,
+    motoboysOpts,
+    paymentTypesOpts,
+    closeModal,
+    openModal,
+    useModal,
+    sales,
+    formik: {
+      values,
+      handleChange,
+      handleSubmit
+    }
+  } = useSaleClosing()
 
   return (
-    <Private roles={['Admin']} logout>
-      <Grid gap={20}>
-        <Header title="Fechamentos" subtitle="Logística" />
+    <Private roles={['admin']} logout>
 
-        <Paper>
-          <Flex justify="end" gap={20}>
-            <SideFilters>
-              <Grid gap={10}>
-                <Input
-                  label="Data"
-                  type="date"
-                />
+      <Header title="Fechamentos" subtitle="Logística" />
 
-                <Input
-                  label="até"
-                  type="date"
-                />
+      <Divider my={10} />
 
-                <Select
-                  label="Tipo de entrega"
-                />
+      <Paper>
+        <Flex justify="end" gap={20}>
+          <SideFilters onFilter={handleSubmit}>
+            <Grid gap={10}>
+              <Input
+                label="Data"
+                type="date"
+                name="init_date"
+                value={values.init_date}
+                onChange={handleChange}
+              />
 
-                <Select
-                  label="Motoboy"
-                />
+              <Input
+                label="até"
+                type="date"
+                name="end_date"
+                value={values.end_date}
+                onChange={handleChange}
+              />
 
-                <Select
-                  label="Vendedor"
-                />
-              </Grid>
-            </SideFilters>
-          </Flex>
+              <Select
+                label="Tipo de entrega"
+                options={deliveryTypesOpts}
+                name="delivery_type"
+                value={values.delivery_type}
+                onChange={handleChange}
+              />
+              
+              <Select
+                label="Método de pagamento"
+                options={paymentTypesOpts}
+                name="payment_type"
+                value={values.payment_type}
+                onChange={handleChange}
+              />
 
-        </Paper>
+              <Select
+                label="Motoboy"
+                options={motoboysOpts}
+                name="motoboy"
+                value={values.motoboy}
+                onChange={handleChange}
+              />
 
-        <Paper>
-          <Table
-            columns={[
-              { label: 'Data', value: 'created_at' },
+              <Select
+                label="Vendedor"
+                options={usersOpts}
+                name="seller"
+                value={values.seller}
+                onChange={handleChange}
+              />
+            </Grid>
+          </SideFilters>
+        </Flex>
+      </Paper>
 
-              { label: 'Cliente', value: 'client_name' },
-              { label: 'Cidade', value: 'client_city' },
-              { label: 'Estado', value: 'client_state' },
-              { label: 'Telefone', value: 'client_phone' },
+      <Divider my={10} />
 
-              { label: 'Tipo entrega', value: 'delivery_type' },
-              { label: 'Motoboy', value: 'motoboy' },
-              { label: 'Data de entrega', value: 'delivery_date' },
-              { label: 'Valor entrega', value: 'delivery_value' },
+      <Paper>
+        <Table
+          columns={[
+            // { label: '', value: 'id', render: value => (
+            //   <Checkbox
+            //     onChange={toggleCheckData(value.toString())}
+            //     checked={useCheckData.includes(value.toString())}
+            //   />
+            // ) },
+            { label: '#', value: 'number' },
+            { label: 'Data', value: 'created_at' },
 
-              // { label: 'Qntd. vendas', value: 'total_sales' },
-              // { label: 'Qntd. produtos', value: 'total_products' },
-              { label: 'Valor venda', value: 'total_amount' },
-              { label: 'Vendedor', value: 'seller_name' },
-            ]}
-            data={tableData}
-          />
-        </Paper>
-      </Grid>
+            { label: 'Cliente', value: 'client_name' },
+            { label: 'Cidade', value: 'client_city' },
+            { label: 'Estado', value: 'client_state' },
+            { label: 'Telefone', value: 'client_phone' },
+
+            { label: 'Tipo entrega', value: 'delivery_type' },
+            { label: 'Motoboy', value: 'motoboy' },
+            { label: 'Data de entrega', value: 'delivery_date' },
+            { label: 'Valor entrega', value: 'delivery_value' },
+            {
+              label: 'Status', value: 'status', render: (value, data) => (
+                <Badge block color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
+              )
+            },
+
+            { label: 'Valor venda', value: 'total_amount' },
+            { label: 'Vendedor', value: 'seller_name' },
+            {
+              label: 'Ações', align: 'center', value: 'id', render: value => (
+                <TableActions actions={[
+                  { type: 'Vizualizer', onClick: openModal('sale', value.toString()) },
+                  { type: 'Edit', onClick: openModal('logistic-infos', value.toString()) },
+                  { type: 'History', onClick: openModal('history', value.toString()) },
+                ]} />
+              )
+            },
+          ]}
+          data={tableData}
+        />
+      </Paper>
+      
+      <Divider my={10} />
+
+      <TotalsResume sales={sales} />
+
+      <Divider my={10} />
+
+      <MotoboysResume sales={sales} />
+
+      <LogisticInfosModal
+        show={useModal.show == 'logistic-infos'}
+        data={useModal.data!}
+        onClose={() => closeModal('sale')}
+      />
+
+      <LogisticInfosHistoryModal
+        show={useModal.show == 'history'}
+        data={useModal.data!}
+        onClose={closeModal}
+      />
+
+      <SaleModal
+        show={useModal.show == 'sale'}
+        data={useModal.data!}
+        onClose={() => closeModal('sale')}
+      />
     </Private>
   )
 }

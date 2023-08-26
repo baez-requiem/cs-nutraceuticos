@@ -1,3 +1,5 @@
-export { default as ModalSale } from './ModalSale'
-export { default as ModalLogisticInfos } from './ModalLogisticInfos'
-export { default as ModalHistory } from './ModalHistory'
+export { default as SaleFilters } from './SaleFilters'
+export { default as SaleTable } from './SaleTable'
+export * from './SellersResume'
+export * from './SalesTeamsResume'
+export * from './MediasResume'

@@ -11,7 +11,9 @@ export type LoginResponse = {
     userId: number
   }
   user: {
-    role: string
+    id: string,
+    role: string,
+    name: string
   }
 } | {
   error: {

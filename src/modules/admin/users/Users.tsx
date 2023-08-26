@@ -1,6 +1,4 @@
-import { BsTrash } from "react-icons/bs"
-import { MdOutlineModeEditOutline } from "react-icons/md"
-import { Badge, Button, Confirm, Divider, Flex, IconButton, Paper, Private, Table, TableActions } from "src/components/ui"
+import { Badge, Button, Confirm, Divider, Flex, Paper, Private, Table, TableActions } from "src/components/ui"
 import ModalUser from "./ModalUser"
 import { useUsers } from "./hooks/useUsers"
 import { formatUTCDate } from "src/utils/date.utils"
@@ -19,7 +17,7 @@ const Users = () => {
   } = useUsers()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Header title="Usuários" />
       <Divider my={10} />
       

@@ -8,7 +8,7 @@ import { handleChangeFormatReal } from "src/utils/form.utils"
 export interface ModalProductProps {
   show: boolean
   data?: ProductType
-  onClose: (arg0?: boolean) => void
+  onClose: () => void
 }
 
 const ModalProduct: FC<ModalProductProps> = ({
@@ -55,23 +55,12 @@ const ModalProduct: FC<ModalProductProps> = ({
 
       <Divider />
 
-      <Grid gap={10} template="1fr 1fr" xs="1fr">
+      <Grid gap={10} template="1fr" xs="1fr">
         <Input
           label="Descrição:"
           name="description"
           labelFixed={!!values.description}
           value={values.description}
-          onChange={handleChange}
-        />
-
-        <Input
-          label="Qntd. aviso de abastecimento:"
-          name="supply_quantity_notice"
-          block
-          labelFixed={!!values.supply_quantity_notice}
-          value={values.supply_quantity_notice}
-          min={0}
-          type="number"
           onChange={handleChange}
         />
       </Grid>
@@ -101,7 +90,7 @@ const ModalProduct: FC<ModalProductProps> = ({
       <Divider my={10} />
       
       <Flex items="end" justify="end" gap={10}>
-        <Button size="sm" color="gray_500" onClick={() => onClose()}>Cancelar</Button>
+        <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>
         <Button size="sm" color="green_600" onClick={submitForm}>Salvar</Button>
       </Flex>
     </Modal>

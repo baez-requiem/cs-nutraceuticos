@@ -7,7 +7,7 @@ import { handleChangeFormatCEP, handleChangeFormatCPF, handleChangeFormatPhone }
 export interface ModalUserProps {
   show: boolean
   data?: UserType
-  onClose: (arg0?: boolean) => void
+  onClose: () => void
 }
 
 const ModalUser: FC<ModalUserProps> = ({
@@ -48,7 +48,7 @@ const ModalUser: FC<ModalUserProps> = ({
         />
 
         <Input
-          label="Telefone:"
+          label="Telefone*:"
           name="phone"
           value={values.phone}
           labelFixed={!!values.phone}
@@ -97,7 +97,7 @@ const ModalUser: FC<ModalUserProps> = ({
         />
 
         <Select
-          label="Tipo de usuário:"
+          label="Tipo de usuário*:"
           name="roleId"
           value={values.roleId}
           onChange={handleChange}

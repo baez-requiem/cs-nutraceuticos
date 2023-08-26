@@ -4,13 +4,9 @@ import { useMutation, useQueryClient } from 'react-query'
 import { logisticApi } from 'src/services/api'
 import { toast } from 'react-toastify'
 import { MotoboyType } from 'src/services/api/logistic/logistic.types'
-
-const initialValues = {
-  name: '',
-  phone: '',
-  notes: '',
-  active: false
-}
+import { initialValuesFormMotoboy } from '../constants'
+import { validateMotoboy } from '../utils/validations'
+import { formatPhone } from 'src/utils/number.utils'
 
 const useModalMotoboy = (
   show: boolean,
@@ -20,16 +16,16 @@ const useModalMotoboy = (
 
   const queryClient = useQueryClient()
 
-  const mototobyMutation = useMutation(async (values: typeof initialValues) => {
+  const mototobyMutation = useMutation(async (values: typeof initialValuesFormMotoboy) => {
     const idMotoboy = data?.id
 
-    toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idMotoboy ? 'Atualizando' : 'Inserindo'} dados...`)
 
     const ok = idMotoboy
       ? await logisticApi.updateMotoboy({ ...values, id: idMotoboy })
       : await logisticApi.createMotoboy(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idMotoboy ? 'atualizar' : 'cadastrar'} o motoboy.`)
@@ -41,12 +37,14 @@ const useModalMotoboy = (
       onClose()
     }
   })
-  
+
   const formik = useFormik({
-    initialValues,
-    onSubmit(values) {
-      mototobyMutation.mutateAsync(values)
-    },
+    initialValues: initialValuesFormMotoboy,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: values => validateMotoboy(values),
+    onSubmit: values => mototobyMutation.mutateAsync(values)
   })
 
   useEffect(() => {
@@ -54,7 +52,7 @@ const useModalMotoboy = (
       ? formik.setValues({
         name: data.name,
         notes: data.notes || '',
-        phone: data.phone || '',
+        phone: data.phone ? formatPhone(data.phone) : '',
         active: data.active
       })
       : formik.resetForm()

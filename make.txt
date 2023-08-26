@@ -1,15 +1,49 @@
-Revisão OK
+OK
 
-admin/dashboard
-admin/products
-admin/medias
-admin/sales-team
-admin/users
-admin/logistic/sales
-admin/logistic/motoboys
+1 - Quantidade de vendas ser um unico campo
+2 - fechamento
+2.1 Adicionar resumo de valores (valor a pagar/receber do motoboy) || (bruto em cartão, bruto em dinheiro, pix, deposito, etc)
+2.2 Adicionar ações do pagina de vendas no fechamento
+3 - Melhorar filtro de busca por cliente'
+4 - Adicionar mais opções de pagamento na parte de venda
+5 - Se for sedex, adicionar um campo de rastreio de encomenda
+5.1 - Adiconar no historico
+7 - , produto, gerar csv dos resultados (caso tiver produto filtrado, aparecer em primeiro)
+8 - historico de vendas
+8.1 - vendedora poder ver o status da venda
+8.2 - vendedora poder ver o codigo de rastreio
+8.3 exibir detalhes da venda
+9 - pagina de venda
+9.1 - filtro numero da venda
+9.2 resumo (qntd venda por vendedora(qntd venda, dinheiro cartao, bruto), vendas por equipe (qntd venda, dinheiro cartao, bruto), venda por midia, qntd de produto por midia)
 
-|----------------------------------------------------------------|
+rever dashboard do admin
+ver update sale
+rever resumo fechamento as info de saldo do motoboy
+- Adicionar filtro por forma de pagamento no fechamento
+revisar todas as infos de pagamento e csv e pdf
+RESUMO MOTOBOY
+- MOSTRAR PRODUTOS ENTREGUES
+melhorar pdf entrega
 
-TODO
+tanto os status da venda aguardando aprovacao e retorno n irao somar na saida de estoque
 
-criar fleg nas tabelas de user/motoboy/etc "deleted" para manter registros
+CENTRO DE DISTRIBUIÇÕES
+
+- pedidos com motoboys são retirados dos cds deles ok
+- de correios são do cd de porto alegre ok
+
+- poder fazer transferencia, extravio, cadastrar ok
+
+- (entrada, saida, extravio)(atrelado ao motoboy)(cada motoboy tem seu estoque) ok
+
+----------------------------------------
+
+DESENVOLVER
+
+- resumo cd no dashboard(aviso de reposicao)(alerta)
+
+----------------------------------------
+
+Após algumas meses, vai ser necessário criar um banco de cache para o estoque
+

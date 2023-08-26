@@ -21,14 +21,14 @@ const useMotoboys = () => {
   const [useModal, setModal] = useState<ModalSate>({ show: false })
   const [useConfirm, setConfirm] = useState<useConfirmState>({ })
 
-  const { data: motoboys, refetch: refetchMotoboys } = useQuery('logistic/motoboys', logisticApi.getMotoboys, { initialData: [], refetchOnWindowFocus: false })
+  const { data: motoboys, refetch: refetchMotoboys } = useQuery('logistic/motoboys', async () => logisticApi.getMotoboys(), { initialData: [], refetchOnWindowFocus: false })
 
   const deleteMotoboyMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    const toastId = toast.loading("Excluindo produto...")
 
     const hasDeleted = await logisticApi.deleteMotoboy({id})
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir a mídia.`)

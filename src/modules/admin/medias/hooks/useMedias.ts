@@ -17,19 +17,24 @@ interface useConfirmState {
 }
 
 const useMedias = () => {
-  const { data: medias, refetch } = useQuery(['products'], async () => {
+  const { data: medias, refetch } = useQuery(['medias'], async () => {
+
+    const toastId = toast.loading('Carregando mídias...')
+
     const response = await mediasApi.getAllMedias()
+
+    toast.dismiss(toastId)
 
     return response
 
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
   const mediaMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    const toastId = toast.loading("Excluindo produto...")
 
     const hasDeleted = await mediasApi.deleteMedia(id)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir a mídia.`)
@@ -49,8 +54,7 @@ const useMedias = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = (hasRefetch?: boolean) => {
-    hasRefetch && refetch()
+  const closeModal = () => {
     setModal({ show: false })
   }
 

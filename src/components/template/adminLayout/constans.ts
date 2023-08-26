@@ -32,8 +32,8 @@ export const menuItems = [
     Icon: HiOutlineUserGroup({ size: 22 })
   },
   {
-    label: 'Estoque',
-    to: '/admin/stock',
+    label: 'Centros de distribuição',
+    to: '/admin/distribution-centers',
     Icon: BsBox({ size: 22 })
   },
   {

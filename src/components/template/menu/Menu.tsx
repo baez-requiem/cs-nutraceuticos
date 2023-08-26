@@ -21,6 +21,7 @@ import { RxEnter } from 'react-icons/rx'
 
 import { useMenu } from "./hook/useMenu"
 import { BsDot } from 'react-icons/bs'
+import { getStorageAuth } from 'src/utils/localstorage'
 
 export interface MenuItemChildren {
 
@@ -49,6 +50,9 @@ const Menu: FC<MenuProps> = ({
     toggleSubMenuOpen
   } = useMenu()
 
+  const storageAuth = getStorageAuth()
+  const userName = storageAuth?.user.name || ''
+
   return (
     <NavContainer hasMenuHide={hasMenuHide}>
       <NavHeader>
@@ -63,7 +67,7 @@ const Menu: FC<MenuProps> = ({
 
       <UserContent hasMenuHide={hasMenuHide}>
         <Divider line my={0} />
-        <span>teste@email.com.br</span>
+        <span>{userName}</span>
         <Divider line my={0} />
       </UserContent>
 

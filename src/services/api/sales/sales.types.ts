@@ -12,8 +12,7 @@ export type SaleBodyType = {
   phone: string
 
   media_id: string
-  payment_type_id: string
-  card_installments: number
+  sales_quantity: number
 
   discounts: number
   
@@ -32,7 +31,13 @@ export type SaleBodyType = {
   products: {
     id_product: string
     quantity: number
-    sales_quantity: number
+  }[]
+
+  payment_types: {
+    id_payment_type: string,
+    amount: number,
+    card_installments?: number | null,
+    paid: boolean
   }[]
 }
 

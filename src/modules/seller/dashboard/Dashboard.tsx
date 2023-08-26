@@ -1,17 +1,21 @@
-import { Button, Divider, Flex, Paper, Private, Text } from "src/components/ui"
-import { DaySalesChart, ModalNewSale } from "./components"
+import { Button, Divider, Flex, Paper } from "src/components/ui"
+import { DaySalesChart, SalesSummary } from "./components"
 import { useDashboard } from "./hooks/useDashboard"
 import { CardsContainer } from "./styles"
-import SalesSummary from "./components/SalesSummary"
+import { PrivatePage } from "src/components/context"
+import { HeaderSeller } from "src/components/template"
+import { SaleModal } from "src/components/modals"
 
 const Dashboard = () => {
 
-  const { showModal, setShowModal } = useDashboard()
+  const { showModal, setShowModal, data } = useDashboard()
 
   return (
-    <Private roles={['Vendedor']} logout>
-      <Text size="xl2" weight="600" color="gray_900">Dashboard</Text>
+    <PrivatePage roles={['seller']}>
+      <HeaderSeller title="Dashboard" />
+
       <Divider my={10} />
+      
       <CardsContainer>
         <Paper>
           <Flex gap={10} items="end" justify="end">
@@ -19,13 +23,20 @@ const Dashboard = () => {
           </Flex>
         </Paper>
 
-        <DaySalesChart />
+        <DaySalesChart data={data?.totalSalesPerDay} />
 
-        <SalesSummary />
+        <SalesSummary
+          totalSalesMonth={data?.totalSalesMonth}
+          totalSalesWeek={data?.totalSalesWeek}
+          totalSalesDay={data?.totalSalesDay}
+        />
       </CardsContainer>
 
-      <ModalNewSale show={showModal} onClose={() => setShowModal(false)} />
-    </Private>
+      <SaleModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
+    </PrivatePage>
   )
 }
 

@@ -40,4 +40,4 @@ const IconButton = styled.button<IconButtonProps>`
 
 `
 
-export default IconButton
+export { IconButton }

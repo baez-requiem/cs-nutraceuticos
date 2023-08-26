@@ -20,3 +20,7 @@ export type CreateMediaBody = {
 export type UpdateMediaBody = {
   id: string
 } & CreateMediaBody
+
+export type GetMediasParams = {
+  active?: boolean
+}

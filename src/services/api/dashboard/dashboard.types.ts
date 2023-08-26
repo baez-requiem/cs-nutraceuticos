@@ -29,3 +29,10 @@ export type DayItemType = {
   day: number
   amount: number
 }
+
+export type SellerDashboard = {
+  totalSalesMonth: number
+  totalSalesWeek: number
+  totalSalesDay: number
+  totalSalesPerDay: { label: string, value: number }[]
+}

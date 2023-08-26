@@ -72,10 +72,25 @@ export const makeGETParams = (url: string = '', obj: { [key: string]: string | n
 
   for (const key in obj) {
     const value = obj[key]
-    const param = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
 
-    params.push(param)
+    if (Array.isArray(value) && value.length) {
+
+      value.forEach(arrValue => {
+        if (typeof arrValue === 'string' || typeof arrValue === 'number') {
+          const param = `${encodeURIComponent(key+'[]')}=${encodeURIComponent(arrValue)}`
+          params.push(param)
+        }
+      })
+    } else {
+      const param = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+  
+      params.push(param)
+    }
   }
 
   return `${url}?${params.join('&')}`
 }
+
+export const isStatus = (res: AxiosResponse, status: number) => res.status === status
+export const isStatus200 = (res: AxiosResponse) => isStatus(res, 200)
+export const isStatus201 = (res: AxiosResponse) => isStatus(res, 201)

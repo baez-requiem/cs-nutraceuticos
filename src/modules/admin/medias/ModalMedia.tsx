@@ -73,7 +73,7 @@ const ModalMedia: FC<ModalMediaProps> = ({
       <Divider my={10} />
 
       <Flex items="end" justify="end" gap={10}>
-        <Button size="sm" color="gray_500" onClick={() => onClose()}>Cancelar</Button>
+        <Button size="sm" color="gray_500" onClick={onClose}>Cancelar</Button>
         <Button size="sm" color="green_600" onClick={submitForm}>Salvar</Button>
       </Flex>
     </Modal>

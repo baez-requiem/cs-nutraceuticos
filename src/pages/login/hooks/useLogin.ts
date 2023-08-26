@@ -13,11 +13,11 @@ const useLogin = () => {
   const navigate = useNavigate()
 
   const mutation = useMutation(async (values: typeof initialValues) => {
-    toast.loading("Validando os dados...")
+    const toastId = toast.loading("Validando os dados...")
 
     const data = await auth.login(values)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
     
     if ('error' in data) {
       toast.error(data.error.message)

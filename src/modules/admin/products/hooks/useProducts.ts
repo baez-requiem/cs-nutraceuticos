@@ -18,18 +18,22 @@ interface useConfirmState {
 
 const useProducts = () => {
   const { data: products, refetch } = useQuery(['products'], async () => {
+    const toastId = toast.loading("Carregando produtos...")
+
     const response = await productsApi.getAllProducts()
+
+    toast.dismiss(toastId)
 
     return response
 
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
   const mutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo produto...")
+    const toastId = toast.loading("Excluindo produto...")
 
     const hasDeleted = await productsApi.deleteProduct(id)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir o produto.`)
@@ -49,8 +53,7 @@ const useProducts = () => {
       : setModal({ show: true })
   }
 
-  const closeModal = (hasRefetch?: boolean) => {
-    hasRefetch && refetch()
+  const closeModal = () => {
     setModal({ show: false })
   }
 

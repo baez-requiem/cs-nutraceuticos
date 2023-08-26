@@ -5,7 +5,6 @@ export type ProductType = {
   notes: string | null
   active: boolean
   amount: number
-  supply_quantity_notice: number | null
   created_at: string
   updated_at: string | null
 }
@@ -16,9 +15,12 @@ export type CreateProductBody = {
   notes: string | null
   active: boolean
   amount: number
-  supply_quantity_notice: number | null
 }
 
 export type UpdateProductBody = {
   id: string
 } & CreateProductBody
+
+export type GetProductsParamsType = {
+  active?: boolean
+}

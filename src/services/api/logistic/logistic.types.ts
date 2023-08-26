@@ -1,3 +1,5 @@
+import { SalesTeamType } from "../salesTeam/salesTeam.types"
+
 export type Product = {
   id: string
   name: string
@@ -5,7 +7,6 @@ export type Product = {
   notes: string | null
   active: boolean
   amount: number
-  supply_quantity_notice: number | null
   created_at: string
   updated_at: string | null
 }
@@ -31,11 +32,27 @@ export type SaleStatus = {
   id: string
   color?: string
   status: string
+  order: number
+}
+
+export type SalePayments = {
+  id: string
+  id_sale: string
+
+  id_payment_type: string
+  payment_type: PaymentType
+
+  paid: boolean
+  amount: number
+  card_installments: number | null
+
+  created_at: string
 }
 
 export type LogisticInfos = {
   id: string
   id_sale_status: string
+  tracking_code: string | null
   delivery_value: number
   id_delivery_type: string | null
   delivery_date: string | Date
@@ -77,13 +94,18 @@ export type SaleProduct = {
   id_product: string
   id_sale: string
   quantity: number
-  sales_quantity: number
+  unit_value: number
   created_at: string
   product: Product
 }
 
 export type Sale = {
   id: string
+  number: number
+  
+  id_user: string
+  user: User
+
   name: string
   phone: string
   rg: string | null
@@ -95,21 +117,21 @@ export type Sale = {
   neighborhood: string | null
   address: string | null
   complement: string | null
+  
+  sales_quantity: number
   media_id: string
-  payment_type_id: string
-  card_installments: number | null
-  id_user: string
   id_sales_team: string | null
   discounts: number | null
   notes: string | null
-  created_at: string
-  updated_at: string | null
   media: Media
-  payment_type: PaymentType
-  sales_team: string | null
-  user: User
+  
+  sales_team: SalesTeamType | null
   sale_products: SaleProduct[]
   logistic_infos: LogisticInfos[]
+  sale_payments: SalePayments[]
+  
+  created_at: string
+  updated_at: string | null
 }
 
 export type DeliveryType = {
@@ -137,6 +159,7 @@ export type CreateNewLogisticInfoBodyType = {
   delivery_date: string
   delivery_value: number
   notes: string | null
+  tracking_code: string | null
 }
 
 export type GetSalesParams = {
@@ -146,6 +169,8 @@ export type GetSalesParams = {
   seller?: string | null
   client_name?: string | null
   client_phone?: string | null
+  number?: number | null
+  payment_type?: string | null
 }
 
 export type CreateMotoboyBodyType = {
@@ -158,3 +183,7 @@ export type CreateMotoboyBodyType = {
 export type UpdateMotoboyBodyType = {
   id: string
 } & CreateMotoboyBodyType
+
+export type GetMotoboysParamsType = {
+  active?: boolean
+}

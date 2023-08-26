@@ -1,131 +1,82 @@
-import { AiOutlineEye } from "react-icons/ai"
-import { MdOutlineModeEditOutline } from "react-icons/md"
 import { Header } from "src/components/template"
-import { Badge, Flex, Grid, IconButton, Input, Paper, Private, Select, SideFilters, Table, TableActions } from "src/components/ui"
+import { Divider, Flex, Paper, Private, Buttons } from "src/components/ui"
 import { useSales } from "./hooks/useSales"
-import { ModalHistory, ModalLogisticInfos, ModalSale } from "./components"
-import { matchColor } from "src/utils/theme"
-
-import { handleChangeFormatPhone } from "src/utils/form.utils"
-
+import { MediasResume, SaleFilters, SaleTable, SalesTeamsResume, SellersResume } from "./components"
+import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
+import { makeSalesCsv } from "./utils"
 
 export const Sales = () => {
 
   const {
     tableData,
-    statusOpts,
-    usersOpts,
     openModalSale,
     openModalLogisticInfos,
     openModalHistory,
     useModal,
     closeModal,
     salePDF,
-    formik: {
-      values,
-      handleChange,
-      submitForm,
-      setFieldValue
-    }
+    sales,
+    onFilter,
+    useFilters
   } = useSales()
 
   return (
-    <Private roles={['Admin']} logout>
-      <Grid gap={20}>
-        <Header title="Vendas" subtitle="Logística" />
+    <Private roles={['admin']} logout>
 
-        <Paper>
-          <Flex justify="end" gap={20}>
-            <SideFilters onFilter={submitForm}>
-              <Grid gap={10}>
-                <Input
-                  name="init_date"
-                  label="Data"
-                  type="date"
-                  onChange={handleChange}
-                  value={values.init_date}
-                />
-                <Input
-                  name="end_date"
-                  label="até"
-                  type="date"
-                  onChange={handleChange}
-                  value={values.end_date}
-                />
+      <Header title="Vendas" subtitle="Logística" />
 
-                <Select
-                  label="Status"
-                  name="status"
-                  onChange={handleChange}
-                  value={values.status}
-                  options={statusOpts}
-                />
-                <Select
-                  label="Vendedor"
-                  name="seller"
-                  onChange={handleChange}
-                  value={values.seller}
-                  options={usersOpts}
-                />
+      <Divider my={10} />
 
-                <Input
-                  label="Nome do cliente"
-                  name="client_name"
-                  onChange={handleChange}
-                  value={values.client_name}
-                />
-                <Input
-                  label="Telefone"
-                  name="client_phone"
-                  onChange={handleChangeFormatPhone(setFieldValue)}
-                  value={values.client_phone}
-                />
-              </Grid>
-            </SideFilters>
-          </Flex>
-        </Paper>
+      <Paper>
+        <Flex justify="space-between" gap={20}>
+          <Buttons.Csv onClick={() => makeSalesCsv(sales, useFilters?.products?.[0])} />
 
-        <Paper>
-          <Table
-            columns={[
-              { label: 'Data', value: 'date' },
-              { label: 'Vendedor', value: 'user_name' },
-              { label: 'Qntd. total de vendas', value: 'total_sales' },
-              { label: 'Qntd. total de produtos', value: 'total_products' },
-              { label: 'Valor total', value: 'total_amount' },
-              { label: 'Status', value: 'status', render: (value, data) => (
-                <Badge color={matchColor(data.color_status?.toString()) || 'black'}>{value}</Badge>
-              ) },
-              { label: 'Ações', align: 'center', value: 'id', render: value => (
-                <TableActions actions={[
-                  { type: 'Vizualizer', onClick: openModalSale(value.toString()) },
-                  { type: 'Edit', onClick: openModalLogisticInfos(value.toString()) },
-                  { type: 'History', onClick: openModalHistory(value.toString()) },
-                  { type: 'PDF', onClick: salePDF(value.toString()) },
-                ]} />
-              ) },
-            ]}
-            data={tableData}
+          <SaleFilters
+            onFilter={onFilter}
           />
-        </Paper>
-      </Grid>
+        </Flex>
+      </Paper>
 
-      <ModalSale
-        show={useModal.show == 'sale'}
-        data={useModal.data!}
-        onClose={closeModal}
-      />
+      <Divider my={10} />
 
-      <ModalLogisticInfos
+      <Paper>
+        <SaleTable
+          data={tableData}
+          openModalSale={openModalSale}
+          openModalLogisticInfos={openModalLogisticInfos}
+          openModalHistory={openModalHistory}
+          salePDF={salePDF}
+        />
+      </Paper>
+
+      <Divider my={10} />
+
+      <SellersResume sales={sales} />
+      
+      <Divider my={10} />
+
+      <SalesTeamsResume sales={sales} />
+      
+      <Divider my={10} />
+
+      <MediasResume sales={sales} />
+
+      <LogisticInfosModal
         show={useModal.show == 'logistic-infos'}
         data={useModal.data!}
         onClose={closeModal}
       />
-      
-      <ModalHistory
+
+      <LogisticInfosHistoryModal
         show={useModal.show == 'history'}
         data={useModal.data!}
         onClose={closeModal}
+      />
+
+      <SaleModal
+        show={useModal.show == 'sale'}
+        data={useModal.data!}
+        onClose={() =>closeModal('sale')}
       />
     </Private>
   )

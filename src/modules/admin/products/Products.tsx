@@ -33,7 +33,7 @@ const Products = () => {
   } = useProducts()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Header title="Produtos" />
       <Divider my={10} />
 
@@ -55,7 +55,6 @@ const Products = () => {
               </Flex>
             ) },
             { label: 'Descrição', value: 'description' },
-            { label: 'Anotações', value: 'notes' },
             { label: 'Status', value: 'active', render: value => (
               <Badge color={value == 1 ? 'green_600' : 'gray_500'}>{value == 1 ? 'Ativo' : 'desativado'}</Badge>
             ) },

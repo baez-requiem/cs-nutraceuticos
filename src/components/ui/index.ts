@@ -1,4 +1,3 @@
-export { default as IconButton } from './iconButton/IconButton'
 export { default as Divider } from './Divider/CustomDivider'
 export { default as Loader } from './loader/Loader'
 export { default as Button } from './button/Button'
@@ -18,4 +17,10 @@ export { default as Select } from './select/Select'
 export { default as Badge } from './badge/Badge'
 export { default as Switch } from './switch/Switch'
 export { default as TableActions } from './tableActions/TableActions'
-export { Table as Table } from './table/Table'
+export { default as Table } from './tableComponent/Table'
+export { default as Checkbox } from './checkbox/Checkbox'
+
+export * from './iconButton/IconButton'
+export * from './resumeCard/ResumeCard'
+
+export * as Buttons from './buttons'

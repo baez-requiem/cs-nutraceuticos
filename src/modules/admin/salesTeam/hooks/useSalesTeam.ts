@@ -25,11 +25,11 @@ const useSalesTeam = () => {
   }, { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false })
 
   const saleTeamMutation = useMutation(async (id: string) => {
-    toast.loading("Excluindo Equipe de vendas...")
+    const toastId = toast.loading("Excluindo Equipe de vendas...")
 
     const hasDeleted = await salesTeamApi.deleteSaleTeam(id)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!hasDeleted) {
       toast.error(`Houve um erro ao excluir a equipe de vendas.`)

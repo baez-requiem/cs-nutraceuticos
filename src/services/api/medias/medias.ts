@@ -1,16 +1,17 @@
-import { authenticatedRequest } from "../utils"
+import { authenticatedRequest, makeGETParams } from "../utils"
 
 import {
   CreateMediaBody,
+  GetMediasParams,
   MediaType,
   UpdateMediaBody
 } from "./medias.types"
 
-const getAllMedias = async (): Promise<MediaType[]> => {
+const getAllMedias = async (params: GetMediasParams = {}): Promise<MediaType[]> => {
 
   try {
     const response = await authenticatedRequest({
-      url: '/medias',
+      url: makeGETParams('/medias', params),
       method: 'get'
     })
 

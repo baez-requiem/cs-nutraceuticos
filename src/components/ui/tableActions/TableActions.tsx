@@ -16,10 +16,16 @@ interface TableActionsProps {
     type: 'Edit' | 'Delete' | 'Stock' | 'PDF' | 'Vizualizer' | 'History'
     onClick?: () => void
     title?: string
+    show?: boolean
   }[]
 }
 
-const ActionButton = ({ type, onClick, title }: TableActionsProps['actions'][0]) => {
+const ActionButton = ({ type, onClick, title, show = true }: TableActionsProps['actions'][0]) => {
+
+  if (!show) {
+    return null
+  }
+
   switch (type) {
     case 'PDF':        return <PDFAciton onClick={onClick} title={title} />
     case 'Edit':       return <EditAciton onClick={onClick} title={title} />

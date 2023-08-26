@@ -16,7 +16,7 @@ export const Container = styled.div<{ block: boolean, size?: number }>`
   }};
 `
 
-export const StyledInput = styled.input<{ block: boolean, size?: number, hasUpLabel: boolean }>`
+export const StyledInput = styled.input<{ block: boolean, size?: number, hasUpLabel: boolean, hasError: boolean }>`
   margin-top: auto;
   border-radius: 5px;
   padding: 0 10px;
@@ -37,6 +37,10 @@ export const StyledInput = styled.input<{ block: boolean, size?: number, hasUpLa
   :focus:not(:disabled) {
     border: 1.5px solid ${({ theme }) => theme.colors.sky_600};
   }
+
+  ${({ hasError }) => hasError && css`
+    border: 1.5px solid ${({ theme }) => theme.colors.red_600};
+  `}
 
   width: ${({ block, size }) => {
     if (block) return '100%'

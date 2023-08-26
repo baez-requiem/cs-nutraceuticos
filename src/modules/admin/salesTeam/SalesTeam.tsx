@@ -31,7 +31,7 @@ const SalesTeam = () => {
   } = useSalesTeam()
 
   return (
-    <Private roles={['Admin']} logout>
+    <Private roles={['admin']} logout>
       <Header title="Equipes de venda" />
       <Divider my={10} />
 
@@ -47,7 +47,6 @@ const SalesTeam = () => {
         <Table
           columns={[
             { label: 'Equipe', value: 'name' },
-            { label: 'Anotações', value: 'notes' },
             {
               label: 'Ações',
               value: 'id',

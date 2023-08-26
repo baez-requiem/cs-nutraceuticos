@@ -1,18 +1,20 @@
 import { FC, ReactNode, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { BsChevronRight } from 'react-icons/bs'
-import { Button, IconButton, Text } from '..'
+import { Button, Flex, IconButton, Text } from '..'
 import { Container, Content, Footer, Header } from './sideFilters.styles'
 
 export interface SideFiltersProps {
   children: ReactNode | ReactNode[]
   onClose?: () => void
   onFilter?: () => void
+  onReset?: () => void
 }
 
 const SideFilters: FC<SideFiltersProps> = ({
   children,
   onFilter,
+  onReset,
 }) => {
 
   const [show, setShow] = useState(false)
@@ -33,7 +35,10 @@ const SideFilters: FC<SideFiltersProps> = ({
             {children}
           </Content>
           <Footer>
+            <Flex gap={20}>
+            {onReset && <Button color='blue_800' block onClick={onReset}>Redefinir</Button>}
             <Button color='sky_800' block onClick={onFilter}>Filtrar</Button>
+            </Flex>
           </Footer>
         </Container>
       , document.body)}

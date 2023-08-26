@@ -1,38 +1,91 @@
-import { Button, Divider, Flex, Grid, Input, Paper, Private, Table, Text } from "src/components/ui"
+import { Badge, Divider, Flex, Grid, Input, Paper, Private, SideFilters, Table, TableActions, Text } from "src/components/ui"
+import { useSalesHistory } from "./hooks/useSalesHistory"
+import { SaleDetailsModal, SaleModal } from "src/components/modals"
+import { matchColor } from "src/utils/theme"
+import { HeaderSeller } from "src/components/template"
 
 const SalesHistory = () => {
 
+  const {
+    tableData,
+    closeModal,
+    openModal,
+    useModal,
+    formik: {
+      values,
+      handleSubmit,
+      handleChange
+    }
+  } = useSalesHistory()
+
   return (
-    <Private roles={['Vendedor']} logout>
-      <Text size="xl2" weight="600" color="gray_900">Histórico de vendas</Text>
+    <Private roles={['seller']} logout>
+      <HeaderSeller title="Histórico de vendas" />
       <Divider my={10} />
 
-      <Grid template="300px">
-        <Input label="Pesquisar..." />
-      </Grid>
+      <Paper>
+          <Flex justify="end" gap={20}>
+            <SideFilters onFilter={handleSubmit}>
+              <Grid gap={10}>
+                <Input
+                  label="Data"
+                  type="date"
+                  name="init_date"
+                  value={values.init_date}
+                  onChange={handleChange}
+                />
 
+                <Input
+                  label="até"
+                  type="date"
+                  name="end_date"
+                  value={values.end_date}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </SideFilters>
+          </Flex>
+
+        </Paper>
       
       <Divider my={10} />
 
       <Paper>
         <Table
           columns={[
+            { label: "#", value: "number" },
             { label: "Cliente", value: "client_name" },
-            { label: "Telefone", value: "phone" },
+            { label: "Telefone", value: "client_phone" },
             { label: "Mídia", value: "media" },
-            { label: "Qntd. Vendas", value: "quantity_sales" },
             { label: "Data", value: "date" },
-            { label: "Ações", value: "id" },
+            { label: "Cód. rastreio", value: "tracking_code" },
+            {
+              label: 'Status', value: 'status', render: (value, obj) => (
+                <Badge block color={matchColor(obj.color_status?.toString()) || 'black'}>{value}</Badge>
+              )
+            },
+            { label: "Ações", value: "id", align: 'center', render: (value, sale) => <TableActions
+              actions={[
+                { type: 'Vizualizer', onClick: openModal('sale-details', value.toString()) },
+                { type: 'Edit', onClick: openModal('sale', value.toString()), show: !!sale.hasEditSale },
+              ]}
+            /> },
           ]}
-          data={[
-            { id: 'a1', client_name: 'Fulano de tal', phone: '(99) 99999-9999', media: "Facebook", quantity_sales: 16, date: '01/01/2023 ás 10:00' },
-            { id: 'a2', client_name: 'Fulano de tal', phone: '(99) 99999-9999', media: "Google Ads", quantity_sales: 16, date: '01/01/2023 ás 09:00' },
-            { id: 'a3', client_name: 'Fulano de tal', phone: '(99) 99999-9999', media: "WhatsApp", quantity_sales: 16, date: '01/01/2023 ás 08:00' }
-          ]}
+          data={tableData}
         />
       </Paper>
 
-      <Divider my={10} />
+      <SaleModal
+        show={useModal.show === 'sale'}
+        onClose={closeModal}
+        data={useModal.data}
+      />
+
+      <SaleDetailsModal
+        show={useModal.show === 'sale-details'}
+        onClose={closeModal}
+        data={useModal.data}
+      />
     </Private>
   )
 }

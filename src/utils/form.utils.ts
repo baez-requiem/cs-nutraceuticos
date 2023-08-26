@@ -56,3 +56,28 @@ export function handleChangeFormatPhone(
     setFieldValue(name, hasNumbers ? formatedValue : '')
   }
 }
+
+export function makeSelectOpts(
+  inputArray: {[key: string]: any}[],
+  labelField: string,
+  valueField: string,
+  nullLabelField?: string,
+): { label: string, value: string|number }[] {
+  const transformedArray: { label: string, value: string|number }[] = []
+
+  nullLabelField && transformedArray.push({
+    label: nullLabelField,
+    value: ''
+  })
+
+  for (const obj of inputArray) {
+    if (obj[labelField] !== undefined && obj[valueField] !== undefined) {
+      transformedArray.push({
+        label: obj[labelField],
+        value: obj[valueField]
+      })
+    }
+  }
+
+  return transformedArray
+}

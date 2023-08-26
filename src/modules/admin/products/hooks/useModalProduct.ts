@@ -4,52 +4,47 @@ import { ProductType } from "src/services/api/products/products.types"
 import { useMutation } from 'react-query'
 import { productsApi } from 'src/services/api'
 import { toast } from 'react-toastify'
-import { formatReal, realToFloat } from 'src/utils/number.utils'
-
-const initialValues = {
-  description: '',
-  active: false,
-  amount: '',
-  notes: '',
-  name: '',
-  supply_quantity_notice: ''
-}
+import { floatToReal } from 'src/utils/number.utils'
+import { initialValuesFormProduct } from '../constants'
+import { parseProductSubmit, validateProduct } from '../utils/validations'
+import { useRefetchQueries } from 'src/hooks'
 
 const useModalProduct = (
   show: boolean,
-  onClose: (arg0?: boolean) => void,
+  onClose: () => void,
   data?: ProductType
 ) => {
-  const mutation = useMutation(async (values: typeof initialValues) => {
+  const { refetchQueries } = useRefetchQueries()
+
+  const mutation = useMutation(async (values: typeof initialValuesFormProduct) => {
     const idProduct = data?.id
 
-    toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
+    const toastId = toast.loading(`${idProduct ? 'Atualizando' : 'Inserindo'} dados...`)
 
-    const body = {
-      ...values,
-      supply_quantity_notice: parseInt(values.supply_quantity_notice),
-      amount: realToFloat(values.amount)
-    }
+    const body = parseProductSubmit(values)
 
     const ok = idProduct
       ? await productsApi.updateProduct({ ...body, id: idProduct })
       : await productsApi.createProduct(body)
 
-    toast.dismiss()
+    toast.dismiss(toastId)
 
     if (!ok) {
       toast.error(`Houve um erro ao ${idProduct ? 'atualizar' : 'cadastrar'} o produto.`)
     } else {
       toast.success(`Produto ${idProduct ? 'atualizado' : 'cadastrado'} com sucesso!`)
-      onClose(true)
+      refetchQueries(['products'])
+      onClose()
     }
   })
   
   const formik = useFormik({
-    initialValues,
-    onSubmit(values) {
-      mutation.mutateAsync(values)
-    },
+    initialValues: initialValuesFormProduct,
+    validateOnBlur: false,
+    validateOnChange: false,
+    validateOnMount: false,
+    validate: values => validateProduct(values, data?.id),
+    onSubmit: values => mutation.mutateAsync(values)
   })
 
   useEffect(() => {
@@ -59,8 +54,7 @@ const useModalProduct = (
         description: data.description || '',
         notes: data.notes || '',
         active: data.active,
-        supply_quantity_notice: data.supply_quantity_notice?.toString() || '',
-        amount: formatReal(data.amount) ,
+        amount: floatToReal(data.amount) ,
       })
       : formik.resetForm()
   }, [show])
