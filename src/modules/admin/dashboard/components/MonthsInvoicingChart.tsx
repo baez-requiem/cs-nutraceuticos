@@ -18,7 +18,7 @@ const MonthsInvoicingChart = () => {
   )
 
   const data = [{
-    data: monthStatisticsResume
+    data: monthStatisticsResume.length ? monthStatisticsResume : [{ day: 1, amount: 0 }]
   }]
 
   const primaryAxis = useMemo((): AxisOptions<DayItemType> => ({
