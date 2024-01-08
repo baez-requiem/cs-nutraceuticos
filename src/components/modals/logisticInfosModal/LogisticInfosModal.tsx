@@ -115,6 +115,11 @@ const LogisticInfosModal: FC<LogisticInfosModalProps> = ({
           <Text>Endereço:</Text>
           <Text size="sm">{data?.address}</Text>
         </Grid>
+        
+        <Grid items="center">
+          <Text>Número:</Text>
+          <Text size="sm">{data?.address_number}</Text>
+        </Grid>
 
         <Grid items="center">
           <Text>Complemento:</Text>
@@ -144,16 +149,6 @@ const LogisticInfosModal: FC<LogisticInfosModalProps> = ({
         <Text weight="500">Dados da entrega</Text>
         <Divider />
         <Grid gap={10} template="1fr 1fr" md="1fr">
-          <Select
-            nullable
-            label="Tipo de entrega:"
-            name="id_delivery_type"
-            value={values.id_delivery_type}
-            options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
-            onChange={handleChange}
-            labelFixed={!!values.id_delivery_type}
-          />
-
           <Input
             label="Data de entrega:"
             name="delivery_date"
@@ -162,6 +157,25 @@ const LogisticInfosModal: FC<LogisticInfosModalProps> = ({
             onChange={handleChange}
             labelFixed={!!values.delivery_date}
           />
+          
+          <Input
+            label="Horário de entrega:"
+            name="delivery_time"
+            type="time"
+            value={values.delivery_time}
+            onChange={handleChange}
+            labelFixed={!!values.delivery_time}
+          />
+
+          <Select
+            nullable
+            label="Tipo de entrega:"
+            name="id_delivery_type"
+            value={values.id_delivery_type}
+            options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
+            onChange={handleChange}
+            labelFixed={!!values.id_delivery_type}
+          />          
 
           <Fade.FadeIn show={!!values.id_delivery_type}>
             {values.id_delivery_type === 'motoboy' && (

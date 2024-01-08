@@ -32,6 +32,7 @@ export const parseSaleFormValues = (sale: Sale) => {
     state: sale.state || '',
     address: sale.address || '',
     neighborhood: sale.neighborhood || '',
+    address_number: sale.address_number || '',
     complement: sale.complement || '',
 
     media_id: sale.media_id,

@@ -1,4 +1,5 @@
 import { jsPDF } from "jspdf"
+import { filesApi } from "src/services/api"
 import { Sale } from "src/services/api/logistic/logistic.types"
 import { downloadCsv, jsonToCsv } from "src/utils/csv"
 import { formatDate, formatDateTime, formatDocDateTime } from "src/utils/date.utils"
@@ -18,30 +19,43 @@ export const hasShowPdfAction = (sale: Sale) => {
   return hasShow
 }
 
-export const makeSalePDF = (sale: Sale) => {
+export const makeSalePDF = (sale: Sale, convertToPNG?: boolean) => {
+  
+  const logisticInfo = sale.logistic_infos[0]!;
+
   const doc = new jsPDF('p', 'px', [720, 480])
 
-  let spaceY = 20
+  let spaceY = 30
 
-  doc.setFontSize(18)
-  doc.text(`Resumo da venda #${sale.number.toString().padStart(5, '0')}`, 10, spaceY)
+  doc.setFillColor(8,47,73);
+  doc.rect(0, 0, 481, 50, 'F');
 
-  spaceY += 10
+  doc.setFontSize(28)
+  doc.setTextColor('#fff')
+  doc.text(`Resumo Venda #${sale.number.toString().padStart(5, '0')}`, 10, spaceY)
 
-  doc.setLineWidth(0.5)
-  doc.line(10, spaceY, 470, spaceY)
+  spaceY += 50
+
+  doc.setTextColor('#000')
+  doc.setFontSize(22)
+  doc.text(`Dados principais`, 10, spaceY)
 
   spaceY += 20
 
-  doc.setFontSize(14)
-  doc.text(`Data da venda: ${formatDateTime(sale.created_at)}`, 10, spaceY)
-  doc.text(`Vendedor: ${sale.user.name}`, 260, spaceY)
-  spaceY += 25
+  doc.setFontSize(16)
   doc.text(`Cliente: ${sale.name}`, 10, spaceY)
+  doc.text(`Vendedor: ${sale.user.name}`, 260, spaceY)
+  spaceY += 15
+  doc.text(`Data da venda: ${formatDateTime(sale.created_at)}`, 10, spaceY)
   doc.text(`Telefone: ${formatPhone(sale.phone)}`, 260, spaceY)
-  spaceY += 25
+  spaceY += 40
 
-  doc.text('Produtos', 10, spaceY)
+  doc.setFontSize(22)
+  doc.text(`Produtos`, 10, spaceY)
+  spaceY += 20
+
+  doc.setFontSize(16)
+  doc.text('Produto', 10, spaceY)
   doc.text('Qntd.', 130, spaceY)
   doc.text('Valor Und.', 260, spaceY)
   doc.text('Total', 390, spaceY)
@@ -87,11 +101,11 @@ export const makeSalePDF = (sale: Sale) => {
 
   spaceY += 25
 
-  doc.setFontSize(16)
+  doc.setFontSize(22)
   doc.text(`Dados do pagamento`, 10, spaceY)
-  spaceY += 15
+  spaceY += 20
 
-  doc.setFontSize(14)
+  doc.setFontSize(16)
   doc.text('Método', 10, spaceY)
   doc.text('Valor', 260, spaceY)
   doc.text('Situação', 390, spaceY)
@@ -106,23 +120,23 @@ export const makeSalePDF = (sale: Sale) => {
     spaceY += 15
   })
 
-  spaceY += 15
+  spaceY += 20
 
-  doc.setFontSize(16)
+  doc.setFontSize(22)
   doc.text('Dados da entrega', 10, spaceY)
 
-  spaceY += 25
+  spaceY += 20
 
-  doc.setFontSize(14)
-  doc.text(`Tipo de entrega: ${sale.logistic_infos[0].delivery_type.name}`, 10, spaceY)
-  if (sale.logistic_infos[0].delivery_type.id === 'motoboy') {
-    doc.text(`Motoboy: ${sale.logistic_infos[0].motoboy.name}`, 260, spaceY)
+  doc.setFontSize(16)
+  doc.text(`Tipo de entrega: ${logisticInfo.delivery_type.name}`, 10, spaceY)
+  if (logisticInfo.delivery_type.id === 'motoboy') {
+    doc.text(`Motoboy: ${logisticInfo.motoboy.name}`, 260, spaceY)
   }
 
   spaceY += 15
 
-  doc.text(`Data da entrega: ${formatDate(sale.logistic_infos[0].delivery_date)}`, 10, spaceY)
-  doc.text(`Valor da entrega: R$ ${floatToReal(sale.logistic_infos[0].delivery_value)}`, 260, spaceY)
+  doc.text(`Data da entrega: ${formatDate(logisticInfo.delivery_date)}${logisticInfo.delivery_time && ` ás ${logisticInfo.delivery_time}`}`, 10, spaceY)
+  doc.text(`Valor da entrega: R$ ${floatToReal(logisticInfo.delivery_value)}`, 260, spaceY)
 
   spaceY += 25
 
@@ -133,20 +147,43 @@ export const makeSalePDF = (sale: Sale) => {
   doc.text(`Bairro: ${sale.neighborhood}`, 260, spaceY)
   spaceY += 15
   doc.text(`Endereço: ${sale.address}`, 10, spaceY)
-  doc.text(`Complemento: ${sale.complement}`, 260, spaceY)
+  doc.text(`Número: ${sale.address_number}`, 260, spaceY)
+  spaceY += 15
+  doc.text(`Complemento: ${sale.complement}`, 10, spaceY)
 
-  if (sale.logistic_infos[0].notes) {
+  if (logisticInfo.notes) {
     spaceY += 25
 
     doc.setFontSize(16)
     doc.text('Anotações:', 10, spaceY)
     spaceY += 15
-    doc.setFontSize(14)
-    doc.text(sale.logistic_infos[0].notes || 'Nenhuma anotação.', 10, spaceY, { maxWidth: 460 })
+    doc.setFontSize(16)
+    doc.text(logisticInfo.notes || 'Nenhuma anotação.', 10, spaceY, { maxWidth: 460 })
   }
 
+  const fileName = `resumo-venda-${sale.number}`
 
-  doc.save(`resumo-venda-${formatDocDateTime(sale.created_at)}.pdf`)
+  if (!convertToPNG) {
+    doc.save(`${fileName}.pdf`)
+
+    return
+  }
+
+  const blob = doc.output('blob')
+
+  filesApi.pdfToImage({ blob, imageName : fileName }).then(blob => {
+    if (blob) {
+      const url = window.URL.createObjectURL(new Blob([blob]))
+      const link = document.createElement('a')
+      link.href = url
+
+      link.setAttribute('download', fileName + '.png')
+
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode.removeChild(link)
+    }
+  })
 }
 
 export const makeSalesCsv = (sales: Sale[], firstProduct: string = '') => {

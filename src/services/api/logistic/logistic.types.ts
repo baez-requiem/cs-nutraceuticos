@@ -56,6 +56,7 @@ export type LogisticInfos = {
   delivery_value: number
   id_delivery_type: string | null
   delivery_date: string | Date
+  delivery_time: string
   id_motoboy: string | null
   id_sale: string
   notes: string | null
@@ -116,6 +117,7 @@ export type Sale = {
   city: string | null
   neighborhood: string | null
   address: string | null
+  address_number: string | null
   complement: string | null
   
   sales_quantity: number

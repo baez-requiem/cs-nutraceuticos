@@ -3,6 +3,7 @@ export const initialValuesFormLogisticInfos = {
   delivery_value: '',
   id_delivery_type: '',
   delivery_date: '',
+  delivery_time: '',
   id_motoboy: '',
   notes: '',
   tracking_code: '',

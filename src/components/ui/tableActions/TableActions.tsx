@@ -8,12 +8,13 @@ import {
   HistoryAciton,
   PDFAciton,
   StockAciton,
-  VizualizerAciton
+  VizualizerAciton,
+  PNGAction
 } from './TableButtonActions'
 
 interface TableActionsProps {
   actions?: {
-    type: 'Edit' | 'Delete' | 'Stock' | 'PDF' | 'Vizualizer' | 'History'
+    type: 'Edit' | 'Delete' | 'Stock' | 'PDF' | 'Vizualizer' | 'History' | 'PNG'
     onClick?: () => void
     title?: string
     show?: boolean
@@ -33,6 +34,7 @@ const ActionButton = ({ type, onClick, title, show = true }: TableActionsProps['
     case 'Delete':     return <DeleteAciton onClick={onClick} title={title} />
     case 'History':    return <HistoryAciton onClick={onClick} title={title} />
     case 'Vizualizer': return <VizualizerAciton onClick={onClick} title={title} />
+    case 'PNG':        return <PNGAction onClick={onClick} title={title} />
   }
 }
 

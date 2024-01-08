@@ -1,4 +1,5 @@
 export { default as auth             } from './auth/login'
+export { default as filesApi         } from './files/files'
 export { default as usersApi         } from './users/users'
 export { default as rolesApi         } from './roles/roles'
 export { default as salesApi         } from './sales/sales'

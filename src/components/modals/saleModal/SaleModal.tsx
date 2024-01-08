@@ -158,6 +158,14 @@ const SaleModal: FC<ModalSaleProps> = ({
           />
 
           <Input
+            label="Número:"
+            name="address_number"
+            value={values.address_number}
+            onChange={handleChange}
+            labelFixed={!!values.address_number}
+          />
+
+          <Input
             label="Complemento:"
             name="complement"
             value={values.complement}

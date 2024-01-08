@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import { logisticApi } from "src/services/api"
-import { formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
+import { formatDate, formatDateTime, getEndMonthValue, getStartMonthValue } from "src/utils/date.utils"
 import { floatToReal } from "src/utils/number.utils"
 import { toast } from "react-toastify"
 import { hasShowPdfAction, makeSalePDF } from "../utils"
@@ -50,6 +50,8 @@ const useSales = () => {
 
     const { id, user, sale_products, discounts, logistic_infos, created_at, number, sales_quantity } = sale
 
+    const logistic_info = logistic_infos[0]!
+
     return ({
       id,
       number,
@@ -57,8 +59,8 @@ const useSales = () => {
       total_sales: sales_quantity,
       total_products: sale_products.reduce((pv, cv) => pv + cv.quantity, 0),
       total_amount: floatToReal(sale_products.reduce((pv, cv) => pv + (cv.product.amount * cv.quantity), 0) - discounts),
-      status: logistic_infos[0]?.sale_status.status,
-      color_status: logistic_infos[0]?.sale_status.color,
+      status: logistic_info.id_sale_status === 'venda-agendada' ? `Venda agendada para ${formatDate(logistic_info.delivery_date)}` : logistic_info.sale_status.status,
+      color_status: logistic_info.sale_status.color,
       date: formatDateTime(new Date(created_at).toUTCString()),
       showPdf: +hasShowPdfAction(sale)
     })
@@ -93,10 +95,10 @@ const useSales = () => {
     refetchSales()
   }, [useFilters])
 
-  const salePDF = (id: string) => () => {
+  const salePDF = (id: string, convertToPNG?: boolean) => () => {
     const sale = sales.find(sale => sale.id === id)
 
-    makeSalePDF(sale)
+    makeSalePDF(sale, convertToPNG)
   }
 
   return {
