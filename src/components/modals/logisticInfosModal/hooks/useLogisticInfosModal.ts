@@ -54,7 +54,7 @@ const useLogisticInfosModal = ({ show, onClose, data }: useModalLogisticInfosPro
     if (show) {
       formik.setValues({
         delivery_date: formatDateValue(data.logistic_infos[0].delivery_date as string),
-        delivery_time: formatDateValue(data.logistic_infos[0].delivery_time as string),
+        delivery_time: data.logistic_infos[0].delivery_time,
         delivery_value: floatToReal(data.logistic_infos[0].delivery_value),
         id_delivery_type: data.logistic_infos[0].id_delivery_type,
         id_motoboy: data.logistic_infos[0].id_motoboy,

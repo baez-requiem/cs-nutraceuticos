@@ -159,6 +159,7 @@ export type CreateNewLogisticInfoBodyType = {
   id_sale_status: string
   id_motoboy?: string
   delivery_date: string
+  delivery_time: string
   delivery_value: number
   notes: string | null
   tracking_code: string | null

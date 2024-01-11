@@ -81,7 +81,7 @@ const SaleModal: FC<ModalSaleProps> = ({
           />
 
           <Input
-            label="Telefone:*"
+            label="Telefone*:"
             name="phone"
             value={values.phone}
             onChange={handleChangeFormatPhone(setFieldValue)}
@@ -114,7 +114,7 @@ const SaleModal: FC<ModalSaleProps> = ({
           />
 
           <Input
-            label="CEP:"
+            label="CEP*:"
             name="cep"
             value={values.cep}
             onChange={handleChange}
@@ -123,34 +123,31 @@ const SaleModal: FC<ModalSaleProps> = ({
           />
 
           <Input
-            label="Estado:"
+            label="Estado*:"
             name="state"
             value={values.state}
             onChange={handleChange}
             labelFixed={!!values.state}
-            disabled
           />
 
           <Input
-            label="Cidade:"
+            label="Cidade*:"
             name="city"
             value={values.city}
             onChange={handleChange}
             labelFixed={!!values.city}
-            disabled
           />
 
           <Input
-            label="Bairro:"
+            label="Bairro*:"
             name="neighborhood"
             value={values.neighborhood}
             onChange={handleChange}
             labelFixed={!!values.neighborhood}
-            disabled
           />
 
           <Input
-            label="Endereço:"
+            label="Endereço*:"
             name="address"
             value={values.address}
             onChange={handleChange}
@@ -158,7 +155,7 @@ const SaleModal: FC<ModalSaleProps> = ({
           />
 
           <Input
-            label="Número:"
+            label="Número*:"
             name="address_number"
             value={values.address_number}
             onChange={handleChange}

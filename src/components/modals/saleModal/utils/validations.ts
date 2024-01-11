@@ -5,6 +5,12 @@ import { toast } from "react-toastify"
 const saleSchema = z.object({
   name: z.string().nonempty("Nome não deve ser vazio."),
   phone: z.string().nonempty("Telefone não deve ser vazio."),
+  cep: z.string().nonempty("CEP não deve ser vazio."),
+  state: z.string().nonempty("Estado não deve ser vazio."),
+  city: z.string().nonempty("Cidade não deve ser vazia."),
+  neighborhood: z.string().nonempty("Bairro não deve ser vaziao."),
+  address: z.string().nonempty("Endereço não deve ser vazio."),
+  address_number: z.string().nonempty("Número não deve ser vazio."),
   media_id: z.string().nonempty("Selecione um mídia."),
   products: z.any().array().nonempty("Adicione produtos.")
 })
