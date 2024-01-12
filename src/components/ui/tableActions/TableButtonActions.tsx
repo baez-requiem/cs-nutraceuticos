@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { IconButton } from "../iconButton/IconButton"
 
 import { MdOutlineModeEditOutline } from "react-icons/md"
-import { BsBoxSeam, BsFiletypePdf, BsTrash } from "react-icons/bs"
+import { BsBoxSeam, BsFiletypePdf, BsTrash, BsFiletypePng } from "react-icons/bs"
 import { AiOutlineEye } from 'react-icons/ai'
 import { BiHistory } from 'react-icons/bi'
 
@@ -36,7 +36,7 @@ export const StockAciton: FC<ActionProps> = ({ onClick, title = 'Excluir' }) => 
   </IconButton>
 )
 
-export const VizualizerAciton: FC<ActionProps> = ({ onClick, title = 'Visualizer' }) => (
+export const VizualizerAciton: FC<ActionProps> = ({ onClick, title = 'Visualizar' }) => (
   <IconButton color="sky_500" onClick={onClick} title={title}>
     <AiOutlineEye color="white" size={18} />
   </IconButton>
@@ -45,5 +45,11 @@ export const VizualizerAciton: FC<ActionProps> = ({ onClick, title = 'Visualizer
 export const HistoryAciton: FC<ActionProps> = ({ onClick, title = 'Histórico' }) => (
   <IconButton color="gray_500" onClick={onClick} title={title}>
     <BiHistory color="white" size={18} />
+  </IconButton>
+)
+
+export const PNGAction: FC<ActionProps> = ({ onClick, title = 'PNG' }) => (
+  <IconButton color="teal_500" onClick={onClick} title={title}>
+    <BsFiletypePng color="white" size={18} />
   </IconButton>
 )

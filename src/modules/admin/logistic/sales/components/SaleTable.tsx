@@ -7,7 +7,7 @@ interface SaleTableProps {
   openModalSale: (arg0: string) => () => void
   openModalLogisticInfos: (arg0: string) => () => void
   openModalHistory: (arg0: string) => () => void
-  salePDF: (arg0: string) => () => void
+  salePDF: (arg0: string, arg1?: boolean) => () => void
 }
 
 const SaleTable: FC<SaleTableProps> = ({
@@ -39,6 +39,7 @@ const SaleTable: FC<SaleTableProps> = ({
               { type: 'Edit', onClick: openModalLogisticInfos(value.toString()) },
               { type: 'History', onClick: openModalHistory(value.toString()) },
               { type: 'PDF', onClick: salePDF(value.toString()), show: !!data.showPdf },
+              { type: 'PNG', onClick: salePDF(value.toString(), true), show: !!data.showPdf },
             ]} />
           )
         },

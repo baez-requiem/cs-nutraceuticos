@@ -31,6 +31,7 @@ export const initialDataFormSale = {
   city: '',
   state: '',
   address: '',
+  address_number: '',
   neighborhood: '',
   complement: '',
   

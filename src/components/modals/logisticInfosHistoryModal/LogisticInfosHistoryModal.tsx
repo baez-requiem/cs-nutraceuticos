@@ -85,7 +85,7 @@ const LogisticInfosHistoryModal: FC<LogisticInfosHistoryModalProps> = ({
               <div>
                 <Text weight="500">Data de entrega</Text>
                 <br />
-                <Text>{formatDate(li.delivery_date)}</Text>
+                <Text>{formatDate(li.delivery_date)}{li.delivery_time && ` ás ${li.delivery_time}`}</Text>
               </div>
             </Grid>
 
