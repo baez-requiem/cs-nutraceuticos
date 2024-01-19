@@ -1,5 +1,5 @@
 import { authenticatedRequest, makeGETParams } from "../utils"
-import { CreateMotoboyBodyType, CreateNewLogisticInfoBodyType, DeliveryType, GetMotoboysParamsType, GetSalesParams, MotoboyType, Sale, SaleStatus, UpdateMotoboyBodyType } from "./logistic.types"
+import { CreateMotoboyBodyType, CreateNewLogisticInfoBodyType, DeliveryType, GetMotoboysParamsType, GetSalesParams, LogisticInfos, MotoboyType, Sale, SaleStatus, UpdateMotoboyBodyType } from "./logistic.types"
 
 const getSales = async (params?: GetSalesParams): Promise<Sale[]> => {
   try {
@@ -136,6 +136,24 @@ const deleteMotoboy = async (body: { id: string }): Promise<boolean> => {
   }
 }
 
+const getCurrentLogisticInfo = async (params: { id_sale: string }): Promise<LogisticInfos|null> => {
+  if (!params.id_sale) return null
+
+  try {
+    const response = await authenticatedRequest({
+      url: makeGETParams('/logistic/logistic-info/current', params),
+      method: 'get',
+    })
+
+    const data: LogisticInfos = response.data
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 export default {
   getSales,
   createMotoboy,
@@ -144,5 +162,6 @@ export default {
   getSaleStatus,
   getDeliveryTypes,
   getMotoboys,
-  createNewLogisticInfo
+  createNewLogisticInfo,
+  getCurrentLogisticInfo
 }

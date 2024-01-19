@@ -4,6 +4,7 @@ import { useSales } from "./hooks/useSales"
 import { MediasResume, SaleFilters, SaleTable, SalesTeamsResume, SellersResume } from "./components"
 import { LogisticInfosHistoryModal, LogisticInfosModal, SaleModal } from "src/components/modals"
 import { makeSalesCsv } from "./utils"
+import RefreshQueriesButton from "src/components/context/refreshQueriesButton/RefreshQueriesButton"
 
 export const Sales = () => {
 
@@ -17,7 +18,8 @@ export const Sales = () => {
     salePDF,
     sales,
     onFilter,
-    useFilters
+    useFilters,
+    saleQueryKey
   } = useSales()
 
   return (
@@ -30,6 +32,8 @@ export const Sales = () => {
       <Paper>
         <Flex justify="space-between" gap={20}>
           <Buttons.Csv onClick={() => makeSalesCsv(sales, useFilters?.products?.[0])} />
+
+          <RefreshQueriesButton delay={20000} queries={[saleQueryKey]} />
 
           <SaleFilters
             onFilter={onFilter}

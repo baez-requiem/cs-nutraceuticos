@@ -30,8 +30,10 @@ const useSales = () => {
     end_date: getEndMonthValue(new Date())
   })
 
+  const saleQueryKey = ['logistic/sales', useFilters]
+
   const { data: sales, refetch: refetchSales  } = useQuery(
-    ['logistic/sales', useFilters],
+    saleQueryKey,
     async () => {
       const toastId = toast.loading('Carregando dados...')
 
@@ -111,7 +113,8 @@ const useSales = () => {
     onFilter,
     salePDF,
     sales,
-    useFilters
+    useFilters,
+    saleQueryKey
   }
 }
 

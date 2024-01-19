@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "react-query"
 
 import { consultCep } from "src/services/viacep"
 
-import { mediasApi, productsApi, salesApi } from "src/services/api"
+import { logisticApi, mediasApi, productsApi, salesApi } from "src/services/api"
 import { SaleBodyType } from "src/services/api/sales/sales.types"
 import { Sale } from "src/services/api/logistic/logistic.types"
 
@@ -17,6 +17,7 @@ import { floatToReal } from "src/utils/number.utils"
 
 import { validateSale } from "../utils/validations"
 import { parseSaleFormSubmit, parseSaleFormValues } from "../utils/mappers"
+import { formatDateValue } from "src/utils/date.utils"
 
 const useSaleModal = (
   show: boolean,
@@ -25,7 +26,7 @@ const useSaleModal = (
 ) => {
   const [selectValue, setSelectValue] = useState<string>('')
 
-  const { medias, stockProducts } = useQueryData()
+  const { medias, stockProducts, deliveryTypes, logisticInfos } = useQueryData({ id_sale: data?.id })
 
   const createNewSaleMutation = useMutation(async (values: SaleBodyType) => {
     const toastId = toast.loading(`Inserindo dados...`)
@@ -121,6 +122,14 @@ const useSaleModal = (
     setSelectValue(slcValue.toString())
   }, [stockProducts, medias, show])
 
+  useEffect(() => {
+    if (logisticInfos) {
+      formik.setFieldValue('id_delivery_type', logisticInfos.id_delivery_type)
+      formik.setFieldValue('delivery_date', formatDateValue(logisticInfos.delivery_date))
+      formik.setFieldValue('delivery_time', logisticInfos.delivery_time)
+    }
+  }, [logisticInfos])
+
   const selectProductsOpt = stockProducts
     .filter(p => !formik.values.products.find(nsp => nsp.id_product === p.id))
     .map(p => ({ label: p.name, value: p.id }))
@@ -143,11 +152,12 @@ const useSaleModal = (
     searchCEP,
     selectMediasOpt,
     selectProductsOpt,
-    total
+    total,
+    deliveryTypes
   }
 }
 
-const useQueryData = () => {
+const useQueryData = ({ id_sale }) => {
   const { data: medias } = useQuery(
     ['medias', { active: true }],
     async () => mediasApi.getAllMedias({ active: true }),
@@ -160,9 +170,23 @@ const useQueryData = () => {
     { initialData: [], keepPreviousData: true, refetchOnWindowFocus: false }
   )
 
+  const { data: deliveryTypes } = useQuery(
+    '/logistic/delivery-types',
+    logisticApi.getDeliveryTypes,
+    { refetchOnWindowFocus: false, initialData: [] }
+  )
+  
+  const { data: logisticInfos } = useQuery(
+    ['logistic-info/current', id_sale],
+    async () => logisticApi.getCurrentLogisticInfo({ id_sale }),
+    { refetchOnWindowFocus: false, initialData: null }
+  )
+
   return {
     medias,
-    stockProducts
+    stockProducts,
+    deliveryTypes,
+    logisticInfos
   }
 }
 

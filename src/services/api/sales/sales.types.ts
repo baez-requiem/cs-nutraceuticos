@@ -28,6 +28,10 @@ export type SaleBodyType = {
   address?: string
   complement?: string
 
+  id_delivery_type?: string
+  delivery_date?: string
+  delivery_time?: string
+
   products: {
     id_product: string
     quantity: number

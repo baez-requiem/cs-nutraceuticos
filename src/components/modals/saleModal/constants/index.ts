@@ -38,6 +38,10 @@ export const initialDataFormSale = {
   discounts: '',
   notes: '',
 
+  id_delivery_type: '',
+  delivery_date: '',
+  delivery_time: '',
+
   products,
   payment_types
 }

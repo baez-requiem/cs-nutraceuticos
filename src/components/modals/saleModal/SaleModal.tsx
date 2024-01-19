@@ -51,7 +51,8 @@ const SaleModal: FC<ModalSaleProps> = ({
     addProduct,
     removeProduct,
     total,
-    formik
+    formik,
+    deliveryTypes
   } = useSaleModal(show, data, onClose)
 
   const {
@@ -262,6 +263,39 @@ const SaleModal: FC<ModalSaleProps> = ({
         <PaymentMethods formik={formik} />
 
         <Divider />
+
+        <Text weight="500">Dados da logística</Text>
+        <Divider my={10} />
+
+        <Grid gap={10} template="1fr 1fr 1fr" xs="1fr" md="1fr 1fr">
+          <Input
+            label="Data de entrega:"
+            name="delivery_date"
+            type="date"
+            value={values.delivery_date}
+            onChange={handleChange}
+            labelFixed={!!values.delivery_date}
+          />
+
+          <Input
+            label="Horário de entrega:"
+            name="delivery_time"
+            type="time"
+            value={values.delivery_time}
+            onChange={handleChange}
+            labelFixed={!!values.delivery_time}
+          />
+
+          <Select
+            nullable
+            label="Tipo de entrega:"
+            name="id_delivery_type"
+            value={values.id_delivery_type}
+            options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
+            onChange={handleChange}
+            labelFixed={!!values.id_delivery_type}
+          />
+        </Grid>
 
         <Textarea
           label="Anotações"

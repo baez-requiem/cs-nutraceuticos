@@ -55,7 +55,7 @@ export const StyledInput = styled.input<{ block: boolean, size?: number, hasUpLa
 
   }
 
-  &[type=date] {
+  &[type=date], &[type=time] {
     ${({ hasUpLabel }) => !hasUpLabel && css`color: transparent !important;`}
   }
 

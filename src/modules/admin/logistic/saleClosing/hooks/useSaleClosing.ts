@@ -30,7 +30,7 @@ const useSaleClosing = () => {
     end_date: getEndMonthValue(new Date())
   })
 
-  const { data: sales, refetch: refetchSales } = useQuery(
+  const { data: querySales, refetch: refetchSales } = useQuery(
     'logistic/sales2e',
     async () => {
       const toastId = toast.loading('Carregando dados...')
@@ -43,6 +43,8 @@ const useSaleClosing = () => {
     },
     { initialData: [], refetchOnWindowFocus: false }
   )
+
+  const sales = querySales.filter(sale => ['venda-agendada', 'enviada', 'entregue'].includes(sale.logistic_infos[0].id_sale_status))
 
   const { deliveryTypes, motoboys, users, paymentTypes } = useQueryData()
 

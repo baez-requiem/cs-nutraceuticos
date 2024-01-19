@@ -144,6 +144,17 @@ export const getTotalsResume = (sales: Sale[] = []) => {
 
   const total_incomes = incomes.reduce((pv, cv) => pv + cv.total, 0)
 
+  const creditCard = incomes.find(inc => inc.id === 'credit_card')
+  const debitCard = incomes.find(inc => inc.id === 'debit_card')
+
+  if (creditCard && debitCard) {
+    incomes.push({
+      id: 'card',
+      name: 'Cartão',
+      total: creditCard.total + debitCard.total
+    })
+  }
+
   return {
     products,
     sales_quantity,
