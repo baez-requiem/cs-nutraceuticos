@@ -82,6 +82,7 @@ const PaymentMethods: FC<PaymentMethodsProps> = ({ formik }) => {
                 value={paymentType.card_installments}
                 onChange={handleChange}
                 labelFixed={!!paymentType.card_installments}
+                required
               />
             )}
 
@@ -91,6 +92,8 @@ const PaymentMethods: FC<PaymentMethodsProps> = ({ formik }) => {
               name={`payment_types.${idx}.paid`}
               value={paymentType.paid}
               onChange={handleChange}
+              nullable
+              required
             />
 
             <IconButton

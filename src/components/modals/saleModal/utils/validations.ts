@@ -27,19 +27,26 @@ export const validateSale = (values: typeof initialDataFormSale): {} => {
     })
   }
 
-  values.payment_types.forEach((paymentType, idx) => {
-    if (paymentType.id_payment_type === 'credit_card') {
-      if (!paymentType.card_installments) {
-        errors['payment_types'][idx]['card_installments'] = 'Selecione um número de parcelas.'
-        toast.error('Selecione um número de parcelas.')
+  if (values.payment_types && values.payment_types.length) {
+    values.payment_types.forEach((paymentType, idx) => {
+      if (paymentType.id_payment_type === 'credit_card') {
+        if (!paymentType.card_installments) {
+          errors['payment_types'][idx]['card_installments'] = 'Selecione um número de parcelas.'
+          toast.error('Selecione um número de parcelas.')
+        }
+        
+        if (parseInt(paymentType.card_installments) <= 0 || parseInt(paymentType.card_installments) > 10) {
+          errors['payment_types'][idx]['card_installments'] = 'Selecione um número de parcelas entre 1 á 10.'
+          toast.error('Selecione um número de parcelas entre 1 á 10.')
+        }
       }
-      
-      if (parseInt(paymentType.card_installments) <= 0 || parseInt(paymentType.card_installments) > 10) {
-        errors['payment_types'][idx]['card_installments'] = 'Selecione um número de parcelas entre 1 á 10.'
-        toast.error('Selecione um número de parcelas entre 1 á 10.')
-      }
-    }
-  })
+    })
+  } else {
+    errors['payment_types'] = 'Adicione uma forma de pagamento.'
+    toast.error('Adicione uma forma de pagamento.')
+  }
+
+  
   
   return errors
 }

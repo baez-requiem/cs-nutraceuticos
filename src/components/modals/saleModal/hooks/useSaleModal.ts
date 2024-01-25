@@ -113,8 +113,6 @@ const useSaleModal = (
 
     if (data) {
       formik.setValues(parseSaleFormValues(data))
-    } else {
-      medias.length && formik.setFieldValue('media_id', medias[0].id)
     }
 
     const slcValue = stockProducts.filter(p => !formik.values.products.find(fp => fp.id_product === p.id))[0]?.id || ''

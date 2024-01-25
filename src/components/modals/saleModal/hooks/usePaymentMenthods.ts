@@ -56,8 +56,8 @@ const usePaymentMenthods = (
         id_payment_type: id,
         name: paymentType.name,
         amount: '0,00',
-        card_installments: id === 'credit_card' ? '1' : '',
-        paid: '1'
+        card_installments: '',
+        paid: ''
       }
     ])
   }

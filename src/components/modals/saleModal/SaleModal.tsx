@@ -237,6 +237,8 @@ const SaleModal: FC<ModalSaleProps> = ({
             name="media_id"
             value={values.media_id}
             onChange={handleChange}
+            nullable
+            required
           />
 
           <Input
@@ -275,6 +277,7 @@ const SaleModal: FC<ModalSaleProps> = ({
             value={values.delivery_date}
             onChange={handleChange}
             labelFixed={!!values.delivery_date}
+            required
           />
 
           <Input
@@ -284,6 +287,7 @@ const SaleModal: FC<ModalSaleProps> = ({
             value={values.delivery_time}
             onChange={handleChange}
             labelFixed={!!values.delivery_time}
+            required
           />
 
           <Select
@@ -294,6 +298,7 @@ const SaleModal: FC<ModalSaleProps> = ({
             options={deliveryTypes.map(deliveryType => ({ label: deliveryType.name, value: deliveryType.id }))}
             onChange={handleChange}
             labelFixed={!!values.id_delivery_type}
+            required
           />
         </Grid>
 

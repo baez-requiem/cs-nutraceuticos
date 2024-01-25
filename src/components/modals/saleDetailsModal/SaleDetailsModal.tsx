@@ -41,6 +41,7 @@ const SaleDetailsModal: FC<SaleDetailsModalProps> = ({ show, onClose, data }) =>
         <TextField label="Cidade:" value={client.city} />
         <TextField label="Bairro:" value={client.neighborhood} />
         <TextField label="Endereço:" value={client.address} />
+        <TextField label="Número:" value={client.address_number} />
         <TextField label="Complemento:" value={client.complement} />
       </Grid>
 

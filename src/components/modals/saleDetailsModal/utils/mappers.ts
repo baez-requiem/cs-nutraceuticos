@@ -12,6 +12,7 @@ export const getSaleDetails = (sale: Sale) => {
     city: sale?.city || '',
     neighborhood: sale?.neighborhood || '',
     address: sale?.address || '',
+    address_number: sale?.address_number || '',
     complement: sale?.complement || '',
   }
 
